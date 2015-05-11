@@ -1,0 +1,19 @@
+{
+  "transports": [{
+    "type": "Console",
+    "options": {
+      "level": "debug",
+      "colorize": true,
+      "timestamp": true
+    }
+  }, {
+    "type": "File",
+    "options": {
+      "level": "debug",
+      "timestamp": true,
+      "maxSize": 10485760,
+      "maxFiles": 100,
+      "json": false
+    }
+  }]
+}

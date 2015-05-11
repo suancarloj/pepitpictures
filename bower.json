@@ -1,0 +1,15 @@
+{
+  "name": "pepitpictures",
+  "version": "0.0.0",
+  "authors": [
+    "Juan Carlos <ju@ncarlos.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

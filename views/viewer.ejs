@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="PictureViewer" data-ng-controller="PictureViewerController">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+  <title>Pepitpictures - Viewer</title>
+
+  <base href="/">
+
+  <!-- CSS  -->
+  <link href="stylesheets/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="stylesheets/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+<body>
+	<main>
+		<img ng-src="{{currentPicture}}" alt="" >
+	</main>
+
+
+  <footer class="page-footer orange">
+		<div class="row">
+			<div class="col s5 center-align">
+				<a href="" data-ng-click="previousPicture()">Previous</a>
+			</div>
+			<div class="col s2 center-align">
+				<a href="" data-ng-click="toggleStarPicture()">
+					{{pictures.pictures[currentPictureIndex].stared ? 'Saved': 'Save'}}
+				</a>
+			</div>
+			<div class="col s5 center-align">
+				<a href="" data-ng-click="nextPicture()" >Next</a>
+			</div>
+		</div>
+  </footer>
+
+
+  <!--  Scripts-->
+  <script src="javascripts/jquery-2.1.4.min.js"></script>
+	<script src="javascripts/angular.min.js"></script>
+	<script src="javascripts/PicturesViewer/PicturesViewer.js"></script>
+	<script src="javascripts/PicturesViewer/pv.controller.js"></script>
+	<script src="javascripts/PicturesViewer/pv.factory.js"></script>
+  <script src="javascripts/PicturesViewer/pv.service.js"></script>
+  <script src="javascripts/materialize.js"></script>
+  <script src="javascripts/init.js"></script>
+
+  </body>
+</html>
