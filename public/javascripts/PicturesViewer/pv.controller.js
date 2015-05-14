@@ -1,14 +1,14 @@
 (function (module) {
   'use strict';
 
-  function PictureViewerController($scope, picturefactory) {
-    var vm = $scope;
+  function PictureViewerController(picturefactory, Config) {
+    var vm = this;
     vm.currentPicture = '';
     vm.currentPictureIndex = 0;
 
     picturefactory.getAllPictures().then(function (response) {
       vm.pictures = response.data.data;
-      vm.currentPicture = 'uploads/' + vm.pictures.pictures[vm.currentPictureIndex].name;
+      vm.currentPicture = Config.uploadUrl + vm.pictures.pictures[vm.currentPictureIndex].name;
       console.log(vm.pictures);
     })
     .catch(function (err) {
@@ -34,7 +34,7 @@
         vm.currentPictureIndex %= size;
       }
 
-      vm.currentPicture = 'uploads/' + vm.pictures.pictures[vm.currentPictureIndex].name;
+      vm.currentPicture = Config.uploadUrl + vm.pictures.pictures[vm.currentPictureIndex].name;
     }
 
     vm.toggleStarPicture = function () {
@@ -63,7 +63,7 @@
     };
   }
 
-  PictureViewerController.$inject = ['$scope', 'picturefactory'];
+  PictureViewerController.$inject = ['picturefactory', 'Config'];
 
   module.controller('PictureViewerController', PictureViewerController);
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-ng-app="PictureUploader" data-ng-controller="PictureUploaderController">
+<html lang="en" data-ng-controller="PictureUploaderController as pu">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
@@ -13,129 +13,42 @@
   <link href="stylesheets/dropzone.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
 <body>
-  <nav class="light-blue lighten-1" role="navigation">
-    <div class="nav-wrapper container">
-      <a id="logo-container" href="#" class="brand-logo">Pepitpictures.com</a>
-    </div>
-  </nav>
+  <data-pp-navbar></data-pp-navbar>
 
 
   <section class="container">
     <div class="row">
       <div class="col s6">
-        <div class="card">
-          <div class="card-image waves-effect waves-block waves-light">
-            <form action="/upload/computer-1?set=554f8ed148dd1df57ec91036" class="dropzone" id="computer1"></form>
-          </div>
-          <div class="card-content">
-            <span class="card-title activator grey-text text-darken-4">PC 1 - {{pc1.currentPictureSet._id}} <i class="mdi-navigation-more-vert right"></i></span>
-            <p>
-              <a href="" data-ng-click="createNewPictureSet(1)">Create new set</a> -
-              <a href="" data-ng-click="">Download zip</a>
-              </p>
-          </div>
-          <div class="card-reveal">
-            <span class="card-title grey-text text-darken-4">PC 1 <i class="mdi-navigation-close right"></i></span>
-            <div class="dz-preview dz-file-preview">
-              <div class="dz-details">
-                <div class="dz-filename"><span data-dz-name></span></div>
-                <div class="dz-size" data-dz-size></div>
-                <img data-dz-thumbnail />
-              </div>
-              <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>
-              <div class="dz-success-mark"><span>✔</span></div>
-              <div class="dz-error-mark"><span>✘</span></div>
-              <div class="dz-error-message"><span data-dz-errormessage></span></div>
-            </div>
-          </div>
-        </div>
+        <pp-dropzone data-computer="1"
+                     data-set="pu.pc1.currentPictureSet"
+                     data-create-new="pu.createNewPictureSet(1)">
+        </pp-dropzone>
       </div>
       <div class="col s6">
-        <div class="card">
-          <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" src="images/office.jpg">
-          </div>
-          <div class="card-content">
-            <span class="card-title activator grey-text text-darken-4">PC 2 <i class="mdi-navigation-more-vert right"></i></span>
-            <p><a href="#">This is a link</a></p>
-          </div>
-          <div class="card-reveal">
-            <span class="card-title grey-text text-darken-4">PC 2 <i class="mdi-navigation-close right"></i></span>
-            <p>Here is some more information about this product that is only revealed once clicked on.</p>
-          </div>
-        </div>
+        <pp-dropzone data-computer="2"
+                     data-set="pu.pc2.currentPictureSet"
+                     data-create-new="pu.createNewPictureSet(2)">
+        </pp-dropzone>
       </div>
     </div>
     <div class="row">
       <div class="col s6">
-        <div class="card">
-          <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" src="images/office.jpg">
-          </div>
-          <div class="card-content">
-            <span class="card-title activator grey-text text-darken-4">PC 3 <i class="mdi-navigation-more-vert right"></i></span>
-            <p><a href="#">This is a link</a></p>
-          </div>
-          <div class="card-reveal">
-            <span class="card-title grey-text text-darken-4">PC 3 <i class="mdi-navigation-close right"></i></span>
-            <p>Here is some more information about this product that is only revealed once clicked on.</p>
-          </div>
-        </div>
+        <pp-dropzone data-computer="3"
+                     data-set="pu.pc3.currentPictureSet"
+                     data-create-new="pu.createNewPictureSet(3)">
+        </pp-dropzone>
       </div>
       <div class="col s6">
-        <div class="card">
-          <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" src="images/office.jpg">
-          </div>
-          <div class="card-content">
-            <span class="card-title activator grey-text text-darken-4">PC 4 <i class="mdi-navigation-more-vert right"></i></span>
-            <p><a href="#">This is a link</a></p>
-          </div>
-          <div class="card-reveal">
-            <span class="card-title grey-text text-darken-4">PC 4 <i class="mdi-navigation-close right"></i></span>
-            <p>Here is some more information about this product that is only revealed once clicked on.</p>
-          </div>
-        </div>
+        <pp-dropzone data-computer="4"
+                     data-set="pu.pc4.currentPictureSet"
+                     data-create-new="pu.createNewPictureSet(4)">
+        </pp-dropzone>
       </div>
     </div>
   </section>
 
 
-  <footer class="page-footer orange">
-    <div class="container">
-      <div class="row">
-        <div class="col l6 s12">
-          <h5 class="white-text">Company Bio</h5>
-          <p class="grey-text text-lighten-4">We are a team of college students working on this project like it's our full time job. Any amount would help support and continue development on this project and is greatly appreciated.</p>
-
-
-        </div>
-        <div class="col l3 s12">
-          <h5 class="white-text">Settings</h5>
-          <ul>
-            <li><a class="white-text" href="#!">Link 1</a></li>
-            <li><a class="white-text" href="#!">Link 2</a></li>
-            <li><a class="white-text" href="#!">Link 3</a></li>
-            <li><a class="white-text" href="#!">Link 4</a></li>
-          </ul>
-        </div>
-        <div class="col l3 s12">
-          <h5 class="white-text">Connect</h5>
-          <ul>
-            <li><a class="white-text" href="#!">Link 1</a></li>
-            <li><a class="white-text" href="#!">Link 2</a></li>
-            <li><a class="white-text" href="#!">Link 3</a></li>
-            <li><a class="white-text" href="#!">Link 4</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="footer-copyright">
-      <div class="container">
-      Made by <a class="orange-text text-lighten-3" href="http://materializecss.com">Materialize</a>
-      </div>
-    </div>
-  </footer>
+  <data-pp-footer></data-pp-footer>
 
 
   <!--  Scripts-->
@@ -145,23 +58,16 @@
 	<script src="javascripts/PictureUploader/pu.controller.js"></script>
 	<script src="javascripts/PictureUploader/pu.factory.js"></script>
   <script src="javascripts/PictureUploader/pu.service.js"></script>
+  <script src="javascripts/PictureUploader/dropzone.directive.js"></script>
+  <script src="javascripts/Common/core.js"></script>
+  <script src="javascripts/Common/footer.directive.js"></script>
+  <script src="javascripts/Common/navbar.directive.js"></script>
+  <script src="javascripts/Common/config.provider.js"></script>
+  <script src="javascripts/app.js"></script>
   <script src="javascripts/materialize.js"></script>
   <script src="javascripts/init.js"></script>
   <script src="javascripts/dropzone.min.js"></script>
   <script type="text/javascript">
-    Dropzone.options.computer1 = {
-      paramName: "img", // The name that will be used to transfer the file
-      parallelUploads: 20,
-      previewsContainer: ".dz-file-preview",
-      maxFilesize: 50, // MB
-      acceptedFiles: "image/*,.jpg",
-      accept: function(file, done) {
-        if (file.name == "justinbieber.jpg") {
-          done("Naha, you don't.");
-        }
-        else { done(); }
-      }
-    };
   </script>
 
   </body>

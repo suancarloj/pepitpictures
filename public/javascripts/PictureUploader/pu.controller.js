@@ -1,17 +1,14 @@
 (function (module) {
   'use strict';
 
-  function PictureUploaderController($scope, pufactory) {
-    var vm = $scope;
-    vm.pc1 = {
-      currentPictureSet : {}
-    };
+  function PictureUploaderController($scope, pufactory, Config) {
+    var vm = this;
 
     vm.createNewPictureSet = function (id) {
       pufactory.getNewPictureSet(id).then(function (response) {
         var data = response.data.data;
         vm['pc'+ id].currentPictureSet = data;
-        Dropzone.options['computer' + id].url = '/upload/computer-' + id + '?set=' + data._id;
+        vm['pc'+ id].currentPictureSet.text = data._id.substr(10);
       })
       .catch(function (err) {
         if (err) {
@@ -19,9 +16,18 @@
         }
       });
     };
+
+    function init() {
+      for (var i = 1; i <= Config.numberOfComputer; i++) {
+        vm['pc' + i] = { currentPictureSet: {}};
+        vm.createNewPictureSet(i);
+      }
+    }
+
+    init();
   }
 
-  PictureUploaderController.$inject = ['$scope', 'pictureuploadfactory'];
+  PictureUploaderController.$inject = ['$scope', 'pictureuploadfactory', 'Config'];
 
   module.controller('PictureUploaderController', PictureUploaderController);
 
