@@ -19,6 +19,10 @@ main {
   flex: 1 0 auto;
 }
 
+body.black {
+  background-color: #000;
+}
+
 .container1 {
   width: 500px;
   height: 300px;
