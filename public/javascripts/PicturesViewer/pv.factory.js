@@ -13,8 +13,16 @@
       return $http.put(url);
     }
 
+    function isNewSetAvailable(data) {
+      var url = Config.isNewSetAvailable.replace(':computerID', data.computerId)
+        .replace(':createdAt', data.createdAt);
+      return $http.get(url);
+    }
+
+
     this.getAllPictures = getPicturesFromServer;
     this.starPicture = starPicture;
+    this.isNewSetAvailable = isNewSetAvailable;
   }
 
   picturefactory.$inject = ['$http', '$location', 'Config'];

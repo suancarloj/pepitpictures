@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-ng-app="PictureViewer" data-ng-controller="PictureViewerController">
+<html lang="en" data-ng-app="PictureViewer" data-ng-controller="PictureViewerController as vm">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
@@ -12,23 +12,41 @@
   <link href="stylesheets/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
 <body>
-	<main>
-		<img ng-src="{{currentPicture}}" alt="" >
+	<main><i class="large mdi-image-navigation-arrow-back"></i>
+		<img data-ng-src="{{ vm.currentPicture }}" alt="" data-ng-show="vm.pictures.pictures.length" >
 	</main>
 
 
   <footer class="page-footer orange">
 		<div class="row">
 			<div class="col s5 center-align">
-				<a href="" data-ng-click="previousPicture()">Previous</a>
+				<button class="btn btn-large waves-effect waves-light btn-disabled"
+                data-ng-click="vm.previousPicture()"
+                data-ng-disabled="!vm.pictures.pictures.length">
+          Back <i class="mdi-navigation-arrow-back left"></i>
+        </button>
 			</div>
-			<div class="col s2 center-align">
-				<a href="" data-ng-click="toggleStarPicture()">
-					{{pictures.pictures[currentPictureIndex].stared ? 'Saved': 'Save'}}
-				</a>
+			<div class="col s2 center-align" data-ng-show="vm.staredCount < 4">
+  				<button class="btn btn-large waves-effect waves-light"
+                  data-ng-click="vm.toggleStarPicture()"
+                  data-ng-disabled="!vm.pictures.pictures.length">
+            {{ vm.staredCount }} ( {{ vm.getPrice() | currency:'&euro;' }} )<i class="mdi-action-favorite left" data-ng-show="vm.pictures.pictures[vm.currentPictureIndex].stared"></i>
+            <i class="mdi-action-favorite-outline left" data-ng-show="!vm.pictures.pictures[vm.currentPictureIndex].stared"></i>
+  				</button>
+			</div>
+      <div class="col s2 center-align" data-ng-show="vm.staredCount >= 4">
+  				<button class="btn btn-large waves-effect waves-light"
+                  data-ng-click="vm.resetStaredCount()"
+                  data-ng-disabled="!vm.pictures.pictures.length">
+            All ( {{ vm.getPrice() | currency:'&euro;' }} )<i class="mdi-action-favorite left" data-ng-show="vm.pictures.pictures[vm.currentPictureIndex].stared"></i>
+  				</button>
 			</div>
 			<div class="col s5 center-align">
-				<a href="" data-ng-click="nextPicture()" >Next</a>
+				<button class="btn btn-large waves-effect waves-light"
+                data-ng-click="vm.nextPicture()"
+                data-ng-disabled="!vm.pictures.pictures.length">
+          Next<i class="mdi-navigation-arrow-forward right"></i>
+        </button>
 			</div>
 		</div>
   </footer>
@@ -40,7 +58,10 @@
 	<script src="javascripts/PicturesViewer/PicturesViewer.js"></script>
 	<script src="javascripts/PicturesViewer/pv.controller.js"></script>
 	<script src="javascripts/PicturesViewer/pv.factory.js"></script>
-  <script src="javascripts/PicturesViewer/pv.service.js"></script>
+  <script src="javascripts/Common/core.js"></script>
+  <script src="javascripts/Common/footer.directive.js"></script>
+  <script src="javascripts/Common/navbar.directive.js"></script>
+  <script src="javascripts/Common/config.provider.js"></script>
   <script src="javascripts/materialize.js"></script>
   <script src="javascripts/init.js"></script>
 

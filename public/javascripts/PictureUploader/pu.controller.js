@@ -9,6 +9,7 @@
         var data = response.data.data;
         vm['pc'+ id].currentPictureSet = data;
         vm['pc'+ id].currentPictureSet.text = data._id.substr(10);
+        getLastTenSets(id);
       })
       .catch(function (err) {
         if (err) {
@@ -16,6 +17,17 @@
         }
       });
     };
+
+    function getLastTenSets(id) {
+      pufactory.getLastTenSets(id).then(function (response) {
+        vm['pc'+ id].sets = response.data.data;
+      })
+      .catch(function (err) {
+        if (err) {
+          console.log(err);
+        }
+      });
+    }
 
     function init() {
       for (var i = 1; i <= Config.numberOfComputer; i++) {

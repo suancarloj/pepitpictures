@@ -7,7 +7,8 @@
       scope: {
         computerID: '=computer',
         set: '=',
-        createNewPictureSet: '&createNew'
+        createNewPictureSet: '&createNew',
+        sets: '='
       },
       templateUrl: 'templates/pu.dropzone.html',
       link: {
@@ -16,7 +17,7 @@
             url: Config.action.replace(':computerID', scope.computerID).replace(':set', scope.set._id),
             paramName: "img", // The name that will be used to transfer the file
             parallelUploads: 20,
-            previewsContainer: ".dz-file-preview",
+            previewsContainer: false,
             maxFilesize: 50, // MB
             acceptedFiles: "image/*,.jpg",
             init: function() {

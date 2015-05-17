@@ -1,19 +1,15 @@
 (function (module) {
   'use strict';
 
-  function PictureViewerController(picturefactory, Config) {
+  function PictureViewerController(picturefactory, Config, $interval) {
     var vm = this;
     vm.currentPicture = '';
     vm.currentPictureIndex = 0;
+    vm.staredCount = 0;
 
-    picturefactory.getAllPictures().then(function (response) {
-      vm.pictures = response.data.data;
-      vm.currentPicture = Config.uploadUrl + vm.pictures.pictures[vm.currentPictureIndex].name;
-      console.log(vm.pictures);
-    })
-    .catch(function (err) {
-      console.log(err);
-    });
+
+    updatePictures();
+    $interval(updatePictures, 10000);
 
     vm.nextPicture = function () {
       changePicture(1);
@@ -21,6 +17,25 @@
     vm.previousPicture = function () {
       changePicture(-1);
     };
+
+    function updatePictures() {
+      picturefactory.getAllPictures().then(function (response) {
+        var oldId = vm.pictures ? vm.pictures._id : -1;
+        var oldIndex = vm.currentPictureIndex;
+        var data = response.data.data;
+        vm.pictures = data;
+
+        if (data._id && (oldId !== data._id) && vm.pictures.pictures.length > 0) {
+          vm.currentPictureIndex = 0;
+          vm.currentPicture = Config.uploadUrl + vm.pictures.pictures[vm.currentPictureIndex].name;
+        }
+
+        setStaredCount();
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+    }
 
     function changePicture(i) {
       var size = vm.pictures.pictures.length;
@@ -34,8 +49,10 @@
         vm.currentPictureIndex %= size;
       }
 
-      vm.currentPicture = Config.uploadUrl + vm.pictures.pictures[vm.currentPictureIndex].name;
+      vm.currentPicture = Config.uploadUrl + vm.pictures.pictures[vm.currentPictureIndex].name || '';
     }
+
+
 
     vm.toggleStarPicture = function () {
       var index = vm.currentPictureIndex;
@@ -45,14 +62,10 @@
         stared: vm.pictures.pictures[index].stared ? false : true
       };
 
-      console.log(vm.pictures.pictures[index]);
-
-
       picturefactory.starPicture(data).then(function (response) {
-        console.log(response);
         if (response.data.data._id) {
           vm.pictures.pictures[index].stared = data.stared;
-          console.log(vm.pictures.pictures[index]);
+          setStaredCount();
         }
       })
       .catch(function (err) {
@@ -61,9 +74,54 @@
         }
       });
     };
+
+    vm.resetStaredCount = function () {
+      vm.pictures.pictures.forEach(function (p) {
+        if (p.stared) {
+          var data = {
+            setID: vm.pictures._id,
+            pictureID: p._id,
+            stared: false
+          };
+          picturefactory.starPicture(data).then(function (response) {
+            if (response.data.data._id) {
+              p.stared = data.stared;
+              setStaredCount();
+            }
+          })
+          .catch(function (err) {
+            if (err) {
+              console.log(err);
+            }
+          });
+        }
+      });
+    };
+
+    vm.getPrice = function () {
+      var price = 0;
+      if (vm.staredCount === 1) {
+        price = 15;
+      } else if (vm.staredCount >= 2 && vm.staredCount <= 3) {
+        price = 33;
+      } else if (vm.staredCount > 3) {
+        price = 40;
+      }
+
+      return price;
+    };
+
+    function setStaredCount() {
+      vm.staredCount = 0;
+      vm.pictures.pictures.forEach(function (p) {
+        if (p.stared) {
+          vm.staredCount++;
+        }
+      });
+    }
   }
 
-  PictureViewerController.$inject = ['picturefactory', 'Config'];
+  PictureViewerController.$inject = ['picturefactory', 'Config', '$interval'];
 
   module.controller('PictureViewerController', PictureViewerController);
 

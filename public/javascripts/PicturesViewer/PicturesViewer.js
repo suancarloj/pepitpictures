@@ -1,5 +1,5 @@
 (function() {
   'use strict';
 
-  angular.module('PictureViewer', []);
+  angular.module('PictureViewer', ['Core']);
 }());

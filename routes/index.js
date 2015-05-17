@@ -5,11 +5,15 @@ var ObjectId = require('mongoose').Types.ObjectId;
 var PictureSet = require('../stores/picture-set.store');
 
 /* GET home page. */
-router.get('/', fileUploaderView);
-router.get('/view/:computerID', viewPictures);
-router.put('/picture-set/:computerID', createNewPictureSet);
-router.get('/pictures/:computerID', getAllPictures);
-router.put('/pictures/:setID/:pictureID', starPicture);
+router
+  .get('/', fileUploaderView)
+  .get('/view/:computerID', viewPictures)
+  .put('/picture-set/create-sh-file/:setID', createShFile)
+  .put('/picture-set/:computerID', createNewPictureSet)
+  .get('/picture-set/:computerID/all', getAllPictureSet)
+  .get('/pictures/fetchNew', isNewPictureSetAvailable)
+  .get('/pictures/:computerID', getAllPictures)
+  .put('/pictures/:setID/:pictureID', starPicture);
 
 function fileUploaderView(req, res, next) {
   res.render('index', { title: 'Express' });
@@ -17,6 +21,23 @@ function fileUploaderView(req, res, next) {
 
 function viewPictures(req, res, next) {
   res.render('viewer');
+}
+
+function createShFile(req, res, next) {
+  if (!req.params.computerID) {
+    return next(new Error('Erreur lors de la récupération des images, paramètre manquant dans l’url (computer-id)'));
+  }
+
+  var processFind = function (err, set) {
+    if (err) {
+      return next(err);
+    }
+
+    return res.json({ status: 'success', data: set });
+  };
+
+  PictureSet.findById(req.query.set, processFind);
+  res.json({ status: 'success', data: 'hello'});
 }
 
 function createNewPictureSet(req, res, next) {
@@ -55,6 +76,47 @@ function getAllPictures (req, res, next) {
   query.exec(processPictureSet);
 }
 
+function getAllPictureSet (req, res, next) {
+  if (!req.params.computerID) {
+    return next(new Error('Erreur lors de la récupération des images, paramètre manquant dans l’url (computer-id)'));
+  }
+
+  var processPictureSet = function (err, set) {
+    if (err) {
+      return next(err);
+    }
+
+    return res.json({ status: "success", data: set});
+  };
+
+  var query = PictureSet
+    .find({ computerId: req.params.computerID })
+    .sort({ createdAt : -1})
+    .limit(10);
+
+  query.exec(processPictureSet);
+}
+
+function isNewPictureSetAvailable(req, res, next) {
+
+  var search = {
+    computerId: req.query.computerID,
+    createdAt: {
+      $gt: new Date(req.query.createdAt)
+    }
+  };
+
+  var processFind = function (err, set) {
+    if (err) {
+      return next(err);
+    }
+
+    return res.json({ status: 'success', data: set });
+  };
+
+  PictureSet.findOne(search, processFind);
+}
+
 function starPicture(req, res, next) {
   var search = {
     _id: new ObjectId(req.params.setID),
@@ -75,7 +137,8 @@ function starPicture(req, res, next) {
         _id: req.params.pictureID
       };
     }
-
+    console.log(numAffectedRow);
+    console.log(data);
     return res.json({ status: 'success', data: data});
   };
 

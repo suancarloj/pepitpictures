@@ -3,24 +3,22 @@
     <form class="dropzone" id="computer1"></form>
   </div>
   <div class="card-content">
-    <span class="card-title activator grey-text text-darken-4">PC {{::computerID}} - {{set.text}} <i class="mdi-navigation-more-vert right"></i></span>
+    <span class="card-title activator grey-text text-darken-4">PC {{ ::computerID }} - {{ set.text }} <i class="mdi-navigation-more-vert right"></i></span>
     <p>
-      <a href="" data-ng-click="createNewPictureSet()">Create new set</a> -
-      <a href="" data-ng-click="">Download zip</a>
+      <a href="" data-ng-click="createNewPictureSet()">Create new set</a>
     </p>
   </div>
   <div class="card-reveal">
-    <span class="card-title grey-text text-darken-4">PC 1 <i class="mdi-navigation-close right"></i></span>
-    <div class="dz-preview dz-file-preview">
-      <div class="dz-details">
-        <div class="dz-filename"><span data-dz-name></span></div>
-        <div class="dz-size" data-dz-size></div>
-        <img data-dz-thumbnail />
-      </div>
-      <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>
-      <div class="dz-success-mark"><span>✔</span></div>
-      <div class="dz-error-mark"><span>✘</span></div>
-      <div class="dz-error-message"><span data-dz-errormessage></span></div>
-    </div>
+    <span class="card-title grey-text text-darken-4">PC {{ ::computerID }} <i class="mdi-navigation-close right"></i></span>
+    <ul class="collection">
+      <li class="collection-item" data-ng-repeat="set in sets" data-ng-if="set.pictures.length > 0">
+        <div>
+          {{ set.createdAt | date: 'HH:mm dd-MM-yyyy' }} ( {{ set.pictures.length }} )
+          <a href="" data-ng-click="" class="secondary-content">
+            <i class="mdi-content-send"></i>
+          </a>
+        </div>
+      </li>
+    </ul>
   </div>
 </div>
