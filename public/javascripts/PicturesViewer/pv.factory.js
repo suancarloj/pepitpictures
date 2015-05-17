@@ -1,7 +1,9 @@
 (function (module) {
-  'strict';
+  'use strict';
 
   function picturefactory($http, $location, Config) {
+
+    var set = [];
 
     function getPicturesFromServer() {
       var url = Config.pvUrl + $location.$$absUrl.match(/\d$/)[0];
@@ -19,14 +21,16 @@
       return $http.get(url);
     }
 
-
-    this.getAllPictures = getPicturesFromServer;
-    this.starPicture = starPicture;
-    this.isNewSetAvailable = isNewSetAvailable;
+    return {
+      getAllPictures: getPicturesFromServer,
+      starPicture: starPicture,
+      isNewSetAvailable: isNewSetAvailable,
+      set: set
+    };
   }
 
   picturefactory.$inject = ['$http', '$location', 'Config'];
 
-  module.service('picturefactory', picturefactory);
+  module.factory('picturefactory', picturefactory);
 
 }(angular.module('PictureViewer')));

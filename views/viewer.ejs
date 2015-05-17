@@ -13,38 +13,44 @@
 </head>
 <body class="grey darken-4">
 	<main><i class="large mdi-image-navigation-arrow-back"></i>
-		<img data-ng-src="{{ vm.currentPicture }}" alt="" data-ng-show="vm.pictures.pictures.length" >
+    <img data-ng-src="{{ vm.pictureBaseUrl + vm.set.pictures[vm.currentPictureIndex].name }}" alt="" data-ng-show="vm.set.pictures.length && !vm.showSelectedPictures" >
+		<img data-ng-src="{{ vm.pictureBaseUrl + vm.selectedPictures[vm.currentPictureIndex].name }}" alt="" data-ng-show="vm.selectedPictures.length && vm.showSelectedPictures" >
 	</main>
 
 
   <footer class="page-footer grey lighten-5">
 		<div class="row">
-			<div class="col s5 center-align">
+			<div class="col s4 center-align">
 				<button class="btn btn-large waves-effect waves-light btn-disabled"
                 data-ng-click="vm.previousPicture()"
-                data-ng-disabled="!vm.pictures.pictures.length">
+                data-ng-disabled="!vm.set.pictures.length || (vm.showSelectedPictures && vm.staredCount === 1)">
           Back <i class="mdi-navigation-arrow-back left"></i>
         </button>
 			</div>
-			<div class="col s2 center-align" data-ng-show="vm.staredCount < 4">
-  				<button class="btn btn-large waves-effect waves-light"
+			<div class="col s2 center-align">
+  				<button class="btn btn-large waves-effect waves-light red lighten-2"
                   data-ng-click="vm.toggleStarPicture()"
-                  data-ng-disabled="!vm.pictures.pictures.length">
-            {{ vm.staredCount }}<i class="mdi-action-favorite left" data-ng-show="vm.pictures.pictures[vm.currentPictureIndex].stared"></i>
-            <i class="mdi-action-favorite-outline left" data-ng-show="!vm.pictures.pictures[vm.currentPictureIndex].stared"></i>
+                  data-ng-disabled="!vm.set.pictures.length">
+            {{ vm.staredCount < 4 ? vm.staredCount : 'All' }}
+            <i class="mdi-action-favorite left"
+              data-ng-show="(!vm.showSelectedPictures && vm.set.pictures[vm.currentPictureIndex].stared) ||
+                            ( vm.showSelectedPictures && vm.selectedPictures[vm.currentPictureIndex].stared)"></i>
+            <i class="mdi-action-favorite-outline left"
+              data-ng-show="(!vm.showSelectedPictures && !vm.set.pictures[vm.currentPictureIndex].stared) ||
+                            (vm.showSelectedPictures && !vm.selectedPictures[vm.currentPictureIndex].stared)"></i>
   				</button>
 			</div>
-      <div class="col s2 center-align" data-ng-show="vm.staredCount >= 4">
+      <div class="col s2 center-align">
   				<button class="btn btn-large waves-effect waves-light"
-                  data-ng-click="vm.resetStaredCount()"
-                  data-ng-disabled="!vm.pictures.pictures.length">
-            All <i class="mdi-action-favorite left" data-ng-show="vm.pictures.pictures[vm.currentPictureIndex].stared"></i>
+                  data-ng-click="vm.toggleSelectedPictures()"
+                  data-ng-disabled="!vm.selectedPictures.length || vm.staredCount > 3">
+                  {{vm.showSelectedPictures ? 'All pictures': 'Selected'}}
   				</button>
 			</div>
-			<div class="col s5 center-align">
+			<div class="col s4 center-align">
 				<button class="btn btn-large waves-effect waves-light"
                 data-ng-click="vm.nextPicture()"
-                data-ng-disabled="!vm.pictures.pictures.length">
+                data-ng-disabled="!vm.set.pictures.length || (vm.showSelectedPictures && vm.staredCount === 1)">
           Next<i class="mdi-navigation-arrow-forward right"></i>
         </button>
 			</div>

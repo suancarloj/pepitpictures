@@ -3,10 +3,13 @@
 
   function PictureViewerController(picturefactory, Config, $interval) {
     var vm = this;
-    vm.currentPicture = '';
     vm.currentPictureIndex = 0;
     vm.staredCount = 0;
+    vm.showSelected = false;
+    vm.pictureBaseUrl = Config.uploadUrl;
+    vm.showSelectedPictures = false;
 
+    vm.selectedPictures = [];
 
     updatePictures();
     $interval(updatePictures, 10000);
@@ -20,14 +23,13 @@
 
     function updatePictures() {
       picturefactory.getAllPictures().then(function (response) {
-        var oldId = vm.pictures ? vm.pictures._id : -1;
+        var oldId = vm.set ? vm.set._id : -1;
         var oldIndex = vm.currentPictureIndex;
         var data = response.data.data;
-        vm.pictures = data;
+        vm.set = data;
 
-        if (data._id && (oldId !== data._id) && vm.pictures.pictures.length > 0) {
+        if (data._id && (oldId !== data._id) && vm.set.pictures.length > 0) {
           vm.currentPictureIndex = 0;
-          vm.currentPicture = Config.uploadUrl + vm.pictures.pictures[vm.currentPictureIndex].name;
         }
 
         setStaredCount();
@@ -38,7 +40,7 @@
     }
 
     function changePicture(i) {
-      var size = vm.pictures.pictures.length;
+      var size = !vm.showSelectedPictures ? vm.set.pictures.length : vm.selectedPictures.length;
       vm.currentPictureIndex += i;
 
       if (vm.currentPictureIndex % size < 0) {
@@ -49,22 +51,50 @@
         vm.currentPictureIndex %= size;
       }
 
-      vm.currentPicture = Config.uploadUrl + vm.pictures.pictures[vm.currentPictureIndex].name || '';
+      if (!vm.showSelectedPictures) {
+        vm.imgUrl = Config.uploadUrl + vm.set.pictures[vm.currentPictureIndex].name;
+      } else {
+        vm.imgUrl = Config.uploadUrl + vm.selectedPictures[vm.currentPictureIndex].name;
+      }
     }
 
 
 
     vm.toggleStarPicture = function () {
       var index = vm.currentPictureIndex;
+
+      if (vm.showSelectedPictures) {
+        vm.set.pictures.forEach(function (p, i) {
+          if (p._id === vm.selectedPictures[vm.currentPictureIndex]._id) {
+            index = i;
+          }
+        });
+      }
+
       var data = {
-        setID: vm.pictures._id,
-        pictureID: vm.pictures.pictures[index]._id,
-        stared: vm.pictures.pictures[index].stared ? false : true
+        setID: vm.set._id,
+        pictureID: vm.set.pictures[index]._id
       };
+
+      if (vm.set.pictures[index].stared) {
+        //remove from stared array
+        var indexToRemove = vm.selectedPictures.indexOf(vm.set.pictures[index]);
+
+        if (indexToRemove >= 0) {
+          vm.selectedPictures.splice(indexToRemove, 1);
+
+          vm.currentPictureIndex = vm.currentPictureIndex > 0 ? vm.currentPictureIndex--: 0;
+        }
+        data.stared = false;
+      } else {
+        //add to stared array
+        vm.selectedPictures.push(vm.set.pictures[index]);
+        data.stared = true;
+      }
 
       picturefactory.starPicture(data).then(function (response) {
         if (response.data.data._id) {
-          vm.pictures.pictures[index].stared = data.stared;
+          vm.set.pictures[index].stared = data.stared;
           setStaredCount();
         }
       })
@@ -76,10 +106,10 @@
     };
 
     vm.resetStaredCount = function () {
-      vm.pictures.pictures.forEach(function (p) {
+      vm.set.pictures.forEach(function (p) {
         if (p.stared) {
           var data = {
-            setID: vm.pictures._id,
+            setID: vm.set._id,
             pictureID: p._id,
             stared: false
           };
@@ -111,9 +141,21 @@
       return price;
     };
 
+    vm.toggleSelectedPictures = function () {
+      if (!vm.selectedPictures.length && !vm.showSelectedPictures) {
+        vm.set.pictures.forEach(function (p) {
+          if (p.stared) {
+            vm.selectedPictures.push(p);
+          }
+        });
+      }
+      vm.showSelectedPictures = !vm.showSelectedPictures;
+      vm.currentPictureIndex = 0;
+    };
+
     function setStaredCount() {
       vm.staredCount = 0;
-      vm.pictures.pictures.forEach(function (p) {
+      vm.set.pictures.forEach(function (p) {
         if (p.stared) {
           vm.staredCount++;
         }
