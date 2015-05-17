@@ -2,17 +2,10 @@ var express = require('express');
 var router = express.Router();
 var ObjectId = require('mongoose').Types.ObjectId;
 var AdmZip = require('adm-zip');
-
+var cors = require('cors');
 var PictureSet = require('../stores/picture-set.store');
 
 /* GET home page. */
-router.all('*', function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
-  next();
-});
-
 router
   .get('/', fileUploaderView)
   .get('/view/:computerID', viewPictures)
@@ -22,7 +15,7 @@ router
   .get('/picture-set/:computerID/all', getAllPictureSet)
   .get('/pictures/fetchNew', isNewPictureSetAvailable)
   .get('/pictures/:computerID', getAllPictures)
-  .put('/pictures/:setID/:pictureID', starPicture);
+  .put('/pictures/:setID/:pictureID',cors(), starPicture);
 
 function fileUploaderView(req, res, next) {
   res.render('index', { title: 'Express' });
