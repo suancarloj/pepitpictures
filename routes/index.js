@@ -6,6 +6,13 @@ var AdmZip = require('adm-zip');
 var PictureSet = require('../stores/picture-set.store');
 
 /* GET home page. */
+router.all('*', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+});
+
 router
   .get('/', fileUploaderView)
   .get('/view/:computerID', viewPictures)
