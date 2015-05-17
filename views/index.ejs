@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-ng-controller="PictureUploaderController as pu">
+<html lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
@@ -19,35 +19,19 @@
   <section class="container">
     <div class="row">
       <div class="col s6">
-        <pp-dropzone data-computer="1"
-                     data-set="pu.pc1.currentPictureSet"
-                     data-create-new="pu.createNewPictureSet(1)"
-                     data-sets="pu.pc1.sets">
-        </pp-dropzone>
+        <data-pp-dropzone data-computer="1"></data-pp-dropzone>
+      </div>
+      <!-- <div class="col s6">
+        <data-pp-dropzone data-computer="2"></data-pp-dropzone>
+      </div>
+          </div>
+          <div class="row">
+      <div class="col s6">
+        <data-pp-dropzone data-computer="3"></data-pp-dropzone>
       </div>
       <div class="col s6">
-        <pp-dropzone data-computer="2"
-                     data-set="pu.pc2.currentPictureSet"
-                     data-create-new="pu.createNewPictureSet(2)"
-                     data-sets="pu.pc2.sets">
-        </pp-dropzone>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col s6">
-        <pp-dropzone data-computer="3"
-                     data-set="pu.pc3.currentPictureSet"
-                     data-create-new="pu.createNewPictureSet(3)"
-                     data-sets="pu.pc3.sets">
-        </pp-dropzone>
-      </div>
-      <div class="col s6">
-        <pp-dropzone data-computer="4"
-                     data-set="pu.pc4.currentPictureSet"
-                     data-create-new="pu.createNewPictureSet(4)"
-                     data-sets="pu.pc4.sets">
-        </pp-dropzone>
-      </div>
+        <data-pp-dropzone data-computer="4"></data-pp-dropzone>
+      </div> -->
     </div>
   </section>
 
@@ -63,6 +47,7 @@
 	<script src="javascripts/PictureUploader/pu.factory.js"></script>
   <script src="javascripts/PictureUploader/pu.service.js"></script>
   <script src="javascripts/PictureUploader/dropzone.directive.js"></script>
+  <script src="javascripts/PictureUploader/count.filter.js"></script>
   <script src="javascripts/Common/core.js"></script>
   <script src="javascripts/Common/footer.directive.js"></script>
   <script src="javascripts/Common/navbar.directive.js"></script>

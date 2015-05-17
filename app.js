@@ -18,7 +18,12 @@ app.set('view engine', 'ejs');
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
-app.use(multer({ dest: './public/uploads/'}));
+app.use(multer({
+  dest: './public/uploads/',
+  rename: function (fieldname, filename, req, res) {
+    return 'PepitPictures.com_' + new Date().toJSON().replace('T', '_').replace(/[:\.Z]/g, '');
+  }
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());

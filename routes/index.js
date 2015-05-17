@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var ObjectId = require('mongoose').Types.ObjectId;
+var AdmZip = require('adm-zip');
 
 var PictureSet = require('../stores/picture-set.store');
 
@@ -8,6 +9,7 @@ var PictureSet = require('../stores/picture-set.store');
 router
   .get('/', fileUploaderView)
   .get('/view/:computerID', viewPictures)
+  .get('/picture-set/download/:setID', downloadSet)
   .put('/picture-set/create-sh-file/:setID', createShFile)
   .put('/picture-set/:computerID', createNewPictureSet)
   .get('/picture-set/:computerID/all', getAllPictureSet)
@@ -23,8 +25,8 @@ function viewPictures(req, res, next) {
   res.render('viewer');
 }
 
-function createShFile(req, res, next) {
-  if (!req.params.computerID) {
+function downloadSet(req, res, next) {
+  if (!req.params.setID) {
     return next(new Error('Erreur lors de la récupération des images, paramètre manquant dans l’url (computer-id)'));
   }
 
@@ -33,11 +35,56 @@ function createShFile(req, res, next) {
       return next(err);
     }
 
-    return res.json({ status: 'success', data: set });
+    var stared = [];
+
+    set.pictures.forEach(function (p) {
+      if (p.stared) {
+        stared.push(p);
+      }
+    });
+
+    if (stared.length > 0 && stared.length <=3) {
+      zip = new AdmZip();
+
+      stared.forEach(function (s) {
+        zip.addLocalFile('public/uploads/' + s.name);
+      });
+
+      return res.type('zip').send(new Buffer(zip.toBuffer(), 'binary'));
+    }
+
+    return res.status(500).json({ status: 'fail', data: set});
   };
 
-  PictureSet.findById(req.query.set, processFind);
-  res.json({ status: 'success', data: 'hello'});
+  PictureSet.findById(req.params.setID, processFind);
+}
+
+function createShFile(req, res, next) {
+  if (!req.params.setID) {
+    return next(new Error('Erreur lors de la récupération des images, paramètre manquant dans l’url (computer-id)'));
+  }
+
+  var processFind = function (err, set) {
+    if (err) {
+      return next(err);
+    }
+
+    var stared = [];
+
+    set.pictures.forEach(function (p) {
+      if (p.stared) {
+        stared.push(p);
+      }
+    });
+
+    if (stared.length > 3) {
+      return res.json({ status: 'success', data: set });
+    }
+
+    return res.status(500).json({ status: 'fail', data: set});
+  };
+
+  PictureSet.findById(req.params.setID, processFind);
 }
 
 function createNewPictureSet(req, res, next) {
@@ -90,7 +137,7 @@ function getAllPictureSet (req, res, next) {
   };
 
   var query = PictureSet
-    .find({ computerId: req.params.computerID })
+    .find({ computerId: req.params.computerID, 'pictures.0': { $exists: true } })
     .sort({ createdAt : -1})
     .limit(10);
 

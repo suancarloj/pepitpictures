@@ -1,5 +1,5 @@
 (function (module) {
-  'strict';
+  'use strict';
 
   function pictureuploadfactory($http, $location, Config) {
 
@@ -13,19 +13,20 @@
       return $http.get(url);
     }
 
-    function createShFile(id) {
-      var url = Config.createShFile.replace(':setID', id);
+    function createShFile(setID) {
+      var url = Config.createShFile.replace(':setID', setID);
       return $http.put(url);
     }
 
-
-    this.getNewPictureSet = getNewPictureSet;
-    this.getLastTenSets = getLastTenSets;
-
+    return {
+      getNewPictureSet: getNewPictureSet,
+      getLastTenSets: getLastTenSets,
+      createShFile: createShFile
+    };
   }
 
   pictureuploadfactory.$inject = ['$http', '$location', 'Config'];
 
-  module.service('pictureuploadfactory', pictureuploadfactory);
+  module.factory('pictureuploadfactory', pictureuploadfactory);
 
 }(angular.module('PictureUploader')));
