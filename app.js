@@ -21,7 +21,7 @@ app.use(logger('dev'));
 app.use(multer({
   dest: './public/uploads/',
   rename: function (fieldname, filename, req, res) {
-    return 'PepitPictures.com_' + new Date().toJSON().replace('T', '_').replace(/[:\.Z]/g, '');
+    return 'PepitPictures_com_' + new Date().toJSON().replace(/[T\-:\.Z]/g, '');
   }
 }));
 app.use(bodyParser.json());

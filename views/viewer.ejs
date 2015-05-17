@@ -30,7 +30,7 @@
   				<button class="btn btn-large waves-effect waves-light"
                   data-ng-click="vm.toggleStarPicture()"
                   data-ng-disabled="!vm.pictures.pictures.length">
-            {{ vm.staredCount }} ( {{ vm.getPrice() | currency:'&euro;' }} )<i class="mdi-action-favorite left" data-ng-show="vm.pictures.pictures[vm.currentPictureIndex].stared"></i>
+            {{ vm.staredCount }}<i class="mdi-action-favorite left" data-ng-show="vm.pictures.pictures[vm.currentPictureIndex].stared"></i>
             <i class="mdi-action-favorite-outline left" data-ng-show="!vm.pictures.pictures[vm.currentPictureIndex].stared"></i>
   				</button>
 			</div>
@@ -38,7 +38,7 @@
   				<button class="btn btn-large waves-effect waves-light"
                   data-ng-click="vm.resetStaredCount()"
                   data-ng-disabled="!vm.pictures.pictures.length">
-            All ( {{ vm.getPrice() | currency:'&euro;' }} )<i class="mdi-action-favorite left" data-ng-show="vm.pictures.pictures[vm.currentPictureIndex].stared"></i>
+            All <i class="mdi-action-favorite left" data-ng-show="vm.pictures.pictures[vm.currentPictureIndex].stared"></i>
   				</button>
 			</div>
 			<div class="col s5 center-align">

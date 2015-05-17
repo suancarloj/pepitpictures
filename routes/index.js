@@ -184,8 +184,7 @@ function starPicture(req, res, next) {
         _id: req.params.pictureID
       };
     }
-    console.log(numAffectedRow);
-    console.log(data);
+
     return res.json({ status: 'success', data: data});
   };
 
