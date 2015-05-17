@@ -143,6 +143,7 @@
 
     vm.toggleSelectedPictures = function () {
       if (!vm.selectedPictures.length && !vm.showSelectedPictures) {
+        vm.selectedPictures = [];
         vm.set.pictures.forEach(function (p) {
           if (p.stared) {
             vm.selectedPictures.push(p);
@@ -155,9 +156,11 @@
 
     function setStaredCount() {
       vm.staredCount = 0;
+      vm.selectedPictures = [];
       vm.set.pictures.forEach(function (p) {
         if (p.stared) {
           vm.staredCount++;
+          vm.selectedPictures.push(p);
         }
       });
     }
