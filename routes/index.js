@@ -15,7 +15,7 @@ router
   .get('/picture-set/:computerID/all', getAllPictureSet)
   .get('/pictures/fetchNew', isNewPictureSetAvailable)
   .get('/pictures/:computerID', getAllPictures)
-  .put('/pictures/:setID/:pictureID',cors(), starPicture);
+  .put('/pictures/:setID/:pictureID', cors({ origin: 'http://192.168.0.150:3000' }), starPicture);
 
 function fileUploaderView(req, res, next) {
   res.render('index', { title: 'Express' });
