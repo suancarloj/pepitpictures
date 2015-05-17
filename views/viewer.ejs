@@ -31,7 +31,7 @@
   				<button class="btn btn-large waves-effect waves-light red lighten-2"
                   data-ng-click="vm.toggleStarPicture()"
                   data-ng-disabled="!vm.set.pictures.length">
-            {{ vm.staredCount < 4 ? vm.staredCount : 'All' }}
+            {{ vm.staredCount }}
             <i class="mdi-action-favorite left"
               data-ng-show="(!vm.showSelectedPictures && vm.set.pictures[vm.currentPictureIndex].stared) ||
                             ( vm.showSelectedPictures && vm.selectedPictures[vm.currentPictureIndex].stared)"></i>
