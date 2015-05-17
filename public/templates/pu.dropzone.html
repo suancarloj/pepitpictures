@@ -15,7 +15,7 @@
         <div>
           {{ pu.currentPictureSet.createdAt | date: 'HH:mm dd-MM-yyyy' }} ( {{ count =(set | countPictures) }} / {{ set.pictures.length }} )
 
-          <a href="{{ 'picture-set/download/' + set._id }}" data-ng-show="count > 0 && count <= 3" data-ng-click="" class="secondary-content">
+          <a href="{{ 'picture-set/download/' + set._id }}" download data-ng-show="count > 0 && count <= 3" data-ng-click="" class="secondary-content">
             <i class="mdi-file-file-download"></i>
           </a>
           <a href="" data-ng-show="count > 3 || count === 0" data-ng-click="pu.pushToRasp(set._id)" class="secondary-content">

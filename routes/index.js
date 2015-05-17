@@ -39,21 +39,22 @@ function downloadSet(req, res, next) {
 
     set.pictures.forEach(function (p) {
       if (p.stared) {
-        stared.push(p);
+        stared.push(p.originalName);
       }
     });
 
-    if (stared.length > 0 && stared.length <=3) {
-      zip = new AdmZip();
+    // if (stared.length > 0 && stared.length <=3) {
+    //   zip = new AdmZip();
+    //
+    //   stared.forEach(function (s) {
+    //     zip.addLocalFile('public/uploads/' + s.name);
+    //   });
+    //
+    //   return res.type('zip').send(new Buffer(zip.toBuffer(), 'binary'));
+    // }
 
-      stared.forEach(function (s) {
-        zip.addLocalFile('public/uploads/' + s.name);
-      });
-
-      return res.type('zip').send(new Buffer(zip.toBuffer(), 'binary'));
-    }
-
-    return res.status(500).json({ status: 'fail', data: set});
+    //return res.status(500).json({ status: 'fail', data: set});
+    return res.json(stared);
   };
 
   PictureSet.findById(req.params.setID, processFind);
