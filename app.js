@@ -19,10 +19,7 @@ app.set('view engine', 'ejs');
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(multer({
-  dest: './public/uploads/',
-  rename: function (fieldname, filename, req, res) {
-    return 'PepitPictures_com_' + new Date().toJSON().replace(/[T\-:\.Z]/g, '');
-  }
+  dest: './public/uploads/'
 }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
