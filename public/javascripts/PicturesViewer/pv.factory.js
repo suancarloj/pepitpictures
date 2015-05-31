@@ -12,7 +12,7 @@
 
     function starPicture(data) {
       var url = Config.pvStarPicture + data.setID + '/' + data.pictureID + '?stared=' + data.stared;
-      return $http.get(url);
+      return $http.put(url);
     }
 
     function isNewSetAvailable(data) {

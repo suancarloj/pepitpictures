@@ -14,7 +14,7 @@ router
   .get('/picture-set/:computerID/all', getAllPictureSet)
   .get('/pictures/fetchNew', isNewPictureSetAvailable)
   .get('/pictures/:computerID', getAllPictures)
-  .get('/pictures/:setID/:pictureID', starPicture);
+  .put('/pictures/:setID/:pictureID', starPicture);
 
 function fileUploaderView(req, res, next) {
   res.render('index', { title: 'Express' });
