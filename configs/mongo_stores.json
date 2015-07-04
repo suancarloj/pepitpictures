@@ -1,5 +1,5 @@
 {
   "main": {
-    "uri": "mongodb://localhost/pepitpictures"
+    "uri": "mongodb://127.0.0.1/pepitpictures"
   }
 }

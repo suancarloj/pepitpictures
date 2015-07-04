@@ -4,7 +4,7 @@
   function pictureuploadfactory($http, $location, Config) {
 
     function getNewPictureSet(id) {
-      var url = 'http://localhost:3000/picture-set/computer-' + id;
+      var url = Config.getPictureSetId.replace(':id', id);
       return $http.put(url);
     }
 

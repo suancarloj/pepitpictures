@@ -15,7 +15,7 @@
         },
         post: function (scope, el, attrs) {
           var options = {
-            url: 'http://localhost:3000',
+            url: 'http://127.0.0.1:3000',
             paramName: "img", // The name that will be used to transfer the file
             parallelUploads: 20,
             previewsContainer: false,
