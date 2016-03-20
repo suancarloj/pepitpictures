@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+mongoose.Promise = require('bluebird').Promise;
 var store = require('./mongoose_store');
 var db = store.getDB('main');
 

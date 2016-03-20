@@ -29,34 +29,23 @@ function downloadSet(req, res, next) {
     return next(new Error('Erreur lors de la récupération des images, paramètre manquant dans l’url (computer-id)'));
   }
 
-  var processFind = function (err, set) {
-    if (err) {
-      return next(err);
-    }
+  PictureSet.findById(req.params.setID, processFind).exec()
+    .then(set => {
+      var stared = set.pictures.filter(p => p.stared).map(p => p.originalName);
 
-    var stared = [];
+      // if (stared.length > 0 && stared.length <=3) {
+      //   zip = new AdmZip();
+      //
+      //   stared.forEach(function (s) {
+      //     zip.addLocalFile('public/uploads/' + s.name);
+      //   });
+      //
+      //   return res.type('zip').send(new Buffer(zip.toBuffer(), 'binary'));
+      // }
 
-    set.pictures.forEach(function (p) {
-      if (p.stared) {
-        stared.push(p.originalName);
-      }
+      //return res.status(500).json({ status: 'fail', data: set});
+      return res.json(stared);
     });
-
-    // if (stared.length > 0 && stared.length <=3) {
-    //   zip = new AdmZip();
-    //
-    //   stared.forEach(function (s) {
-    //     zip.addLocalFile('public/uploads/' + s.name);
-    //   });
-    //
-    //   return res.type('zip').send(new Buffer(zip.toBuffer(), 'binary'));
-    // }
-
-    //return res.status(500).json({ status: 'fail', data: set});
-    return res.json(stared);
-  };
-
-  PictureSet.findById(req.params.setID, processFind);
 }
 
 function createShFile(req, res, next) {
@@ -64,27 +53,17 @@ function createShFile(req, res, next) {
     return next(new Error('Erreur lors de la récupération des images, paramètre manquant dans l’url (computer-id)'));
   }
 
-  var processFind = function (err, set) {
-    if (err) {
-      return next(err);
-    }
+  PictureSet.findById(req.params.setID)
+    .then(set => {
+      const stared = set.pictures.filter(p => p.stared);
 
-    var stared = [];
-
-    set.pictures.forEach(function (p) {
-      if (p.stared) {
-        stared.push(p);
+      if (stared.length > 3) {
+        return res.json({ status: 'success', data: set });
       }
-    });
 
-    if (stared.length > 3) {
-      return res.json({ status: 'success', data: set });
-    }
-
-    return res.status(500).json({ status: 'fail', data: set});
-  };
-
-  PictureSet.findById(req.params.setID, processFind);
+      return res.status(500).json({ status: 'fail', data: set });
+    })
+    .catch(next);
 }
 
 function createNewPictureSet(req, res, next) {
@@ -92,15 +71,9 @@ function createNewPictureSet(req, res, next) {
     return next(new Error('Erreur lors de la création d’un set, paramètre manquant dans l’url'));
   }
 
-  var processCreate = function (err, set) {
-    if (err) {
-      return next(new Error('Erreur lors de la sauvegarde d’un set dans la collection.'));
-    }
-
-    return res.json({ status: "success", data: set});
-  };
-
-  PictureSet.create({ computerId: req.params.computerID }, processCreate);
+  PictureSet.create({ computerId: req.params.computerID })
+    .then(set => res.json({ status: "success", data: set}))
+    .catch(err => next(new Error('Erreur lors de la sauvegarde d’un set dans la collection.')));
 }
 
 function getAllPictures (req, res, next) {
@@ -108,44 +81,26 @@ function getAllPictures (req, res, next) {
     return next(new Error('Erreur lors de la récupération des images, paramètre manquant dans l’url (computer-id)'));
   }
 
-  var processPictureSet = function (err, set) {
-    if (err) {
-      return next(err);
-    }
-
-    return res.json({ status: "success", data: set[0]});
-  };
-
-  var query = PictureSet
-    .find({ computerId: req.params.computerID })
-    .sort({ createdAt : -1}).limit(1);
-
-  query.exec(processPictureSet);
+  PictureSet.find({ computerId: req.params.computerID }).sort({ createdAt : -1}).limit(1).exec()
+    .then(set => {
+      return res.json({ status: "success", data: set[0]});
+    })
+    .catch(next);
 }
 
 function getAllPictureSet (req, res, next) {
   if (!req.params.computerID) {
     return next(new Error('Erreur lors de la récupération des images, paramètre manquant dans l’url (computer-id)'));
   }
-
-  var processPictureSet = function (err, set) {
-    if (err) {
-      return next(err);
-    }
-
-    return res.json({ status: "success", data: set});
-  };
-
-  var query = PictureSet
-    .find({ computerId: req.params.computerID, 'pictures.0': { $exists: true } })
-    .sort({ createdAt : -1})
-    .limit(10);
-
-  query.exec(processPictureSet);
+  const query = { computerId: req.params.computerID, 'pictures.0': { $exists: true } }
+  PictureSet.find(query).sort({ createdAt : -1}).limit(10).exec()
+    .then(set => {
+      return res.json({ status: "success", data: set});
+    })
+    .catch(next);
 }
 
 function isNewPictureSetAvailable(req, res, next) {
-
   var search = {
     computerId: req.query.computerID,
     createdAt: {
@@ -153,15 +108,11 @@ function isNewPictureSetAvailable(req, res, next) {
     }
   };
 
-  var processFind = function (err, set) {
-    if (err) {
-      return next(err);
-    }
-
-    return res.json({ status: 'success', data: set });
-  };
-
-  PictureSet.findOne(search, processFind);
+  PictureSet.findOne(search, processFind).exec()
+    .then(set => {
+      return res.json({ status: 'success', data: set })
+    })
+    .catch(next);
 }
 
 function starPicture(req, res, next) {
@@ -172,23 +123,20 @@ function starPicture(req, res, next) {
 
   var update = { $set: { 'pictures.$.stared': (req.query.stared === 'true') } };
 
-  var processUpdate = function (err, numAffectedRow) {
-    if (err) {
-      return next(err);
-    }
-    var data = {};
+  PictureSet.update(search, update, processUpdate).exec()
+    .then(numAffectedRow => {
+      var data = {};
 
-    if (numAffectedRow.nModified > 0) {
-      data._id = req.params.setID;
-      data.pictures = {
-        _id: req.params.pictureID
-      };
-    }
+      if (numAffectedRow.nModified > 0) {
+        data._id = req.params.setID;
+        data.pictures = {
+          _id: req.params.pictureID
+        };
+      }
 
-    return res.json({ status: 'success', data: data});
-  };
-
-  PictureSet.update(search, update, processUpdate);
+      return res.json({ status: 'success', data: data});
+    })
+    .next(next);
 }
 
 module.exports = router;

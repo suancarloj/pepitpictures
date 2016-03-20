@@ -3,7 +3,6 @@ var router = express.Router();
 var PictureSet = require('../stores/picture-set.store');
 
 
-/* GET users listing. */
 router.post('/:computerID', processImageUpload);
 
 function processImageUpload(req, res, next) {
@@ -14,18 +13,6 @@ function processImageUpload(req, res, next) {
   if (!req.query.set) {
     return next(new Error('Erreur dans l’url, identifiant du set manquant'));
   }
-
-  var processAddPictureToSet = function (err, set) {
-    if (err) {
-      return next(new Error('Set non trouvé.'));
-    }
-
-    if (!set) {
-      console.log('no set affected');
-    }
-
-    res.json({ status: "success", data: { message: "File saved!" } });
-  };
 
   var picture = {
     originalName: req.files.img.originalname,
@@ -38,7 +25,17 @@ function processImageUpload(req, res, next) {
     }
   };
 
-  PictureSet.findByIdAndUpdate(req.query.set, update , processAddPictureToSet);
+  PictureSet.findByIdAndUpdate(req.query.set, update)
+    .then(set => {
+      if (!set) {
+        console.log('no set affected');
+      }
+
+      console.log(res.io)
+
+      return res.json({ status: "success", data: { message: "File saved!" } });
+    })
+    .catch(err => next(new Error('Set non trouvé.')));
 }
 
 module.exports = router;
