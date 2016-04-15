@@ -136,7 +136,7 @@ function starPicture(req, res, next) {
 
       return res.json({ status: 'success', data: data});
     })
-    .next(next);
+    .catch(next);
 }
 
 module.exports = router;
