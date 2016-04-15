@@ -3,7 +3,7 @@
 
   module.constant('Config', {
     numberOfComputer: 4,
-    uploadUrl: 'raspbian/',
+    uploadUrl: 'uploads/',
     pvUrl: 'pictures/computer-',
     action: '/upload/computer-:computerID?set=:set',
     isNewSetAvailable: 'pictures/fetchNew?computerID=:computerID&createdAt=:createdAt',
