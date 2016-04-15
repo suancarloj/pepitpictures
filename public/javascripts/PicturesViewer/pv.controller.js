@@ -24,7 +24,6 @@
     function updatePictures() {
       picturefactory.getAllPictures().then(function (response) {
         var oldId = vm.set ? vm.set._id : -1;
-        var oldIndex = vm.currentPictureIndex;
         var data = response.data.data;
         vm.set = data;
 
@@ -96,6 +95,9 @@
         if (response.data.data._id) {
           vm.set.pictures[index].stared = data.stared;
           setStaredCount();
+          if (!vm.staredCount) {
+            vm.toggleSelectedPictures()
+          }
         }
       })
       .catch(function (err) {
@@ -143,26 +145,15 @@
 
     vm.toggleSelectedPictures = function () {
       if (!vm.selectedPictures.length && !vm.showSelectedPictures) {
-        vm.selectedPictures = [];
-        vm.set.pictures.forEach(function (p) {
-          if (p.stared) {
-            vm.selectedPictures.push(p);
-          }
-        });
+        vm.selectedPictures = vm.set.pictures.filter(p => p.stared);
       }
       vm.showSelectedPictures = !vm.showSelectedPictures;
       vm.currentPictureIndex = 0;
     };
 
     function setStaredCount() {
-      vm.staredCount = 0;
-      vm.selectedPictures = [];
-      vm.set.pictures.forEach(function (p) {
-        if (p.stared) {
-          vm.staredCount++;
-          vm.selectedPictures.push(p);
-        }
-      });
+      vm.selectedPictures = vm.set.pictures.filter(p => p.stared);
+      vm.staredCount = vm.selectedPictures.length;
     }
   }
 
