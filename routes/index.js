@@ -123,7 +123,7 @@ function starPicture(req, res, next) {
 
   var update = { $set: { 'pictures.$.stared': (req.query.stared === 'true') } };
 
-  PictureSet.update(search, update, processUpdate).exec()
+  PictureSet.update(search, update).exec()
     .then(numAffectedRow => {
       var data = {};
 
