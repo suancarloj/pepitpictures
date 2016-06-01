@@ -23,9 +23,9 @@ app.set('port', port);
 const server = app.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
-
+var screens = {}
 var io = require('socket.io').listen(server);
-io.on('connection', socketRoutes)
+io.on('connection', socketRoutes(io));
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
@@ -41,6 +41,7 @@ app.use(cors());
 // Make io accessible to our router
 app.use((req, res, next) => {
   res.io = io;
+  req.screens = screens;
   next();
 });
 
@@ -60,6 +61,7 @@ app.use(function(req, res, next) {
 // will print stacktrace
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
+    console.log(err);
     res.status(err.status || 500);
     res.render('error', {
       message: err.message,
