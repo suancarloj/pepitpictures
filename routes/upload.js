@@ -18,7 +18,7 @@ function processImageUpload(req, res, next) {
 
   var pictures = Array.isArray(req.files.img) ? req.files.img : [req.files.img];
 
-  pictures.map(file => ({
+  var formatedPictures = pictures.map(file => ({
     originalName: file.originalname,
     name: file.name
   }));
@@ -26,7 +26,7 @@ function processImageUpload(req, res, next) {
   var update = {
     $addToSet: {
       pictures: {
-        $each: pictures
+        $each: formatedPictures
       }
     }
   };
@@ -39,7 +39,7 @@ function processImageUpload(req, res, next) {
         console.log('no set affected');
       }
 
-      console.log(set)
+      //console.log(set)
 
       res.io.emit('action', { type: 'NEW_SET', payload: set } );
 

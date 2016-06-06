@@ -15,6 +15,9 @@ var PictureSchema = new mongoose.Schema({
   stared: {
     type: Boolean,
     default: false
+  },
+  url: {
+    type: String
   }
 });
 
@@ -26,6 +29,17 @@ var PictureSetSchema = new mongoose.Schema({
   computerId: {
     type: String,
     required: true
+  },
+  email: {
+    type: String
+  },
+  emailSent: {
+    type: Boolean,
+    default: false
+  },
+  filesUploaded: {
+    type: Boolean,
+    default: false
   },
   pictures: [PictureSchema]
 });
