@@ -4,6 +4,7 @@ let uploader = new Set();
 const screensMap = {};
 
 module.exports = function (io) {
+    console.log('init sockets')
     return function (client) {
         console.log("Socket connected: " + client.id);
         client.on('action', (action) => {
