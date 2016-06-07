@@ -12,7 +12,7 @@ var routes = require('./routes/index');
 var upload = require('./routes/upload');
 const socketRoutes = require('./routes/sockets');
 
-var port = normalizePort(process.env.PORT || '80');
+var port = normalizePort(process.env.PORT || '9000');
 var app = express();
 
 // view engine setup

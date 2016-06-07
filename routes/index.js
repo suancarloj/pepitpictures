@@ -263,10 +263,73 @@ function sendEmail(email) {
   // setup e-mail data with unicode symbols
   var mailOptions = {
     from: '"Pepitpictures.com" <info@pepitpictures.com>', // sender address
-    to: 'juan@pinch.eu', // list of receivers
-    subject: 'Hello ✔', // Subject line
-    text: 'Hello world 🐴', // plaintext body
-    html: '<b>Hello world 🐴</b>' // html body
+    to: email, // list of receivers
+    subject: 'Pepitpictures.com : téléchargez vos photos', // Subject line
+    text: `
+H=C3=A9! Vos images sont dispo!
+
+Vous avez re=C3=A7u vos photos!=20
+Elles sont disponibles sur le site pepitpictures.com =
+<http://pepitpictures.com/> dans la rubrique r=C3=A9cup=C3=A9rez vos =
+photos.
+
+Il vous suffira de taper l=E2=80=99adresse mail =C3=A0 laquelle vous =
+avez re=C3=A7u cet e-mail pour t=C3=A9l=C3=A9charger vos Images en toute =
+s=C3=A9curit=C3=A9.
+=C3=80 tr=C3=A8s bient=C3=B4t,
+Le team Pepit
+pepitpictures.com
+06 34 31 60 33`, // plaintext body
+    html: `<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html =
+charset=3Dutf-8"></head><body style=3D"word-wrap: break-word; =
+-webkit-nbsp-mode: space; -webkit-line-break: after-white-space;" =
+class=3D""><font face=3D"Lobster" size=3D"4" class=3D"">H=C3=A9! Vos =
+images sont dispo!</font><div class=3D""><br class=3D""><div =
+class=3D""><font face=3D"Open Sans" size=3D"2" class=3D"">Vous avez =
+re=C3=A7u vos photos!&nbsp;</font></div><div class=3D""><font face=3D"Open=
+ Sans" size=3D"2" class=3D"">Elles sont disponibles sur le site<font =
+color=3D"#7f7f7f" class=3D"">&nbsp;</font><a =
+href=3D"http://pepitpictures.com" style=3D"color: rgb(127, 127, 127);" =
+class=3D"">pepitpictures.com</a><font color=3D"#7f7f7f" =
+class=3D"">&nbsp;</font>dans la rubrique<font color=3D"#7f7f7f" =
+class=3D""> r</font><span style=3D"color: rgb(127, 127, 127);" =
+class=3D"">=C3=A9cup=C3=A9rez vos photos.</span></font></div><div =
+class=3D""><font face=3D"Open Sans" size=3D"2" class=3D""><br =
+class=3D""></font></div><div class=3D""><font face=3D"Open Sans" =
+size=3D"2" class=3D"">Il vous suffira de taper l=E2=80=99adresse mail =C3=A0=
+ laquelle vous avez re=C3=A7u cet e-mail pour t=C3=A9l=C3=A9charger vos =
+Images en toute s=C3=A9curit=C3=A9.<br class=3D""></font><div =
+class=3D""><font face=3D"Open Sans" size=3D"2" class=3D"">=C3=80 tr=C3=A8s=
+ bient=C3=B4t,</font></div><div class=3D""><font face=3D"Lobster" =
+size=3D"7" class=3D"">Le team Pepit</font></div><div =
+apple-content-edited=3D"true" class=3D""><div style=3D"color: rgb(0, 0, =
+0); letter-spacing: normal; orphans: auto; text-align: start; =
+text-indent: 0px; text-transform: none; white-space: normal; widows: =
+auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; word-wrap: =
+break-word; -webkit-nbsp-mode: space; -webkit-line-break: =
+after-white-space;" class=3D""><div style=3D"letter-spacing: normal; =
+orphans: auto; text-align: start; text-indent: 0px; text-transform: =
+none; white-space: normal; widows: auto; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; word-wrap: break-word; =
+-webkit-nbsp-mode: space; -webkit-line-break: after-white-space;" =
+class=3D""><font color=3D"#7f7f7f" face=3D"Open Sans" size=3D"4" =
+class=3D"">&nbsp;<a href=3D"http://pepitpictures.com" =
+class=3D"">pepitpictures.com</a></font></div><div style=3D"letter-spacing:=
+ normal; orphans: auto; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: auto; word-spacing: =
+0px; -webkit-text-stroke-width: 0px; word-wrap: break-word; =
+-webkit-nbsp-mode: space; -webkit-line-break: after-white-space;" =
+class=3D""><span style=3D"color: rgb(127, 127, 127);" class=3D""><font =
+face=3D"Open Sans" size=3D"4" class=3D"">&nbsp;06 34 31 60 =
+33</font></span></div><div style=3D"letter-spacing: normal; orphans: =
+auto; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; widows: auto; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; word-wrap: break-word; =
+-webkit-nbsp-mode: space; -webkit-line-break: after-white-space;" =
+class=3D""><br class=3D""><br class=3D""><br class=3D""><br class=3D""><br=
+ class=3D""></div></div>
+</div>
+<br class=3D""></div></div></body></html>` // html body
   };
 
   return new Promise((resolve, reject) => {
