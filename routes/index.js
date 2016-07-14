@@ -222,7 +222,7 @@ function sendEmailForIds (req, res, next) {
           })
           .then((s) => {
             //console.log(s)
-            console.log('sending emails')
+            console.log('sending emails to: ', s.email)
             return sendEmail(s.email)
               .then((info) => {
                 console.log('email sent!')
