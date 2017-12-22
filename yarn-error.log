@@ -1,0 +1,47 @@
+Arguments: 
+  /usr/local/Cellar/node/8.8.1/bin/node /usr/local/Cellar/yarn/1.2.1/libexec/bin/yarn.js
+
+PATH: 
+  /usr/local/opt/libpq/bin:/usr/local/opt/python/libexec/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/usr/local/opt/libpq/bin:/usr/local/opt/python/libexec/bin:/Users/juan/Development/go:/Users/juan/Development/qover/go:/Users/juan/Development/go-projects/bin:/Users/juan/.rvm/bin:/Users/juan/Development/go:/Users/juan/Development/qover/go:/Users/juan/Development/go-projects/bin:/Users/juan/.rvm/bin
+
+Yarn version: 
+  1.2.1
+
+Node version: 
+  5.12.0
+
+Platform: 
+  darwin x64
+
+npm manifest: 
+  {
+    "name": "pepitpictures",
+    "version": "1.0.0",
+    "main": "index.js",
+    "private": true,
+    "repository": "git@github.com:suancarloj/pepitpictures.git",
+    "author": "Juan Carlos Sanchez Cardenas <juan@qover.me>",
+    "license": "MIT",
+    "workspaces": [
+      "packages/*"
+    ]
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: https://registry.yarnpkg.com/grpc/-/grpc-1.8.0.tgz: ESOCKETTIMEDOUT
+      at ClientRequest.<anonymous> (/usr/local/Cellar/yarn/1.2.1/libexec/lib/cli.js:123642:19)
+      at ClientRequest.g (events.js:273:16)
+      at emitNone (events.js:80:13)
+      at ClientRequest.emit (events.js:179:7)
+      at TLSSocket.emitTimeout (_http_client.js:593:10)
+      at TLSSocket.g (events.js:273:16)
+      at emitNone (events.js:80:13)
+      at TLSSocket.emit (events.js:179:7)
+      at TLSSocket.Socket._onTimeout (net.js:332:8)
+      at tryOnTimeout (timers.js:224:11)

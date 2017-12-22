@@ -1,0 +1,12 @@
+{
+  "name": "pepitpictures",
+  "version": "1.0.0",
+  "main": "index.js",
+  "private": true,
+  "repository": "git@github.com:suancarloj/pepitpictures.git",
+  "author": "Juan Carlos Sanchez Cardenas <jcsanchezcardenas@gmail.com>",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*"
+  ]
+}
