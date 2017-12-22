@@ -1,19 +1,31 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import styled from 'styled-components';
+
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  height: 100%;
+`;
+
+const GridSection = styled.div`
+  align-items: center;
+  color: #fff;
+  background-color: ${props => props.backgroundColor};
+  display: flex;
+  flex-direction: center;
+  justify-content: center;
+`;
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      <Grid>
+        <GridSection backgroundColor="#FACCE1">1</GridSection>
+        <GridSection backgroundColor="#F0EDE1">4</GridSection>
+        <GridSection backgroundColor="#B4C0B8">3</GridSection>
+        <GridSection backgroundColor="#F8D7D6">2</GridSection>
+      </Grid>
     );
   }
 }
