@@ -2,12 +2,13 @@ import angular from 'angular';
 
 import 'angular/angular-csp.css';
 import './index.scss';
+import CoreModule from './common/Core';
+import PictureUploaderModule from './picture-uploader/PictureUploader';
 
-import demoModule from './demo/demoModule';
-
-angular.module('main', [
-  demoModule,
+angular.module('PictureUploader', [
+  CoreModule,
+  PictureUploaderModule,
 ]);
 
-angular.bootstrap(document.documentElement, ['main']);
+angular.bootstrap(document, ['PictureUploader'], { strictDi: true });
 
