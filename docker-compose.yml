@@ -1,0 +1,14 @@
+version: '2'
+services:
+  mongo:
+    image: mongo
+    container_name: mongo-pepit
+    ports:
+    - "27017:27017"
+  fake-s3:
+    image: lphoward/fake-s3
+    container_name: fake-s3-pepit
+    ports:
+    - "4569:4569"
+    volumes:
+    - /tmp:/fakes3_root
