@@ -13,7 +13,7 @@ var DevnullTransports = require('devnull/transports');
 var Configurator = require('./configurator');
 var WinstonBridge = require('./logger/WinstonBridge');
 
-require('winston-loggly');
+// require('winston-loggly');
 
 var configuration = Configurator.load('logger');
 var transports = [];
