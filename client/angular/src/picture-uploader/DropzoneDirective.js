@@ -3,9 +3,9 @@ import PictureUploaderController from './PictureUploaderController';
 function DropzoneDirective(Config) {
   return {
     restrict: 'E',
-    // scope: {
-    //   computerID: '=computer',
-    // },
+    scope: {
+      computerID: '=computer',
+    },
     controller: PictureUploaderController,
     controllerAs: 'pu',
     template: require('./pu.dropzone.html'),
