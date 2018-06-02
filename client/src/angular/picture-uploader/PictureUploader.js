@@ -13,7 +13,7 @@ export default angular
   .directive('ppDropzone', DropzoneDirective)
   .directive(
     'reactDirective',
-    ['$timeout', ReactDirective(ReactComponent, 'test-root', {
+    ['$timeout', ReactDirective(ReactComponent, 'test-root-', {
       pictureSetId: '@pictureSetId',
       computerId: '@computerId',
       createNewPictureSet: '&createNewPictureSet',
