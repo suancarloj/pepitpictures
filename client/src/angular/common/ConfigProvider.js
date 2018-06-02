@@ -1,8 +1,9 @@
 export default {
+  apiBasePath: 'http://localhost:9000/',
   numberOfComputer: 4,
   uploadUrl: 'uploads/',
   pvUrl: 'pictures/computer-',
-  action: '/upload/computer-:computerID?set=:set',
+  action: 'upload/computer-:computerID?set=:set',
   isNewSetAvailable: 'pictures/fetchNew?computerID=:computerID&createdAt=:createdAt',
   pvStarPicture: 'pictures/',
   getPictureSetId: 'picture-set/computer-:id',

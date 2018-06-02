@@ -1,7 +1,6 @@
 import angular from 'angular';
 
 import 'angular/angular-csp.css';
-import './index.scss';
 import CoreModule from './common/Core';
 import PictureUploaderModule from './picture-uploader/PictureUploader';
 
