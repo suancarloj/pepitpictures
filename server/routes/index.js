@@ -4,10 +4,7 @@ var ObjectId = require('mongoose').Types.ObjectId;
 var AdmZip = require('adm-zip');
 var PictureSet = require('../stores/picture-set.store');
 
-/* GET home page. */
 router
-  .get('/', (req, res, next) => res.render('index', { title: 'Express' }))
-  .get('/view/:computerID', (req, res, next) => res.render('viewer'))
   .get('/picture-set/download/:setId', (req, res, next) => {
     if (!req.params.setId) {
       return next(new Error('Erreur lors de la récupération des images, paramètre manquant dans l’url (computer-id)'));
@@ -103,19 +100,15 @@ router
       return next(new Error('Erreur lors de la récupération des images, paramètre manquant dans l’url (computer-id)'));
     }
   
-    var processPictureSet = function (err, set) {
+    var query = PictureSet
+      .find({ computerId: req.params.computerId })
+      .sort({ createdAt : -1}).limit(1)
+      .exec((err, set) => {
       if (err) {
         return next(err);
       }
-  
       return res.json({ status: "success", data: set[0]});
-    };
-  
-    var query = PictureSet
-      .find({ computerId: req.params.computerId })
-      .sort({ createdAt : -1}).limit(1);
-  
-    query.exec(processPictureSet);
+    });
   })
   .put('/pictures/:setId/:pictureId', (req, res, next) => {
     var search = {
@@ -136,7 +129,7 @@ router
           };
         }
     
-        return res.json({ status: 'success', data: data});
+        return res.json({ status: 'success', data });
       }).catch((err) => {
         if (err) {
           return next(err);
