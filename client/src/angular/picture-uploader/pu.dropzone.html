@@ -3,17 +3,26 @@
     <form class="dropzone" id="computer1"></form>
   </div>
   <div class="card-content">
-    <span class="card-title activator grey-text text-darken-4">PC {{ ::computerID }} - {{ pu.currentPictureSet.text }} <i class="mdi-navigation-more-vert right"></i></span>
+    <span class="card-title activator grey-text text-darken-4">PC {{ ::computerID }} - {{ pu.currentPictureSet.text }}
+      <i class="mdi-navigation-more-vert right"></i>
+    </span>
+    <data-react-directive
+      data-computer-id="{{ computerID }}"
+      data-picture-set-id="{{ pu.currentPictureSet.text }}"
+    ></data-react-directive>
     <p>
       <a href="" data-ng-click="pu.createNewPictureSet(computerID)">Close picture set</a>
     </p>
   </div>
   <div class="card-reveal">
-    <span class="card-title grey-text text-darken-4">PC {{ ::computerID }} <i class="mdi-navigation-close right"></i></span>
+    <span class="card-title grey-text text-darken-4">PC {{ ::computerID }}
+      <i class="mdi-navigation-close right"></i>
+    </span>
     <ul class="collection">
       <li class="collection-item" data-ng-repeat="set in pu.sets" data-ng-if="set.pictures.length > 0">
         <div>
-          {{ pu.currentPictureSet.createdAt | date: 'HH:mm dd-MM-yyyy' }} ( {{ count =(set | countPictures) }} / {{ set.pictures.length }} )
+          {{ pu.currentPictureSet.createdAt | date: 'HH:mm dd-MM-yyyy' }} ( {{ count =(set | countPictures) }} / {{ set.pictures.length
+          }} )
 
           <a href="{{ 'picture-set/download/' + set._id }}" download data-ng-show="count > 0 && count <= 3" data-ng-click="" class="secondary-content">
             <i class="mdi-file-file-download"></i>

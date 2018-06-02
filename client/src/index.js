@@ -1,8 +1,8 @@
 import angular from 'angular';
 
 import 'angular/angular-csp.css';
-import CoreModule from './common/Core';
-import PictureUploaderModule from './picture-uploader/PictureUploader';
+import CoreModule from './angular/common/Core';
+import PictureUploaderModule from './angular/picture-uploader/PictureUploader';
 
 angular.module('PictureUploader', [
   CoreModule,
