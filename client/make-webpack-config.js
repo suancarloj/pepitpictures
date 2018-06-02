@@ -206,7 +206,7 @@ module.exports = function makeWebpackConfig(options) {
       },
       // transpile and instrument only testing sources with babel-istanbul
       {
-        test: /\.jsx?$/,
+        test: /\.(js|jsx)?$/,
         exclude: [
           /node_modules/,
           /\.test\./,
@@ -216,9 +216,11 @@ module.exports = function makeWebpackConfig(options) {
           options: {
             presets: [
               'env',
+              'react',
             ],
             plugins: [
               'angularjs-annotate',
+              'styled-components',
             ],
           },
         }],
@@ -227,8 +229,20 @@ module.exports = function makeWebpackConfig(options) {
   } else {
     jsRules = [
       {
-        test: /\.jsx?$/,
-        use: ['babel-loader'],
+        test: /\.(js|jsx)?$/,
+        use: [{
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              'env',
+              'react',
+            ],
+            plugins: [
+              'angularjs-annotate',
+              'styled-components',
+            ],
+          },
+        }],
         exclude: /node_modules/,
       },
     ];
