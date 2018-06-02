@@ -16,6 +16,7 @@ export default angular
     ['$timeout', ReactDirective(ReactComponent, 'test-root', {
       pictureSetId: '@pictureSetId',
       computerId: '@computerId',
+      createNewPictureSet: '&createNewPictureSet',
     })]
   )
   .controller('PictureUploaderController', PictureUploaderController)

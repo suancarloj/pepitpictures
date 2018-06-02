@@ -1,18 +1,13 @@
 <div class="card">
   <div class="card-image waves-effect waves-block waves-light">
-    <form class="dropzone" id="computer1"></form>
+    <form class="dropzone dz-container" id="computer1"></form>
   </div>
   <div class="card-content">
-    <span class="card-title activator grey-text text-darken-4">PC {{ ::computerID }} - {{ pu.currentPictureSet.text }}
-      <i class="mdi-navigation-more-vert right"></i>
-    </span>
     <data-react-directive
       data-computer-id="{{ computerID }}"
-      data-picture-set-id="{{ pu.currentPictureSet.text }}"
+      data-picture-set-id="{{ pu.currentPictureSet._id }}"
+      data-create-new-picture-set="pu.createNewPictureSet(computerID)"
     ></data-react-directive>
-    <p>
-      <a href="" data-ng-click="pu.createNewPictureSet(computerID)">Close picture set</a>
-    </p>
   </div>
   <div class="card-reveal">
     <span class="card-title grey-text text-darken-4">PC {{ ::computerID }}

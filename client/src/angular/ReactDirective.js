@@ -14,7 +14,11 @@ function ReactDirective(Component, targetId, scp) {
           function(newValue, oldValue) {
             if (angular.isDefined(newValue)) {
               ReactDOM.render(
-                <Component computerId={scope.computerId} pictureSetId={newValue} />,
+                <Component
+                  computerId={scope.computerId}
+                  pictureSetId={newValue}
+                  createNewPictureSet={scope.createNewPictureSet}
+                />,
                 reactRoot
               );
             }

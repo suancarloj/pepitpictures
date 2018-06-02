@@ -64,3 +64,11 @@ main img {
   right: 0;
   top: 0;
 }
+
+.dz-container {
+  min-height: 100px;
+}
+
+.card-content {
+  padding: 20px 20px 0 20px !important;
+}
