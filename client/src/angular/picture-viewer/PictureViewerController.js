@@ -1,4 +1,4 @@
-function PictureViewerController(picturefactory, Config, $interval) {
+function PictureViewerController(PictureViewerFactory, Config, $interval) {
   let vm = this;
 
   vm.currentPictureIndex = 0;
@@ -15,7 +15,7 @@ function PictureViewerController(picturefactory, Config, $interval) {
   }
 
   function updatePictures() {
-    picturefactory.getAllPictures().then((response) => {
+    PictureViewerFactory.getAllPictures().then((response) => {
       let oldId = vm.set ? vm.set._id : -1;
       const { data } = response.data;
       vm.set = data;
@@ -91,7 +91,7 @@ function PictureViewerController(picturefactory, Config, $interval) {
       data.stared = true;
     }
 
-    picturefactory.starPicture(data).then((response) => {
+    PictureViewerFactory.starPicture(data).then((response) => {
       if (response.data.data._id) {
         vm.set.pictures[index].stared = data.stared;
         setStaredCount();
@@ -114,7 +114,7 @@ function PictureViewerController(picturefactory, Config, $interval) {
           pictureID: p._id,
           stared: false
         };
-        picturefactory.starPicture(data).then((response) => {
+        PictureViewerFactory.starPicture(data).then((response) => {
           if (response.data.data._id) {
             p.stared = data.stared;
             setStaredCount();
@@ -150,6 +150,6 @@ function PictureViewerController(picturefactory, Config, $interval) {
   };
 }
 
-PictureViewerController.$inject = ['picturefactory', 'Config', '$interval'];
+PictureViewerController.$inject = ['PictureViewerFactory', 'Config', '$interval'];
 
 export default PictureViewerController;

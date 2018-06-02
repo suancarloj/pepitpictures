@@ -2,16 +2,21 @@ function PictureViewerFactory($http, $location, Config) {
   const set = [];
   return {
     getAllPictures() {
-      const url = Config.pvUrl + $location.$$absUrl.match(/\d$/)[0];
+      const url = Config.apiBasePath + Config.pvUrl + $location.$$absUrl.match(/\d$/)[0];
       return $http.get(url);
     },
     starPicture(data) {
-      const url = `${Config.pvStarPicture}${data.setID}/${data.pictureID}?stared=${data.stared}`;
+      const url = `${Config.apiBasePath}${Config.pvStarPicture}${data.setID}/${
+        data.pictureID
+      }?stared=${data.stared}`;
       return $http.put(url);
     },
     isNewSetAvailable(data) {
-      const url = Config.isNewSetAvailable.replace(':computerID', data.computerId)
-        .replace(':createdAt', data.createdAt);
+      const url =
+        Config.apiBasePath +
+        Config.isNewSetAvailable
+          .replace(':computerID', data.computerId)
+          .replace(':createdAt', data.createdAt);
       return $http.get(url);
     },
     set,
