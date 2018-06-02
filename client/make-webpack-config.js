@@ -240,6 +240,7 @@ module.exports = function makeWebpackConfig(options) {
             plugins: [
               'angularjs-annotate',
               'styled-components',
+              'transform-class-properties',
             ],
           },
         }],
