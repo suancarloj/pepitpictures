@@ -8,12 +8,12 @@ var PictureSet = require('../stores/picture-set.store');
 router
   .get('/', (req, res, next) => res.render('index', { title: 'Express' }))
   .get('/view/:computerID', (req, res, next) => res.render('viewer'))
-  .get('/picture-set/download/:setID', (req, res, next) => {
-    if (!req.params.setID) {
+  .get('/picture-set/download/:setId', (req, res, next) => {
+    if (!req.params.setId) {
       return next(new Error('Erreur lors de la récupération des images, paramètre manquant dans l’url (computer-id)'));
     }
   
-    PictureSet.findById(req.params.setID)
+    PictureSet.findById(req.params.setId)
       .then((set) => {
         var stared = set.pictures.filter(p => p.stared)
           .map(p =>p.originalName);
@@ -24,12 +24,12 @@ router
         }
       });
   })
-  .put('/picture-set/create-sh-file/:setID', (req, res, next) =>{
-    if (!req.params.setID) {
+  .put('/picture-set/create-sh-file/:setId', (req, res, next) =>{
+    if (!req.params.setId) {
       return next(new Error('Erreur lors de la récupération des images, paramètre manquant dans l’url (computer-id)'));
     }
   
-    PictureSet.findById(req.params.setID)
+    PictureSet.findById(req.params.setId)
       .then((set) => {
         var stared = set.pictures.filter(p => p.stared);
         return stared.length > 3
@@ -98,8 +98,8 @@ router
         }
       });
   })
-  .get('/pictures/:computerID', (req, res, next) => {
-    if (!req.params.computerID) {
+  .get('/pictures/:computerId', (req, res, next) => {
+    if (!req.params.computerId) {
       return next(new Error('Erreur lors de la récupération des images, paramètre manquant dans l’url (computer-id)'));
     }
   
@@ -112,15 +112,15 @@ router
     };
   
     var query = PictureSet
-      .find({ computerId: req.params.computerID })
+      .find({ computerId: req.params.computerId })
       .sort({ createdAt : -1}).limit(1);
   
     query.exec(processPictureSet);
   })
-  .put('/pictures/:setID/:pictureID', (req, res, next) => {
+  .put('/pictures/:setId/:pictureId', (req, res, next) => {
     var search = {
-      _id: new ObjectId(req.params.setID),
-      'pictures._id': new ObjectId(req.params.pictureID)
+      _id: new ObjectId(req.params.setId),
+      'pictures._id': new ObjectId(req.params.pictureId)
     };
   
     var update = { $set: { 'pictures.$.stared': (req.query.stared === 'true') } };
@@ -130,9 +130,9 @@ router
         var data = {};
   
         if (numAffectedRow.nModified > 0) {
-          data._id = req.params.setID;
+          data._id = req.params.setId;
           data.pictures = {
-            _id: req.params.pictureID
+            _id: req.params.pictureId
           };
         }
     
