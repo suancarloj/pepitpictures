@@ -6,7 +6,7 @@ export default {
   action: 'upload/computer-:computerID?set=:set',
   isNewSetAvailable: 'pictures/fetchNew?computerID=:computerID&createdAt=:createdAt',
   pvStarPicture: 'pictures/',
-  getPictureSetId: 'picture-set/computer-:id',
+  getPictureSetId: 'pictures',
   lastTenSets: 'picture-set/computer-:computerID/all',
   createShFile: 'picture-set/create-sh-file/:setID',
 };

@@ -21,7 +21,7 @@ router
         }
       });
   })
-  .put('/picture-set/create-sh-file/:setId', (req, res, next) =>{
+  .put('/picture-set/create-sh-file/:setId', (req, res, next) => {
     if (!req.params.setId) {
       return next(new Error('Erreur lors de la récupération des images, paramètre manquant dans l’url (computer-id)'));
     }
@@ -50,12 +50,15 @@ router
       res.json({ status: "success", data: set})
     });
   })
-  .put('/picture-set/:computerID', (req, res, next) => {
-    if (!req.params.computerID) {
+  .put('/picture-set/:pictureSetId/publish', (req, res, next) => {
+
+  })
+  .post('/pictures', (req, res, next) => {
+    if (!req.body.computerId) {
       return next(new Error('Erreur lors de la création d’un set, paramètre manquant dans l’url'));
     }
   
-    PictureSet.create({ computerId: req.params.computerID })
+    PictureSet.create({ computerId: req.body.computerId })
       .then((set) => res.json({ status: "success", data: set}))
       .catch((err) => {
         if (err) {
@@ -79,7 +82,7 @@ router
         return res.json({ status: "success", data: set});
       });
   })
-  .get('/pictures/fetchNew', (req, res, next) =>{
+  .get('/pictures/fetchNew', (req, res, next) => {
     var search = {
       computerId: req.query.computerID,
       createdAt: {

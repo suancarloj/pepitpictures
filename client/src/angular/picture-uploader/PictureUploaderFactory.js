@@ -1,8 +1,8 @@
 function pictureUploaderFactory($http, $location, Config) {
   return {
     getNewPictureSet(id) {
-      const url = Config.getPictureSetId.replace(':id', id);
-      return $http.put(`${Config.apiBasePath}${url}`);
+      const url = `${Config.apiBasePath}${Config.getPictureSetId}`;
+      return $http.post(url, { computerId: id });
     },
     getLastTenSets(id) {
       const url = Config.lastTenSets.replace(':computerID', id);
