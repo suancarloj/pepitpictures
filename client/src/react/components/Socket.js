@@ -8,16 +8,25 @@ class Socket extends Component {
     this.socket = io.connect(props.host);
   }
   componentDidMount() {
-    if (this.props.subscribeTopic)
-      this.socket.on(this.props.subscribeTopic, this.props.subscribeCallback);
+    const { subscribeTopic } = this.props;
+    if (subscribeTopic) {
+      const topics = Array.isArray(subscribeTopic) ? subscribeTopic : [subscribeTopic];
+      topics.forEach((topic) => {
+        this.socket.on(topic, (data) => {
+          console.log(topic, ':', data);
+          this.props.subscribeCallback(topic, data);
+        });
+      })
+    }
+
   }
 
-  push = (topic, data) => this.socket.emit(topic, data)
+  push = (topic, data) => {
+    console.log(topic, ':', data);
+    this.socket.emit(topic, data);
+  };
 
   render() {
-    if (this.props.subscribeTopic && this.props.subscribeCallback) {
-      return null;
-    }
     return this.props.children({ push: this.push });
   }
 }
@@ -25,7 +34,10 @@ class Socket extends Component {
 Socket.propTypes = {
   children: PropTypes.func,
   host: PropTypes.string.isRequired,
-  subscribeTopic: PropTypes.string,
+  subscribeTopic: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.string),
+    PropTypes.string,
+  ]),
   subscribeCallback: PropTypes.func,
 };
 

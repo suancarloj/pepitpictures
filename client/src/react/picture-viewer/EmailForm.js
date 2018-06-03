@@ -25,36 +25,27 @@ const Button = styled.button`
   margin: 0 0 0 20px;
 `;
 
-class EmailForm extends Component {
-  state = {
-    email: '',
-  };
-
-  handleSubmit = (e) => {
-    e.preventDefault();
-    setPicturesEmail(this.props.pictureSetId, this.state.email)
-      .then(() => this.setState({ email: '' }));
-  };
-
-  render() {
-    return (
-      <Container>
-        <form onSubmit={this.handleSubmit} method="post">
-          <Input
-            autocomplete="off"
-            type="text"
-            name="email"
-            onChange={(e) => this.setState({ email: e.target.value })}
-            value={this.state.value}
-          />
-          <Button className="btn btn-large">Save</Button>
-        </form>
-        {/* {JSON.stringify(this.props)} */}
-      </Container>
-    );
-  }
+function EmailForm(props) {
+  return (
+    <Container>
+      <form onSubmit={props.onSubmit} method="post">
+        <Input
+          autocomplete="off"
+          type="text"
+          name="email"
+          onChange={(e) => props.onEmailChange(e.target.value)}
+          value={props.email}
+        />
+        <Button className="btn btn-large">Save</Button>
+      </form>
+    </Container>
+  );
 }
 
-EmailForm.propTypes = {};
+EmailForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  onEmailChange: PropTypes.func.isRequired,
+  email: PropTypes.string,
+};
 
 export default EmailForm;
