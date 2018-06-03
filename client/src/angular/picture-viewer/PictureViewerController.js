@@ -1,4 +1,4 @@
-function PictureViewerController(PictureViewerFactory, Config, $interval) {
+function PictureViewerController(PictureViewerFactory, Config, $interval, $location) {
   let vm = this;
 
   vm.currentPictureIndex = 0;
@@ -6,6 +6,7 @@ function PictureViewerController(PictureViewerFactory, Config, $interval) {
   vm.showSelected = false;
   vm.pictureBaseUrl = Config.uploadUrl;
   vm.showSelectedPictures = false;
+  vm.computerId = $location.$$absUrl.match(/\d$/)[0];
 
   vm.selectedPictures = [];
 
@@ -150,6 +151,6 @@ function PictureViewerController(PictureViewerFactory, Config, $interval) {
   };
 }
 
-PictureViewerController.$inject = ['PictureViewerFactory', 'Config', '$interval'];
+PictureViewerController.$inject = ['PictureViewerFactory', 'Config', '$interval', '$location'];
 
 export default PictureViewerController;

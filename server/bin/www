@@ -5,9 +5,10 @@
  */
 
 var app = require('../app');
+var appSocket = require('../appSocket');
 var debug = require('debug')('pepitpictures:server');
 var http = require('http');
-
+var sockerIo = require('socket.io');
 /**
  * Get port from environment and store in Express.
  */
@@ -20,7 +21,8 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
-
+var io = sockerIo(server);
+io.on('connection', appSocket);
 /**
  * Listen on provided port, on all network interfaces.
  */

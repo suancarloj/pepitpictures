@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import Config from '../angular/common/ConfigProvider';
+import { setPicturesEmail } from './services/pictures';
+import Socket from './components/Socket';
+import ConfigProvider from '../angular/common/ConfigProvider';
 
 const Container = styled.div`
   display: flex;
@@ -70,15 +72,7 @@ class App extends Component {
 
   handleSubmitEmail = (e) => {
     e.preventDefault();
-    fetch(`${Config.apiBasePath}picture-set/${this.props.pictureSetId}/set-email`, {
-      method: 'put',
-      body: JSON.stringify({ email: this.state.email }),
-      headers: {
-        'content-type': 'application/json',
-      },
-    })
-      .then((res) => res.json())
-      .then((res) => console.log(res))
+    setPicturesEmail(this.props.pictureSetId, this.state.email)
       .then(() => this.setState({ email: '' }));
   };
 
@@ -102,9 +96,16 @@ class App extends Component {
           <SaveButton>Save</SaveButton>
         </Form>
         <ActionContainer>
-          <Button onClick={this.handleShowEmailPopupClick} type="button">
-            Show email
-          </Button>
+          <Socket
+            host={ConfigProvider.apiBasePath + `?room=computer-${this.props.computerId}`}
+            registerId={this.props.computerId}
+          >
+            {({ push }) => (
+              <Button onClick={() => push('show-email-popup', true)} type="button">
+                Show email
+              </Button>
+            )}
+          </Socket>
           <Button onClick={createNewPictureSet} type="button" style={{ padding: '0 18px' }}>
             Close
           </Button>

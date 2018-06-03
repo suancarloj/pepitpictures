@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 
 function ReactDirective(Component, targetId, scp) {
   return (timer) => ({
-    template: `<div id="${targetId}{{computerId}}"></div>`,
+    template: `<div id="${targetId}{{computerId}}" class="react-directive-root"></div>`,
     scope: scp,
     link: function link(scope) {
       var fn = () => {
