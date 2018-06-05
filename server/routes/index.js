@@ -50,7 +50,7 @@ router
       res.json({ status: "success", data: set})
     });
   })
-  .put('/picture-set/:pictureSetId/publish', (req, res, next) => {
+  .put('/pictures/:pictureSetId/publish', (req, res, next) => {
 
   })
   .post('/pictures', (req, res, next) => {
@@ -59,20 +59,20 @@ router
     }
   
     PictureSet.create({ computerId: req.body.computerId })
-      .then((set) => res.json({ status: "success", data: set}))
+      .then((set) => res.json({ status: "success", data: set }))
       .catch((err) => {
         if (err) {
           return next(new Error('Erreur lors de la sauvegarde d’un set dans la collection.'));
         }
       });
   })
-  .get('/picture-set/:computerID/all', (req, res, next) => {
-    if (!req.params.computerID) {
+  .get('/picture-set/:computerId/all', (req, res, next) => {
+    if (!req.params.computerId) {
       return next(new Error('Erreur lors de la récupération des images, paramètre manquant dans l’url (computer-id)'));
     }
   
     var query = PictureSet
-      .find({ computerId: req.params.computerID, 'pictures.0': { $exists: true } })
+      .find({ computerId: req.params.computerId, 'pictures.0': { $exists: true } })
       .sort({ createdAt : -1})
       .limit(10)
       .exec((err, set) => {
@@ -102,7 +102,7 @@ router
     if (!req.params.computerId) {
       return next(new Error('Erreur lors de la récupération des images, paramètre manquant dans l’url (computer-id)'));
     }
-  
+
     var query = PictureSet
       .find({ computerId: req.params.computerId })
       .sort({ createdAt : -1}).limit(1)
@@ -110,6 +110,7 @@ router
       if (err) {
         return next(err);
       }
+
       return res.json({ status: "success", data: set[0]});
     });
   })
