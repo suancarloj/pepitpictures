@@ -4,7 +4,7 @@ function PictureViewerController(PictureViewerFactory, Config, $interval, $locat
   vm.currentPictureIndex = 0;
   vm.staredCount = 0;
   vm.showSelected = false;
-  vm.pictureBaseUrl = Config.uploadUrl;
+  vm.pictureBaseUrl = Config.apiBasePath + Config.uploadUrl;
   vm.showSelectedPictures = false;
   vm.computerId = $location.$$absUrl.match(/\d$/)[0];
 
@@ -16,12 +16,12 @@ function PictureViewerController(PictureViewerFactory, Config, $interval, $locat
   }
 
   function updatePictures() {
-    PictureViewerFactory.getAllPictures().then((response) => {
+    PictureViewerFactory.getAllPictures().then((response) => {
       let oldId = vm.set ? vm.set._id : -1;
       const { data } = response.data;
       vm.set = data;
 
-      if (data._id && (oldId !== data._id) && vm.set.pictures.length > 0) {
+      if (data._id && (oldId !== data._id) && vm.set.pictures.length > 0) {
         vm.currentPictureIndex = 0;
       }
 
