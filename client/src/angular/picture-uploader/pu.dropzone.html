@@ -1,0 +1,33 @@
+<div class="card">
+  <div class="card-image waves-effect waves-block waves-light">
+    <form class="dropzone dz-container" id="computer1"></form>
+  </div>
+  <div class="card-content">
+    <data-react-directive
+      data-computer-id="{{ computerID }}"
+      data-picture-set-id="{{ pu.currentPictureSet._id }}"
+      data-create-new-picture-set="pu.createNewPictureSet(computerID)"
+    ></data-react-directive>
+  </div>
+  <div class="card-reveal">
+    <span class="card-title grey-text text-darken-4">PC {{ ::computerID }}
+      <i class="mdi-navigation-close right"></i>
+    </span>
+    <ul class="collection">
+      <li class="collection-item" data-ng-repeat="set in pu.sets" data-ng-if="set.pictures.length > 0">
+        <div>
+          {{ pu.currentPictureSet.createdAt | date: 'HH:mm dd-MM-yyyy' }} ( {{ count =(set | countPictures) }} / {{ set.pictures.length
+          }} )
+
+          <a href="{{ 'picture-set/download/' + set._id }}" download data-ng-show="count > 0 && count <= 3" data-ng-click="" class="secondary-content">
+            <i class="mdi-file-file-download"></i>
+          </a>
+          <a href="" data-ng-show="count > 3 || count === 0" data-ng-click="pu.pushToRasp(set._id)" class="secondary-content">
+            <i class="mdi-content-send"></i>
+          </a>
+
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
