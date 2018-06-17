@@ -5,11 +5,15 @@ function pictureUploaderFactory($http, $location, Config) {
       return $http.post(url, { computerId: `computer-${id}` });
     },
     getLastTenSets(id) {
-      const url = Config.lastTenSets.replace(':computerID', id);
+      const url = Config.lastTenSets.replace(':computerId', id);
       return $http.get(`${Config.apiBasePath}${url}`);
     },
-    createShFile(setID) {
-      const url = Config.createShFile.replace(':setID', setID);
+    createShFile(setId) {
+      const url = Config.createShFile.replace(':setId', setId);
+      return $http.put(`${Config.apiBasePath}${url}`);
+    },
+    publish(setId) {
+      const url = Config.publish.replace(':setId', setId);
       return $http.put(`${Config.apiBasePath}${url}`);
     },
   };

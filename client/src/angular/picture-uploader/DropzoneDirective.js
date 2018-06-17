@@ -24,7 +24,7 @@ function DropzoneDirective(Config) {
           init() {
             this.on('processing', () => {
               const url = Config.action
-                .replace(':computerID', scope.computerID)
+                .replace(':computerId', scope.computerID)
                 .replace(':set', scope.pu.currentPictureSet._id);
               this.options.url = Config.apiBasePath + url;
             });

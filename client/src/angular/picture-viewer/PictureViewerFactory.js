@@ -15,7 +15,7 @@ function PictureViewerFactory($http, $location, Config) {
       const url =
         Config.apiBasePath +
         Config.isNewSetAvailable
-          .replace(':computerID', data.computerId)
+          .replace(':computerId', data.computerId)
           .replace(':createdAt', data.createdAt);
       return $http.get(url);
     },
