@@ -1,0 +1,14 @@
+module.exports = {
+  aws: {
+    accessKeyId: '<your key id here>',
+    secretAccessKey: '<your access key here>',
+    region: 'eu-west-1',
+  },
+  env: 'production',
+  email: {
+    credentials: {
+      user: '<your email here>',
+      pass: '<your password here>',
+    },
+  },
+};
