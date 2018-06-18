@@ -10,7 +10,7 @@ class App extends Component {
     this.state = {
       error: null,
       id,
-      json: null
+      pictures: null
     };
   }
 
@@ -20,10 +20,20 @@ class App extends Component {
       return ;
     }
 
-    fetch(`https://i.pepitpictures.com/img/${this.state.id}/collection.json`)
+    const basePath = `https://i.pepitpictures.com/img/${this.state.id}`;
+
+    fetch(`${basePath}/collection.json`)
       .then(res => res.json())
-      .then(res => {
-        console.log(res);
+      .then((json = {}) => {
+        const pictures = json.pictures.map((picture, idx) => {
+          return {
+            src: `${basePath}/pepitpicture-${idx}.jpg`,
+            thumbnail : `${basePath}/pepitpicture-${idx}-tbn.jpg`,
+            thumbnailHeight: picture.thumbnailHeight,
+            thumbnailWidth: picture.thumbnailWidth,
+          }
+        });
+        this.setState({ pictures });
       })
       .catch(err => {
         this.setState({ error: 'error-fetching-collection' });
@@ -33,9 +43,11 @@ class App extends Component {
   render() {
     return (
       <Layout>
-        {/* <ImageViewer
-
-        /> */}
+        {this.state.pictures && (
+          <ImageViewer
+            images={this.state.pictures}
+          />
+        )}
       </Layout>
     );
   }

@@ -14,8 +14,8 @@ ImageViewer.propTypes = {
   images: PropTypes.arrayOf(PropTypes.shape({
     src: PropTypes.string.isRequired,
     thumbnail: PropTypes.string.isRequired,
-    thumbnailWidth: PropTypes.number,
-    thumbnailHeight: PropTypes.number,
+    thumbnailWidth: PropTypes.number.isRequired,
+    thumbnailHeight: PropTypes.number.isRequired,
     isSelected: PropTypes.bool,
   })).isRequired,
 };
