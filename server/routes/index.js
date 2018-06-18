@@ -66,30 +66,35 @@ router.put('/pictures/:pictureSetId/set-email', (req, res, next) => {
 
 router.put('/pictures/:pictureSetId/publish', (req, res, next) => {
   const { pictureSetId } = req.params;
-  PictureSet.findOne({ _id: new ObjectId(pictureSetId) }).lean().then((pictureSet) => {
-    const staredPictures = pictureSet.pictures.filter(p => p.stared);
-    const pictures = staredPictures.length < 3 ? staredPictures : pictureSet.pictures;
-    const jobData = {
-      title: `upload pictures (${staredPictures.length}) for client: ${pictureSet.email}`,
-      pictureSetId,
-      pictures,
-      email: pictureSet.email,
-    };
+  PictureSet.findOne({ _id: new ObjectId(pictureSetId) })
+    .lean()
+    .then((pictureSet) => {
+      const staredPictures = pictureSet.pictures.filter((p) => p.stared);
+      const pictures =
+        staredPictures.length > 0 && staredPictures.length < 3
+          ? staredPictures
+          : pictureSet.pictures;
+      const jobData = {
+        title: `upload pictures (${pictures.length}) for client: ${pictureSet.email}`,
+        pictureSetId,
+        pictures,
+        email: pictureSet.email,
+      };
 
-    const job = queue
-      .create(jobTypes.uploadPictures, jobData)
-      .priority('normal')
-      .attempts(5)
-      .backoff({ type: 'exponential' })
-      .save((err) => {
-        if (err) {
-          console.log('error creating job', job.id, err);
-          res.status(500).json({ status: 'error', errors: err });
-        }
+      const job = queue
+        .create(jobTypes.uploadPictures, jobData)
+        .priority('normal')
+        .attempts(5)
+        .backoff({ type: 'exponential' })
+        .save((err) => {
+          if (err) {
+            console.log('error creating job', job.id, err);
+            res.status(500).json({ status: 'error', errors: err });
+          }
 
-        res.json({ status: 'success' });
-      });
-  });
+          res.json({ status: 'success' });
+        });
+    });
 });
 
 router.post('/pictures', (req, res, next) => {

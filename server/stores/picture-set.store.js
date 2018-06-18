@@ -5,32 +5,44 @@ var db = store.getDB('main');
 var PictureSchema = new mongoose.Schema({
   originalName: {
     type: String,
-    required: true
+    required: true,
   },
   name: {
     type: String,
-    required: true
+    required: true,
+  },
+  thumbnail: {
+    type: String,
+    required: true,
+  },
+  thumbnailHeight: {
+    type: Number,
+    required: true,
+  },
+  thumbnailWidth: {
+    type: Number,
+    required: true,
   },
   stared: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 });
 
 var PictureSetSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
   computerId: {
     type: String,
-    required: true
+    required: true,
   },
   email: {
     type: String,
-    required: false
+    required: false,
   },
-  pictures: [PictureSchema]
+  pictures: [PictureSchema],
 });
 
 module.exports = db.model('PictureSet', PictureSetSchema);

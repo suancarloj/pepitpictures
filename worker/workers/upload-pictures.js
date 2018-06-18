@@ -16,6 +16,16 @@ function uploadPicture(pictureSetId, picture, idx) {
   return storages.PicturesStorage.uploadStream(awsKey, stream);
 }
 
+function uploadThumbnail(pictureSetId, picture, idx) {
+  const thumnailPath = path.resolve(__dirname, '../../server/public/uploads', picture.thumbnail);
+  const awsKey = `img/${pictureSetId}/pepitpicture-${idx}-tbn.jpg`;
+
+  debug(`uploading thumbnail ${picture.thumbnail}: ${thumnailPath} - ${awsKey}`);
+
+  const stream = fs.createReadStream(thumnailPath);
+  return storages.PicturesStorage.uploadStream(awsKey, stream);
+}
+
 function uploadJson(picturesDoc) {
   const { pictureSetId, pictures } = picturesDoc;
   debug(`uploading json for ${pictureSetId} with ${pictures.length} pictures`);
@@ -42,13 +52,14 @@ function sendMail(to, pictureSetId) {
 
 module.exports = function uploadPictures(job, done) {
   const { pictures, pictureSetId, email } = job.data;
-  const len = 1 || pictures.length;
+  const len = pictures.length;
 
   function next(i) {
     const picture = pictures[i]; // pretend we did a query on this slide id ;)
     job.log(`uploading ${picture.name} picture into ${pictureSetId}`);
     debug(`uploading picture ${i + 1} of ${len} from ${pictureSetId}`);
     uploadPicture(pictureSetId, picture, i)
+      .then(() => uploadThumbnail(pictureSetId, picture, i))
       .then(() => {
         job.progress(i, len, { nextPicture: i == len ? 'done' : picture.name });
         if (i <= len - 2) {
