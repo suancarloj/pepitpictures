@@ -52,14 +52,7 @@ PicturesStorage.prototype.downloadBase64 = function downloadBase64(key) {
 PicturesStorage.prototype.uploadStream = function uploadStream(key, stream) {
   validateS3Init();
 
-  return s3ProxyInstance.objectExists(key)
-    .then((exists) => {
-      if (exists) {
-        throw new errors.ValidationError(`Assert ${PicturesStorage} already exist on storage`);
-      }
-
-      return s3ProxyInstance.putObject(key, stream);
-    });
+  return s3ProxyInstance.putObject(key, stream);
 };
 
 module.exports = new PicturesStorage();
