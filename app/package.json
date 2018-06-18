@@ -11,9 +11,10 @@
     "styled-components": "~3.3.2"
   },
   "scripts": {
-    "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "deploy": "npm run build && aws s3 sync ./build s3://i.pepitpictures.com --cache-control public,max-age=0 --exclude '*.map' --profile pepit",
+    "eject": "react-scripts eject",
+    "start": "react-scripts start",
+    "test": "react-scripts test --env=jsdom"
   }
 }
