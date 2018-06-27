@@ -43,6 +43,8 @@ var PictureSetSchema = new mongoose.Schema({
     required: false,
   },
   pictures: [PictureSchema],
+}, {
+  timestamps: true,
 });
 
 module.exports = db.model('PictureSet', PictureSetSchema);
