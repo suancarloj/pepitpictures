@@ -8,8 +8,18 @@ module.exports = [
     exec_mode: 'cluster',
     instances: 1,
     merge_logs: true,
-    log_file: `logs/pm2-app-api.log`,
-    error_file: `logs/pm2-app-api-err.log`,
+    log_file: `logs/pm2-server.log`,
+    error_file: `logs/pm2-server-err.log`,
+    source_map_support: true,
+  },
+  {
+    name: 'worker',
+    script: 'worker/index.js',
+    exec_mode: 'cluster',
+    instances: 1,
+    merge_logs: true,
+    log_file: `logs/pm2-worker.log`,
+    error_file: `logs/pm2-worker-err.log`,
     source_map_support: true,
   }
 ];
