@@ -1,3 +1,7 @@
 module.exports = {
-  mongo: 'mongodb://localhost:27017/pepitpictures',
+  mongo: {
+    "main": {
+      "uri": "mongodb://127.0.0.1/pepitpictures"
+    }
+  },
 };
