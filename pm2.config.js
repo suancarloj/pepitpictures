@@ -7,7 +7,7 @@ module.exports = [
     env: {
       PROCESS_NAME: 'server',
       NODE_CONFIG_DIR: path.resolve(__dirname, 'server/config'),
-      PORT: 2222,
+      PORT: 9000,
     },
     exec_mode: 'cluster',
     instances: 1,
