@@ -4,8 +4,26 @@ const PictureSet = require('../stores/picture-set.store');
 const debug = require('debug')('api:upload');
 const path = require('path');
 const sharp = require('sharp');
+const multer = require('multer');
+const crypto = require('crypto');
 
-router.post('/:computerID', (req, res, next) => {
+function getFilename (req, file, cb) {
+  crypto.pseudoRandomBytes(16, function (err, raw) {
+    cb(err, err ? undefined : raw.toString('hex') + '.jpg')
+  })
+}
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.resolve(__dirname, '../public/uploads/'))
+  },
+  filename: getFilename,
+});
+
+const upload = multer({
+  storage,
+});
+router.post('/:computerID', upload.single('img'), (req, res, next) => {
   if (!req.params.computerID) {
     return next(new Error('Erreur dans l’url, il faut un identifiant pour le pc.'));
   }
@@ -14,10 +32,10 @@ router.post('/:computerID', (req, res, next) => {
     return next(new Error('Erreur dans l’url, identifiant du set manquant'));
   }
 
-  debug(`img destination path ${req.files.img.path}`);
-  const thumbnailName = `tbn_${req.files.img.name.toLowerCase()}`;
+  debug(`img destination path ${req.file.path}`);
+  const thumbnailName = `tbn_${req.file.filename.toLowerCase()}`;
   const thumbnailPath = path.resolve(__dirname, '../public/uploads', thumbnailName);
-  sharp(req.files.img.path)
+  sharp(req.file.path)
     .resize(320)
     .toFile(thumbnailPath)
     .then((info) => {
@@ -25,8 +43,8 @@ router.post('/:computerID', (req, res, next) => {
       const update = {
         $addToSet: {
           pictures: {
-            originalName: req.files.img.originalname,
-            name: req.files.img.name,
+            originalName: req.file.originalname,
+            name: req.file.filename,
             thumbnail: thumbnailName,
             thumbnailHeight: info.height,
             thumbnailWidth: info.width,
