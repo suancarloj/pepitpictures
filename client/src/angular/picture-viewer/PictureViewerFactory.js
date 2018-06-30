@@ -2,7 +2,7 @@ function PictureViewerFactory($http, $location, Config) {
   const set = [];
   return {
     getAllPictures() {
-      const url = Config.apiBasePath + Config.pvUrl + $location.$$absUrl.match(/\d$/)[0];
+      const url = Config.apiBasePath + Config.pvUrl + $location.$$absUrl.match(/\d/g).pop();
       return $http.get(url);
     },
     starPicture(data) {
