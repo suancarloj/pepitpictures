@@ -39,7 +39,7 @@ class EmailForm extends Component {
             type="text"
             name="email"
             onChange={(e) => this.props.onEmailChange(e.target.value)}
-            ref={(input) => { this.emailInput = input; }}
+            innerRef={(input) => { this.emailInput = input; }}
             value={this.props.email}
           />
           <Button className="btn btn-large">Save</Button>
