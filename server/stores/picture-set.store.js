@@ -1,8 +1,6 @@
-var mongoose = require('mongoose');
-var store = require('./mongoose_store');
-var db = store.getDB('main');
+const mongoose = require('mongoose');
 
-var PictureSchema = new mongoose.Schema({
+const PictureSchema = new mongoose.Schema({
   originalName: {
     type: String,
     required: true,
@@ -29,7 +27,7 @@ var PictureSchema = new mongoose.Schema({
   },
 });
 
-var PictureSetSchema = new mongoose.Schema({
+const PictureSetSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now,
@@ -47,4 +45,4 @@ var PictureSetSchema = new mongoose.Schema({
   timestamps: true,
 });
 
-module.exports = db.model('PictureSet', PictureSetSchema);
+module.exports = mongoose.model('PictureSet', PictureSetSchema);

@@ -4,6 +4,7 @@ module.exports = [
   {
     name: 'client',
     script: 'client/src/server/server.js',
+    instance_var: 'INSTANCE_ID',
     env: {
       PROCESS_NAME: 'client',
       NODE_CONFIG_DIR: path.resolve(__dirname, 'client/config'),
@@ -18,6 +19,7 @@ module.exports = [
   {
     name: 'server',
     script: 'server/bin/www.js',
+    instance_var: 'INSTANCE_ID',
     env: {
       PROCESS_NAME: 'server',
       NODE_CONFIG_DIR: path.resolve(__dirname, 'server/config'),
@@ -33,6 +35,7 @@ module.exports = [
   {
     name: 'worker',
     script: 'worker/index.js',
+    instance_var: 'INSTANCE_ID',
     env: {
       PROCESS_NAME: 'worker',
       NODE_CONFIG_DIR: path.resolve(__dirname, 'worker/config'),
