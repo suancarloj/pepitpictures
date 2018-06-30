@@ -24,8 +24,18 @@ function PictureUploaderController($scope, pufactory) {
     });
   };
 
-  vm.pushToRasp = (setID) => {
-    pufactory.createShFile(setID).then((response) => {
+  vm.pushToRasp = (setId) => {
+    pufactory.createShFile(setId).then((response) => {
+      console.log(response.data.data);
+    }).catch((err) => {
+      if (err) {
+        console.log(err);
+      }
+    });
+  };
+
+  vm.publish = (setId) => {
+    pufactory.publish(setId).then((response) => {
       console.log(response.data.data);
     }).catch((err) => {
       if (err) {

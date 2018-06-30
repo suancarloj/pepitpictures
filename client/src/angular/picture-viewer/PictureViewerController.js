@@ -6,7 +6,7 @@ function PictureViewerController(PictureViewerFactory, Config, $interval, $locat
   vm.showSelected = false;
   vm.pictureBaseUrl = Config.apiBasePath + Config.uploadUrl;
   vm.showSelectedPictures = false;
-  vm.computerId = $location.$$absUrl.match(/\d$/)[0];
+  vm.computerId = $location.$$absUrl.match(/\d/g).pop();
 
   vm.selectedPictures = [];
 

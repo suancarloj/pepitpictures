@@ -25,21 +25,28 @@ const Button = styled.button`
   margin: 0 0 0 20px;
 `;
 
-function EmailForm(props) {
-  return (
-    <Container>
-      <form onSubmit={props.onSubmit} method="post">
-        <Input
-          autocomplete="off"
-          type="text"
-          name="email"
-          onChange={(e) => props.onEmailChange(e.target.value)}
-          value={props.email}
-        />
-        <Button className="btn btn-large">Save</Button>
-      </form>
-    </Container>
-  );
+class EmailForm extends Component {
+  componentDidMount() {
+    this.emailInput.focus();
+  }
+
+  render() {
+    return (
+      <Container>
+        <form onSubmit={this.props.onSubmit} method="post">
+          <Input
+            autocomplete="off"
+            type="text"
+            name="email"
+            onChange={(e) => this.props.onEmailChange(e.target.value)}
+            innerRef={(input) => { this.emailInput = input; }}
+            value={this.props.email}
+          />
+          <Button className="btn btn-large">Save</Button>
+        </form>
+      </Container>
+    );
+  }
 }
 
 EmailForm.propTypes = {

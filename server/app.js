@@ -1,24 +1,23 @@
-var express = require('express');
-var path = require('path');
-var logger = require('morgan');
-var multer = require('multer');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var cors = require('cors');
+const express = require('express');
+const path = require('path');
+const logger = require('morgan');
+const multer = require('multer');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 
-var routes = require('./routes/index');
-var upload = require('./routes/upload');
+const routes = require('./routes/index');
+const upload = require('./routes/upload');
 
-var app = express();
+require('./infrastructure/db/mongo');
+
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
-app.use(multer({
-  dest: './public/uploads/'
-}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -41,6 +40,7 @@ app.use(function(req, res, next) {
 // will print stacktrace
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
+    console.log('ERROR:', err)
     res.status(err.status || 500);
     res.render('error', {
       message: err.message,
