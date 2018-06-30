@@ -22,7 +22,7 @@
           <a href="{{ 'pictures/' + set._id + '/download'  }}" download data-ng-show="count > 0 && count <= 3" data-ng-click="" class="secondary-content">
             <i class="mdi-file-file-download"></i>
           </a>
-          <a href="" data-ng-show="count > 3 || count === 0" data-ng-click="pu.publish(set._id)" class="secondary-content">
+          <a href="" data-ng-click="pu.publish(set._id)" class="secondary-content">
             <i class="mdi-content-send"></i>
           </a>
 

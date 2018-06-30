@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { setPicturesEmail } from './services/pictures';
+import { publishPictures, setPicturesEmail } from './services/pictures';
 import Socket from './components/Socket';
 import ConfigProvider from '../angular/common/ConfigProvider';
 
@@ -44,7 +44,11 @@ const SaveButton = Button.extend`
   }
   &:focus {
     background-color: rgba(3, 155, 229, 0.1);
-    transition: all 0.2s
+    transition: all 0.2s;
+  }
+  &:disabled {
+    color: #ccc;
+    opacity: 60%;
   }
 `;
 
@@ -53,6 +57,14 @@ const ActionContainer = styled.div`
   justify-content: space-between;
 
   width: 100%;
+`;
+
+const EmailContainer = styled.div`
+  height: 61px;
+  line-height: 61px;
+  button {
+    margin-left: 16px;
+  }
 `;
 
 class App extends Component {
@@ -64,21 +76,32 @@ class App extends Component {
 
   state = {
     email: '',
+    emailSaved: false,
+    published: false,
+    publishing: false,
+    showEmailForm: false,
   };
 
-  handleSubmitEmail = push => (e) => {
+  handleSubmitEmail = (push) => (e) => {
     e.preventDefault();
-    setPicturesEmail(this.props.pictureSetId, this.state.email)
-      .then(() => {
-        push('show-email-popup', false);
-      });
+    setPicturesEmail(this.props.pictureSetId, this.state.email).then(() => {
+      this.setState({ showEmailForm: false, emailSaved: true });
+      push('show-email-popup', false);
+    });
   };
 
-  handleCloseSet = push => () => {
+  handleCloseSet = (push) => () => {
     this.props.createNewPictureSet();
     push('show-email-popup', false);
     this.setState({ email: '' });
-  }
+  };
+
+  handlePublishPictures = () => {
+    this.setState({ publishing: true });
+    publishPictures(this.props.pictureSetId).then(() => {
+      this.setState({ published: true, publishing: false });
+    });
+  };
 
   render() {
     const { computerId, pictureSetId } = this.props;
@@ -97,24 +120,45 @@ class App extends Component {
         >
           {({ push }) => (
             <Fragment>
-              <Form method="post" onSubmit={this.handleSubmitEmail(push)}>
-                <input
-                  onChange={(e) => {
-                    push('live-email-change', e.target.value);
-                    this.setState({ email: e.target.value });
-                  }}
-                  name="email"
-                  type="email"
-                  value={this.state.email}
-                  required
-                />
-                <SaveButton>Save</SaveButton>
-              </Form>
+              {this.state.showEmailForm ? (
+                <Form method="post" onSubmit={this.handleSubmitEmail(push)}>
+                  <input
+                    onChange={(e) => {
+                      push('live-email-change', e.target.value);
+                      this.setState({ email: e.target.value, emailSaved: false });
+                    }}
+                    name="email"
+                    type="email"
+                    value={this.state.email}
+                    required
+                  />
+                  <SaveButton disabled={this.state.emailSaved}>Save</SaveButton>
+                </Form>
+              ) : (
+                <EmailContainer>
+                  {this.state.email}
+                  {this.state.emailSaved && (
+                    <Button onClick={this.handlePublishPictures} type="button">
+                      Send email
+                    </Button>
+                  )}
+                </EmailContainer>
+              )}
               <ActionContainer>
-                <Button onClick={() => push('show-email-popup', true)} type="button">
-                  Show email
+                <Button
+                  onClick={() => {
+                    this.setState({ showEmailForm: true });
+                    push('show-email-popup', true);
+                  }}
+                  type="button"
+                >
+                  Display on screen {this.props.computerId}
                 </Button>
-                <Button onClick={this.handleCloseSet(push)} type="button" style={{ padding: '0 18px' }}>
+                <Button
+                  onClick={this.handleCloseSet(push)}
+                  type="button"
+                  style={{ padding: '0 18px' }}
+                >
                   Close
                 </Button>
               </ActionContainer>
