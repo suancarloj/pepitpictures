@@ -13,7 +13,7 @@ const Container = styled.div`
 
 const Form = styled.form`
   display: flex;
-  padding: 0 8px;
+  padding: 0 8px 0 0;
 `;
 
 const Button = styled.button`
@@ -49,19 +49,6 @@ const Button = styled.button`
   }
 `;
 
-const SaveButton = Button.extend`
-  padding-left: 20px;
-  padding-right: 20px;
-  &:focus {
-    background-color: rgba(3, 155, 229, 0.1);
-    transition: all 0.2s;
-  }
-  &:disabled {
-    color: #ccc;
-    opacity: 60%;
-  }
-`;
-
 const ActionContainer = styled.div`
   box-sizing: border-box;
   padding: 0 8px;
@@ -69,13 +56,6 @@ const ActionContainer = styled.div`
   div {
     display: flex;
     justify-content: flex-start;
-  }
-`;
-
-const EmailContainer = styled.div`
-  padding: 0 8px;
-  button {
-    margin-left: 16px;
   }
 `;
 
@@ -100,19 +80,13 @@ const EmailInput = styled.input`
   border-radius: 3px;
   border: 1px solid rgba(30, 179, 188, 0.7);
   height: 25px;
-  margin-right: 10px;
   margin-top: 10px;
+  width: 100%;
   &::placeholder {
     opacity: 0.5;
   }
 `;
 
-const ReadOnlyEmailContainer = styled.span`
-  color: rgba(0, 0, 0, 0.5);
-  font-family: Roboto, sans-serif;
-  font-size: 13px;
-  margin-right: 10px;
-`;
 
 class ScreenHandler extends Component {
   static propTypes = {
@@ -150,7 +124,9 @@ class ScreenHandler extends Component {
   handlePublishPictures = () => {
     this.setState({ publishing: true });
     publishPictures(this.props.pictureSetId).then(() => {
-      this.setState({ published: true, publishing: false });
+      setTimeout(() => {
+        this.setState({ published: true, publishing: false });
+      }, 2000);
     });
   };
 
@@ -174,7 +150,7 @@ class ScreenHandler extends Component {
               <div>
                 <Button
                   onClick={() => {
-                    this.setState({ showEmailToggle: !this.state.showEmailToggle })
+                    this.setState({ showEmailToggle: !this.state.showEmailToggle });
                     push('show-email-popup', !this.state.showEmailToggle);
                   }}
                   type="button"
@@ -182,38 +158,37 @@ class ScreenHandler extends Component {
                   {this.state.showEmailToggle ? 'Hide email' : 'Show email'}
                 </Button>
                 <Button
-                  onClick={this.handleCloseSet(push)}
+                  disabled={!this.state.emailSaved || this.state.publishing}
+                  onClick={this.handlePublishPictures}
                   type="button"
-                  style={{ padding: '0 18px' }}
                 >
-                  Close
+                  {this.state.publishing ? 'Email on the way...' : 'Send email'}
                 </Button>
               </div>
 
               <div>
+                <Form method="post">
+                  <EmailInput
+                    onChange={(e) => {
+                      push('live-email-change', e.target.value);
+                      this.setState({ email: e.target.value, emailSaved: false });
+                      this.handleSubmitEmail(push, e.target.value);
+                    }}
+                    name="email"
+                    placeholder="mail@example.com"
+                    type="email"
+                    value={this.state.email}
+                  />
+                </Form>
                 <Button
-                  disabled={!this.state.emailSaved}
-                  onClick={this.handlePublishPictures}
+                  onClick={this.handleCloseSet(push)}
                   type="button"
+                  style={{ paddingLeft: '15px', paddingRight: '15px' }}
                 >
-                  Send email
+                  Close
                 </Button>
               </div>
             </ActionContainer>
-
-            <Form method="post">
-              <EmailInput
-                onChange={(e) => {
-                  push('live-email-change', e.target.value);
-                  this.setState({ email: e.target.value, emailSaved: false });
-                  this.handleSubmitEmail(push, e.target.value);
-                }}
-                name="email"
-                placeholder="mail@example.com"
-                type="email"
-                value={this.state.email}
-              />
-            </Form>
           </Container>
         )}
       </Socket>
