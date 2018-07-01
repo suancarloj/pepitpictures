@@ -33,7 +33,7 @@ class EmailForm extends Component {
   render() {
     return (
       <Container>
-        <form onSubmit={this.props.onSubmit} method="post">
+        <form method="post">
           <Input
             autocomplete="off"
             type="text"
@@ -42,7 +42,6 @@ class EmailForm extends Component {
             innerRef={(input) => { this.emailInput = input; }}
             value={this.props.email}
           />
-          <Button className="btn btn-large">Save</Button>
         </form>
       </Container>
     );

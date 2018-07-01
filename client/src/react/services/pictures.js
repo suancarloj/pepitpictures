@@ -1,4 +1,5 @@
-import Config from '../../angular/common/ConfigProvider';
+// const basePath = 'http://192.168.0.130:9000';
+const basePath = 'http://localhost:9000';
 
 export function setPicturesEmail(pictureSetId, email) {
   const options = {
@@ -8,7 +9,7 @@ export function setPicturesEmail(pictureSetId, email) {
       'content-type': 'application/json',
     },
   };
-  const path = `${Config.apiBasePath}pictures/${pictureSetId}/set-email`;
+  const path = `${basePath}/pictures/${pictureSetId}/set-email`;
   return fetch(path, options).then(res => res.json());
 }
 
@@ -19,8 +20,41 @@ export function publishPictures(pictureSetId) {
       'content-type': 'application/json',
     },
   };
-  const path = `${Config.apiBasePath}pictures/${pictureSetId}/publish`;
+  const path = `${basePath}/pictures/${pictureSetId}/publish`;
   return fetch(path, options).then(res => res.json());
 }
 
-export default {};
+export function createPictureCollection(computerId) {
+  const options = {
+    method: 'post',
+    body: JSON.stringify({ computerId: `computer-${computerId}` }),
+    headers: {
+      'content-type': 'application/json',
+    },
+  };
+  const path = `${basePath}/pictures`;
+  return fetch(path, options).then(res => res.json());
+}
+
+export function getPicturesForComputer(computerId) {
+  const options = {
+    method: 'post',
+    body: JSON.stringify({ computerId: `computer-${computerId}` }),
+    headers: {
+      'content-type': 'application/json',
+    },
+  };
+  const path = `${basePath}/pictures/computer/computer-${computerId}`;
+  return fetch(path, options).then(res => res.json());
+}
+
+export function uploadPicture(file, computerId, pictureSetId) {
+  const formData = new FormData();
+  formData.set('img', file);
+  const options = {
+    method: 'post',
+    body: formData,
+  };
+  const path = `${basePath}/upload/computer-${computerId}?set=${pictureSetId}`;
+  return fetch(path, options).then(res => res.json());
+}

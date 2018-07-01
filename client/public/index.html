@@ -1,36 +1,105 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="UTF-8">
   <title>Pepit pictures</title>
-  <link href="stylesheets/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link href="stylesheets/dropzone.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link href="stylesheets/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <!-- <link href="stylesheets/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/> -->
+  <link href="stylesheets/dropzone.min.css" type="text/css" rel="stylesheet" media="screen,projection" />
+  <!-- <link href="stylesheets/style.css" type="text/css" rel="stylesheet" media="screen,projection"/> -->
   <base href="/">
+  <style>
+    html,
+    body {
+      padding: 0;
+      margin: 0;
+    }
+
+    #root {
+      background-image: url("/images/logo-color.png");
+      background-repeat: no-repeat;
+      background-position: calc(50% + 25px) 50%;
+      background-size: 80%;
+    }
+
+    .grid-container {
+      background-color: rgba(255, 255, 255, 0.97);
+      display: grid;
+      height: 100vh;
+      grid-template-columns: 50px 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      grid-template-areas: "sidebar computer-1 computer-2" "sidebar computer-3 computer-4";
+    }
+
+    .sidebar {
+      background-color: rgb(30, 179, 188);
+      grid-area: sidebar;
+      text-align: center;
+    }
+
+    .sidebar img {
+      width: 40px;
+      margin: 10px auto 20px;
+    }
+
+    .computer-1 {
+      grid-area: computer-1;
+    }
+
+    .computer-2 {
+      grid-area: computer-2;
+    }
+
+    .computer-3 {
+      grid-area: computer-3;
+    }
+
+    .computer-4 {
+      grid-area: computer-4;
+    }
+    .computer-1,
+    .computer-2,
+    .computer-3,
+    .computer-4 {
+      padding: 4px;
+      overflow: hidden;
+      overflow-y: auto;
+    }
+    .computer-1,
+    .computer-3 {
+      border-right: 1px solid rgba(30, 179, 188, 0.4);
+    }
+    .computer-1,
+    .computer-2 {
+      border-bottom: 1px solid rgba(30, 179, 188, 0.4);
+    }
+    .react-directive-root {
+      height: 100%;
+    }
+
+  </style>
 </head>
+
 <body>
-
-  <data-pp-navbar></data-pp-navbar>
-
-
-  <section class="container">
-    <div class="row">
-      <div class="col s6">
+  <div id="root">
+    <div class="grid-container">
+      <div class="sidebar">
+        <img src="/images/logo.png" alt="logo">
+      </div>
+      <div class="computer-1">
         <data-pp-dropzone data-computer="1"></data-pp-dropzone>
       </div>
-      <div class="col s6">
+      <div class="computer-2">
         <data-pp-dropzone data-computer="2"></data-pp-dropzone>
       </div>
-          </div>
-          <div class="row">
-      <div class="col s6">
+      <div class="computer-3">
         <data-pp-dropzone data-computer="3"></data-pp-dropzone>
       </div>
-      <div class="col s6">
+      <div class="computer-4">
         <data-pp-dropzone data-computer="4"></data-pp-dropzone>
       </div>
     </div>
-  </section>
+  </div>
 
   <script src="javascripts/jquery-2.1.4.min.js"></script>
   <script src="javascripts/materialize.js"></script>
@@ -38,4 +107,5 @@
   <script src="javascripts/dropzone.min.js"></script>
   <script src="_assets/main.js"></script>
 </body>
+
 </html>

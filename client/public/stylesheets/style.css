@@ -49,10 +49,10 @@ body.black {
 }
 
 main {
-	display: block;
-	overflow: hidden;
-	position: relative;
-	text-align: center;
+  display: block;
+  overflow: hidden;
+  position: relative;
+  text-align: center;
 }
 main img {
   bottom: 0;

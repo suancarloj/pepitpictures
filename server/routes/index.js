@@ -71,7 +71,7 @@ router.put('/pictures/:pictureSetId/publish', (req, res, next) => {
     .then((pictureSet) => {
       const staredPictures = pictureSet.pictures.filter((p) => p.stared);
       const pictures =
-        staredPictures.length > 0 && staredPictures.length < 3
+        staredPictures.length > 0 && staredPictures.length <= 3
           ? staredPictures
           : pictureSet.pictures;
       const jobData = {

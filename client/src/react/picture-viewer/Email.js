@@ -1,14 +1,20 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import debounce from 'lodash/debounce';
 import Socket from '../components/Socket';
 import ConfigProvider from '../../angular/common/ConfigProvider';
 import EmailForm from './EmailForm';
-import { setPicturesEmail } from '../services/pictures'
+import { setPicturesEmail } from '../services/pictures';
 
 class Email extends Component {
   static propTypes = {
     computerId: PropTypes.string.isRequired,
     pictureSetId: PropTypes.string.isRequired,
+  };
+
+  constructor() {
+    super();
+    this.handleSubmit = debounce(this.handleSubmit, 300);
   }
 
   state = {
@@ -19,7 +25,7 @@ class Email extends Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (prevState.pictureSetId === nextProps.pictureSetId) {
-      return null
+      return null;
     }
 
     return {
@@ -40,14 +46,10 @@ class Email extends Component {
       default:
         break;
     }
-  }
+  };
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    setPicturesEmail(this.props.pictureSetId, this.state.email)
-      .then(() => {
-        this.setState({ email: '', showEmailForm: false })
-      });
+  handleSubmit = (email) => {
+    setPicturesEmail(this.props.pictureSetId, email);
   };
 
   render() {
@@ -59,17 +61,19 @@ class Email extends Component {
           subscribeCallback={this.handleSubscribe}
           subscribeTopic={['show-email-popup', 'live-email-change']}
         >
-          {({ push }) => this.state.showEmailForm && (
-            <EmailForm
-              email={this.state.email}
-              onEmailChange={(val) => {
-                this.setState({ email: val });
-                push('live-email-change', val);
-              }}
-              onSubmit={this.handleSubmit}
-              pictureSetId={this.state.pictureSetId}
-            />
-          )}
+          {({ push }) =>
+            this.state.showEmailForm && (
+              <EmailForm
+                email={this.state.email}
+                onEmailChange={(email) => {
+                  this.handleSubmit(email);
+                  this.setState({ email });
+                  push('live-email-change', email);
+                }}
+                pictureSetId={this.state.pictureSetId}
+              />
+            )
+          }
         </Socket>
       </Fragment>
     );

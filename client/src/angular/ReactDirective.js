@@ -2,7 +2,7 @@ import angular from 'angular';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-function ReactDirective(Component, targetId, scp) {
+function ReactDirective(Component, targetId, scp, watch = 'pictureSetId') {
   return (timer) => ({
     template: `<div id="${targetId}{{computerId}}" class="react-directive-root"></div>`,
     scope: scp,
@@ -10,14 +10,20 @@ function ReactDirective(Component, targetId, scp) {
       var fn = () => {
         const reactRoot = document.getElementById(`${targetId}${scope.computerId}`);
         scope.$watch(
-          'pictureSetId',
+          watch,
           function(newValue, oldValue) {
             if (angular.isDefined(newValue)) {
+              const nextProps = Object.keys(scp).reduce((acc, prop) => {
+                if (scope[prop]) {
+                  acc[prop] = scope[prop]
+                }
+                return acc;
+              }, {});
               ReactDOM.render(
                 <Component
-                  computerId={scope.computerId}
-                  pictureSetId={newValue}
-                  createNewPictureSet={scope.createNewPictureSet}
+                  {...nextProps}
+                  pictureSetId={Array.isArray(newValue) ? newValue[0] : newValue}
+                  pictureCollection={Array.isArray(newValue) ? newValue[1] : undefined}
                 />,
                 reactRoot
               );
