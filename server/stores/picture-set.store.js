@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate');
 
 const PictureSchema = new mongoose.Schema({
   originalName: {
@@ -44,5 +45,7 @@ const PictureSetSchema = new mongoose.Schema({
 }, {
   timestamps: true,
 });
+
+PictureSetSchema.plugin(mongoosePaginate);
 
 module.exports = mongoose.model('PictureSet', PictureSetSchema);

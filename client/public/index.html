@@ -5,7 +5,6 @@
   <meta charset="UTF-8">
   <title>Pepit pictures</title>
   <!-- <link href="stylesheets/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/> -->
-  <link href="stylesheets/dropzone.min.css" type="text/css" rel="stylesheet" media="screen,projection" />
   <!-- <link href="stylesheets/style.css" type="text/css" rel="stylesheet" media="screen,projection"/> -->
   <base href="/">
   <style>
@@ -63,7 +62,6 @@
     .computer-4 {
       padding: 4px;
       overflow: hidden;
-      overflow-y: auto;
     }
     .computer-1,
     .computer-3 {
@@ -81,30 +79,9 @@
 </head>
 
 <body>
-  <div id="root">
-    <div class="grid-container">
-      <div class="sidebar">
-        <img src="/images/logo.png" alt="logo">
-      </div>
-      <div class="computer-1">
-        <data-pp-dropzone data-computer="1"></data-pp-dropzone>
-      </div>
-      <div class="computer-2">
-        <data-pp-dropzone data-computer="2"></data-pp-dropzone>
-      </div>
-      <div class="computer-3">
-        <data-pp-dropzone data-computer="3"></data-pp-dropzone>
-      </div>
-      <div class="computer-4">
-        <data-pp-dropzone data-computer="4"></data-pp-dropzone>
-      </div>
-    </div>
-  </div>
+  <div id="root"></div>
 
   <script src="javascripts/jquery-2.1.4.min.js"></script>
-  <script src="javascripts/materialize.js"></script>
-  <script src="javascripts/init.js"></script>
-  <script src="javascripts/dropzone.min.js"></script>
   <script src="_assets/main.js"></script>
 </body>
 

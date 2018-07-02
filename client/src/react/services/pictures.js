@@ -1,5 +1,5 @@
 // const basePath = 'http://192.168.0.130:9000';
-const basePath = 'http://localhost:9000';
+export const basePath = 'http://localhost:9000';
 
 export function setPicturesEmail(pictureSetId, email) {
   const options = {
@@ -36,7 +36,18 @@ export function createPictureCollection(computerId) {
   return fetch(path, options).then(res => res.json());
 }
 
-export function getPicturesForComputer(computerId) {
+export function getPicturesForComputer(computerId, limit = 10) {
+  const options = {
+    method: 'get',
+    headers: {
+      'content-type': 'application/json',
+    },
+  };
+  const path = `${basePath}/pictures?computer=computer-${computerId}&limit=${limit}`;
+  return fetch(path, options).then(res => res.json());
+}
+
+export function createNewPictureCollection(computerId) {
   const options = {
     method: 'post',
     body: JSON.stringify({ computerId: `computer-${computerId}` }),
@@ -44,7 +55,7 @@ export function getPicturesForComputer(computerId) {
       'content-type': 'application/json',
     },
   };
-  const path = `${basePath}/pictures/computer/computer-${computerId}`;
+  const path = `${basePath}/pictures`;
   return fetch(path, options).then(res => res.json());
 }
 

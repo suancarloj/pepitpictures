@@ -9,6 +9,7 @@ import ConfigProvider from '../../angular/common/ConfigProvider';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
 `;
 
 const Form = styled.form`
@@ -131,7 +132,7 @@ class ScreenHandler extends Component {
   };
 
   render() {
-    const { computerId, pictureSetId } = this.props;
+    const { computerId, pictureSetId = '' } = this.props;
     const shortSetId = pictureSetId.substr(12);
     return (
       <Socket

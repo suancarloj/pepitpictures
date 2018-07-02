@@ -53,6 +53,10 @@ function sendMail(to, pictureSetId) {
 module.exports = function uploadPictures(job, done) {
   const { pictures, pictureSetId, email } = job.data;
   const len = pictures.length;
+  
+  if (len === 0) {
+    return done();
+  }
 
   function next(i) {
     const picture = pictures[i]; // pretend we did a query on this slide id ;)
@@ -73,6 +77,6 @@ module.exports = function uploadPictures(job, done) {
         if (err) return done(err);
       });
   }
-
+  
   next(0);
 };

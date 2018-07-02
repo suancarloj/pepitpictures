@@ -16,6 +16,13 @@ const overlayStyle = {
 
 const Dropzone = styled(Dz)`
   height: 100%;
+  position: relative;
+`;
+
+const Content = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 `;
 
 class DropzoneContainer extends Component {
@@ -56,14 +63,13 @@ class DropzoneContainer extends Component {
     return (
       <Dropzone
         disableClick
-        style={{ position: 'relative' }}
         accept={accept}
         onDrop={this.onDrop}
         onDragEnter={this.onDragEnter}
         onDragLeave={this.onDragLeave}
       >
         { dropzoneActive && <div style={overlayStyle}>Drop files...</div> }
-        <div>
+        <Content>
           {this.props.children}
           {/* <h1>My awesome app</h1>
           <label htmlFor="mimetypes">Enter mime types you want to accept: </label>
@@ -80,7 +86,7 @@ class DropzoneContainer extends Component {
             }
           </ul> */}
 
-        </div>
+        </Content>
       </Dropzone>
     );
   }

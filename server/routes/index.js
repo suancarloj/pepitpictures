@@ -134,6 +134,35 @@ router.get('/pictures/:computerId/all', (req, res, next) => {
     });
 });
 
+router.get('/pictures', (req, res, next) => {
+  if (!req.query.computer) {
+    return next(
+      new Error(
+        'Erreur lors de la récupération des images, paramètre manquant dans l’url (computer-id)'
+      )
+    );
+  }
+
+  PictureSet.paginate(
+    {
+      computerId: req.query.computer,
+      'pictures.0': { $exists: true },
+    },
+    {
+      sort: { createdAt: -1 },
+      offset: Number(req.query.page) || 1,
+      limit: Number(req.query.limit) || 10
+    }
+  ).then((result) => {
+    
+    return res.json(result);
+  }).catch(err => {
+    if (err) {
+      return next(err);
+    }
+  });
+});
+
 router.get('/pictures/fetch-new', (req, res, next) => {
   var search = {
     computerId: req.query.computerId,
