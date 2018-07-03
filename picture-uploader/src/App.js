@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import DropzoneContainer from './picture-uploader/DropzoneContainer';
+import DropzoneContainer from './pages/picture-uploader/DropzoneContainer';
 import { createNewPictureCollection, uploadPicture } from './services/pictures';
-import ScreenHandler from './picture-uploader/ScreenHandler';
-import PictureList from './picture-uploader/PictureList';
+import ScreenHandler from './pages/picture-uploader/ScreenHandler';
+import PictureList from './pages/picture-uploader/PictureList';
 
 class App extends Component {
   static propTypes = {
@@ -59,8 +59,7 @@ class App extends Component {
   };
 
   render() {
-    const { files } = this.state;
-    const { computerId, pictureCollection, pictureSetId, publish } = this.props;
+    const { computerId } = this.props;
     return (
       <DropzoneContainer onDrop={this.handleDrop}>
         <ScreenHandler

@@ -1,10 +1,9 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import debounce from 'lodash/debounce';
-import { publishPictures, setPicturesEmail } from '../services/pictures';
-import Socket from '../components/Socket';
-import ConfigProvider from '../../angular/common/ConfigProvider';
+import { basePath, publishPictures, setPicturesEmail } from '../../services/pictures';
+import Socket from '../../components/Socket';
 
 const Container = styled.div`
   display: flex;
@@ -102,12 +101,26 @@ class ScreenHandler extends Component {
   }
 
   state = {
+    collectionId: null,
     email: '',
     emailSaved: false,
     published: false,
     publishing: false,
     showEmailToggle: false,
   };
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (prevState.collectionId !== nextProps.pictureSetId) {
+      return {
+        collectionId: nextProps.pictureSetId,
+        email: '',
+        emailSaved: false,
+        published: false,
+        publishing: false,
+        showEmailToggle: false,
+      }
+    }
+  }
 
   handleSubmitEmail = (push, email) => {
     setPicturesEmail(this.props.pictureSetId, email).then(() => {
@@ -122,12 +135,13 @@ class ScreenHandler extends Component {
     this.setState({ email: '' });
   };
 
-  handlePublishPictures = () => {
+  handlePublishPictures = (push) => {
     this.setState({ publishing: true });
     publishPictures(this.props.pictureSetId).then(() => {
       setTimeout(() => {
         this.setState({ published: true, publishing: false });
       }, 2000);
+      this.handleCloseSet(push)();
     });
   };
 
@@ -136,7 +150,7 @@ class ScreenHandler extends Component {
     const shortSetId = pictureSetId.substr(12);
     return (
       <Socket
-        host={ConfigProvider.apiBasePath + `?room=computer-${this.props.computerId}`}
+        host={`${basePath}?room=computer-${this.props.computerId}`}
         subscribeCallback={(_, email) => this.setState({ email, emailSaved: true })}
         subscribeTopic="live-email-change"
         registerId={this.props.computerId}
@@ -160,7 +174,7 @@ class ScreenHandler extends Component {
                 </Button>
                 <Button
                   disabled={!this.state.emailSaved || this.state.publishing}
-                  onClick={this.handlePublishPictures}
+                  onClick={() => this.handlePublishPictures(push)}
                   type="button"
                 >
                   {this.state.publishing ? 'Email on the way...' : 'Send email'}

@@ -6,7 +6,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = function makeWebpackConfig(options) {
   const entry = {
-    main: './src/index.js',
     viewer: './src/index-viewer.js',
   };
 

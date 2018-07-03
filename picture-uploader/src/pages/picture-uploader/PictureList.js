@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import format from 'date-fns/format';
 import styled from 'styled-components';
-import { basePath, getPicturesForComputer, publishPictures } from '../services/pictures';
+import { basePath, getPictures, publishPictures } from '../../services/pictures';
 
 const Container = styled.div`
   overflow-y: auto;
@@ -84,7 +84,7 @@ class PictureList extends Component {
   }
 
   getLastTenPictureSet = () => {
-    getPicturesForComputer(this.props.computerId)
+    getPictures(this.props.computerId)
       .then(pictureCollection => {
         this.setState({ pictureCollection: pictureCollection.docs })
       })

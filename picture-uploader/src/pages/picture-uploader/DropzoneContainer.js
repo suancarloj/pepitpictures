@@ -59,7 +59,8 @@ class DropzoneContainer extends Component {
   }
 
   render() {
-    const { accept, files, dropzoneActive } = this.state;
+    const { accept, dropzoneActive } = this.state;
+
     return (
       <Dropzone
         disableClick

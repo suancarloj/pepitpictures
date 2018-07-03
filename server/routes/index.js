@@ -135,19 +135,16 @@ router.get('/pictures/:computerId/all', (req, res, next) => {
 });
 
 router.get('/pictures', (req, res, next) => {
-  if (!req.query.computer) {
-    return next(
-      new Error(
-        'Erreur lors de la récupération des images, paramètre manquant dans l’url (computer-id)'
-      )
-    );
+  const query = {
+    'pictures.0': { $exists: true },
+  };
+
+  if (req.query.computer) {
+    query.computerId = req.query.computer;
   }
 
   PictureSet.paginate(
-    {
-      computerId: req.query.computer,
-      'pictures.0': { $exists: true },
-    },
+    query,
     {
       sort: { createdAt: -1 },
       offset: Number(req.query.page) || 1,

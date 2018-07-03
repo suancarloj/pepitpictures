@@ -1,7 +1,7 @@
 const debug = require('debug')('worker:send-customer-pictures-email');
 const Validator = require('better-validator');
 const emailTransporter = require('../infrastructure/email');
-
+const emailTemplate = require('./emailTemplate');
 const getText = (id) => `
   Bonjour,
 
@@ -20,15 +20,18 @@ const getText = (id) => `
 
 module.exports = function sendEmail(job, done) {
   const email = job.data.to;
-
   const validator = new Validator();
+
   if (!validator(email).isString().isEmail()) {
     return done(new Error('invalid to address'));
   }
+
   const options = {
     to: email,
-    text: getText(job.data.pictureSetId)
+    text: getText(job.data.pictureSetId),
+    html: emailTemplate(job.data.pictureSetId),
   };
+
   emailTransporter.sendMail(options)
     .then((info) => {
       debug(`email sent: ${info.response}`);
