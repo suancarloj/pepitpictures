@@ -13,7 +13,9 @@ function uploadPicture(pictureSetId, picture, idx) {
   debug(`uploading picture ${picture.name}: ${picturePath} - ${awsKey}`);
 
   const stream = fs.createReadStream(picturePath);
-  return storages.PicturesStorage.uploadStream(awsKey, stream);
+  const ContentType = 'application/octet-stream';
+  const ContentDisposition = `attachment; filename="pepitpicture-${idx}.jpg"`;
+  return storages.PicturesStorage.uploadStream(awsKey, stream, ContentType, ContentDisposition);
 }
 
 function uploadThumbnail(pictureSetId, picture, idx) {

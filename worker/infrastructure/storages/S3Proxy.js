@@ -104,7 +104,7 @@ S3Proxy.prototype.getMetadata = function getMetadata(key) {
   .promise();
 };
 
-S3Proxy.prototype.putObject = function putObject(key, stream, metadata = {}) {
+S3Proxy.prototype.putObject = function putObject(key, stream, ContentType, ContentDisposition, metadata = {}) {
   debug(`Upload object ${key} to ${this.bucket}`);
 
   // We cannot upload non file-stream in S3. The hack is to convert the stream into a buffer and upload it
@@ -115,7 +115,8 @@ S3Proxy.prototype.putObject = function putObject(key, stream, metadata = {}) {
         Key: key,
         Body: Buffer.concat(array),
         Metadata: metadata,
-        ContentType: mime.getType(key),
+        ContentType: ContentType || mime.getType(key),
+        ContentDisposition,
       };
 
       if (this.serverSideEncryption) {

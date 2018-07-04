@@ -120,6 +120,7 @@ class ScreenHandler extends Component {
         showEmailToggle: false,
       }
     }
+    return prevState;
   }
 
   handleSubmitEmail = (push, email) => {

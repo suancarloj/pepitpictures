@@ -49,10 +49,9 @@ PicturesStorage.prototype.downloadBase64 = function downloadBase64(key) {
     .then(array => Buffer.concat(array).toString('base64'));
 };
 
-PicturesStorage.prototype.uploadStream = function uploadStream(key, stream) {
+PicturesStorage.prototype.uploadStream = function uploadStream(key, stream, ContentType, ContentDisposition, metadata) {
   validateS3Init();
-
-  return s3ProxyInstance.putObject(key, stream);
+  return s3ProxyInstance.putObject(key, stream, ContentType, ContentDisposition, metadata);
 };
 
 module.exports = new PicturesStorage();
