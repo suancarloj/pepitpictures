@@ -75,6 +75,7 @@ class App extends Component {
             thumbnail: `${basePath}/pepitpicture-${idx}-tbn.jpg`,
             thumbnailHeight: picture.thumbnailHeight,
             thumbnailWidth: picture.thumbnailWidth,
+            caption: <a href={`${basePath}/pepitpicture-${idx}.jpg`} download style={{ color: "#fff" }}>DOWNLOAD</a>
           };
         });
         this.setState({ pictures });
