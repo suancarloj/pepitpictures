@@ -67,7 +67,7 @@ class App extends Component {
           createNewPictureSet={this.handleCreateNewPictureCollection}
           pictureSetId={this.state.pictureSetId}
         />
-        <PictureList computerId={computerId} pictureSetId={this.props.pictureSetId}/>
+        <PictureList computerId={computerId} pictureSetId={this.state.pictureSetId}/>
       </DropzoneContainer>
     );
   }
