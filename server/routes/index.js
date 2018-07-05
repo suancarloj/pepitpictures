@@ -147,7 +147,7 @@ router.get('/pictures', (req, res, next) => {
     query,
     {
       sort: { createdAt: -1 },
-      offset: Number(req.query.page) || 1,
+      offset: Number(req.query.page) || 0,
       limit: Number(req.query.limit) || 10
     }
   ).then((result) => {
