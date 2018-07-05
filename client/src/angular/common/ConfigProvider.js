@@ -1,5 +1,5 @@
 export default {
-  apiBasePath: 'http://localhost:9000/',
+  apiBasePath: 'http://192.168.0.130:9000/',
   numberOfComputer: 4,
   uploadUrl: 'uploads/',
   pvUrl: 'pictures/computer-',
