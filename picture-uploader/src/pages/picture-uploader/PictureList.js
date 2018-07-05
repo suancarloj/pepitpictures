@@ -95,7 +95,7 @@ class PictureList extends Component {
       <Container>
         <List>
           {this.state.pictureCollection.map((collection, idx) => {
-            const starredCount = collection.pictures.filter((p) => p.starred).length;
+            const starredCount = collection.pictures.filter((p) => p.stared).length;
             const date = format(collection.createdAt, 'HH:mm DD-MM');
             return (
               <li className={idx % 2 === 0 ? 'alternate' : ''} key={idx}>
