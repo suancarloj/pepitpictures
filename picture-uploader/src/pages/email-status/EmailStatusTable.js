@@ -103,7 +103,7 @@ class EmailStatusTable extends Component {
                     {countStared} / {collection.pictures.length}
                   </td>
                   <td>
-                    {!collection.email && (
+                    {collection.email && (
                       <Button
                         disabled={this.state.publishing}
                         onClick={() => this.handlePublishPictures(collection._id)}
