@@ -107,6 +107,7 @@ class PictureList extends Component {
                   <Link
                     href={`${basePath}/pictures/${collection._id}/download`}
                     download
+                    target="_blank"
                   >
                     Download
                   </Link>
