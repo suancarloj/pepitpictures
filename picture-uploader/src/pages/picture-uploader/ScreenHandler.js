@@ -126,7 +126,6 @@ class ScreenHandler extends Component {
   handleSubmitEmail = (push, email) => {
     setPicturesEmail(this.props.pictureSetId, email).then(() => {
       this.setState({ emailSaved: true });
-      push('show-email-popup', false);
     });
   };
 
