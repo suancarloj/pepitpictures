@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import format from 'date-fns/format';
 import { getPictures, publishPictures } from '../../services/pictures';
+import Modal from '../../components/Modal';
 
 const Table = styled.table`
   border-collapse: collapse;
@@ -69,6 +70,10 @@ class EmailStatusTable extends Component {
     });
   };
 
+  handleCloseModal = () => {
+    this.props.history.push('/');
+  }
+
   handlePublishPictures = (collectionId) => {
     this.setState({ publishing: collectionId });
     publishPictures(collectionId).then(() => {
@@ -80,45 +85,45 @@ class EmailStatusTable extends Component {
 
   render() {
     return (
-      <Container>
-        <Table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>TIME</th>
-              <th>EMAIL</th>
-              <th>PICTURES</th>
-              <th>ACTIONS</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.collections.map((collection, idx) => {
-              const countStared = collection.pictures.filter((p) => p.stared).length;
-              return (
-                <tr className={idx % 2 === 0 ? 'alternate' : ''} key={idx}>
-                  <td>{collection._id}</td>
-                  <td>{format(collection.createdAt, 'HH:mm DD-MM')}</td>
-                  <td>{collection.email || '--'}</td>
-                  <td>
-                    {countStared} / {collection.pictures.length}
-                  </td>
-                  <td>
-                    {collection.email && (
-                      <Button
-                        disabled={this.state.publishing}
-                        onClick={() => this.handlePublishPictures(collection._id)}
-                        type="button"
-                      >
-                        {this.state.publishing === collection._id ? 'sending.....' : 'Send email'}
-                      </Button>
-                    )}
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </Table>
-      </Container>
+      <Modal onClickOutside={this.handleCloseModal}>
+        <Container>
+          <Table>
+            <thead>
+              <tr>
+                <th>TIME</th>
+                <th>EMAIL</th>
+                <th>PICTURES</th>
+                <th>ACTIONS</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.collections.map((collection, idx) => {
+                const countStared = collection.pictures.filter((p) => p.stared).length;
+                return (
+                  <tr className={idx % 2 === 0 ? 'alternate' : ''} key={idx} title={collection._id}>
+                    <td>{format(collection.createdAt, 'HH:mm DD-MM')}</td>
+                    <td>{collection.email || '--'}</td>
+                    <td>
+                      {countStared} / {collection.pictures.length}
+                    </td>
+                    <td>
+                      {collection.email && (
+                        <Button
+                          disabled={this.state.publishing}
+                          onClick={() => this.handlePublishPictures(collection._id)}
+                          type="button"
+                        >
+                          {this.state.publishing === collection._id ? 'sending.....' : 'Send email'}
+                        </Button>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+        </Container>
+      </Modal>
     );
   }
 }

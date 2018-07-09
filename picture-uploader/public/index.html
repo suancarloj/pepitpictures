@@ -100,6 +100,18 @@
     .react-directive-root {
       height: 100%;
     }
+
+    #modal-root {
+      z-index: 999;
+    }
+
+    #modal-root.show {
+      bottom: 0;
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
   </style>
   <title>PepitPictures</title>
 </head>
@@ -109,6 +121,7 @@
     You need to enable JavaScript to run this app.
   </noscript>
   <div id="root"></div>
+  <div id="modal-root"></div>
   <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
