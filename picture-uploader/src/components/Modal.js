@@ -85,7 +85,7 @@ function Modal({ children, onClickOutside, style = {}, isHidden = false }) {
           <Close onClick={onClickOutside}>
             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 6 6">
               <path
-                fill="#31CFDA"
+                fill="rgb(30, 179, 188)"
                 d="M3 2.246L.926.172a.533.533 0 1 0-.754.754L2.246 3 .172 5.074a.533.533 0 1 0 .754.754L3 3.754l2.074 2.074a.533.533 0 1 0 .754-.754L3.754 3 5.828.926a.533.533 0 1 0-.754-.754L3 2.246z"
               />
             </svg>

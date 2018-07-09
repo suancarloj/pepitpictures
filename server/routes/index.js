@@ -91,8 +91,13 @@ router.put('/pictures/:pictureSetId/publish', (req, res, next) => {
             console.log('error creating job', job.id, err);
             res.status(500).json({ status: 'error', errors: err });
           }
-
-          res.json({ status: 'success' });
+          const search = {
+            _id: new ObjectId(pictureSetId),
+          };
+          PictureSet.update(search, { $set: { pictureJobId: job.id, emailSent: 'PENDING' }})
+            .then(() => {
+              res.json({ status: 'success' });
+            });
         });
     });
 });

@@ -4,6 +4,8 @@ const uploadPictures = require('./workers/upload-pictures');
 const jobTypes = require('../common/job-types');
 const queue = kue.createQueue();
 const storages = require('./infrastructure/storages');
+require('../server/infrastructure/db/mongo');
+
 storages.PicturesStorage.init();
 
 queue.on('error', function(err) {

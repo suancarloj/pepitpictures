@@ -4,6 +4,8 @@ const queue = kue.createQueue();
 const fs = require('fs');
 const path = require('path');
 const stringToStream = require('string-to-stream');
+const ObjectId = require('mongoose').Types.ObjectId;
+const Pictures = require('../../server/stores/picture-set.store');
 const storages = require('../infrastructure/storages');
 
 function uploadPicture(pictureSetId, picture, idx) {
@@ -49,7 +51,17 @@ function sendMail(to, pictureSetId) {
     .priority('high')
     .attempts(5)
     .backoff({ type: 'exponential' })
-    .save();
+    .save((err) => {
+      const search = {
+        _id: new ObjectId(pictureSetId),
+      };
+      if (err) {
+        Pictures.update(search, { $set: { emailSent: 'ERROR' }});
+        return;
+      }
+      Pictures.update(search, { $set: { emailSent: 'SENT', emailJobId: job.id }}, { new: true })
+        .then(res => console.log('-------RESULT:', res, pictureSetId));
+    });
 }
 
 module.exports = function uploadPictures(job, done) {

@@ -11,12 +11,12 @@ let smtpConfig = {
 
 const smtpTransport = nodemailer.createTransport(smtpConfig, {
   from: '"Pepitpictures.com" info@pepitpictures.com',
-  subject: 'Your jet-ski pictures are waiting for you!',
+  subject: 'Vos photos Pepit!',
 });
 
 const transporter = Promise.promisifyAll(smtpTransport);
 
-transporter.verify(function(error, success) {
+transporter.verify((error, success) => {
   if (error) {
     console.log(error);
   } else {

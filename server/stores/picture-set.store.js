@@ -41,6 +41,20 @@ const PictureSetSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  emailJobId: {
+    type: String,
+    required: false,
+  },
+  emailSent: {
+    type: String,
+    required: false,
+    enum: ['NOT_SENT', 'PENDING', 'SENT', 'ERROR'],
+    default: 'NOT_SENT',
+  },
+  pictureJobId: {
+    type: String,
+    required: false,
+  },
   pictures: [PictureSchema],
 }, {
   timestamps: true,
