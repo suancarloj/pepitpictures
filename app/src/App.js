@@ -1,30 +1,7 @@
 import React, { Component } from 'react';
 import qs from 'qs';
 import Layout from './components/layout/Layout';
-import ImageViewer from './pages/image-viewer/ImageViewer';
-import Promise from 'bluebird';
-import FileSaver from 'file-saver';
-import JSZip from 'jszip';
 import styled from 'styled-components';
-
-const DownloadAllButton = styled.button`
-  background-color: rgb(30, 179, 188);
-  border-radius: 3px;
-  border-style: none;
-  color: #fff;
-  font-size: 16px;
-  height: 48px;
-  padding: 16px 40px;
-  text-transform: uppercase;
-  &:hover {
-    opacity: 1.1;
-  }
-  &:disabled {
-    background-color: rgba(0, 0, 0, 0.05);
-    color: #000;
-    text-transform: none;
-  }
-`;
 
 const Separator = styled.hr`
   border-style: none;
@@ -45,6 +22,18 @@ const ImageViewerContainer = styled.div`
   width: 100%;
 `;
 
+const ImageContainer = styled.div`
+  box-sizing: border-box;
+  padding: 10px;
+  position: relative;
+  text-align: center;
+  svg {
+    left: calc(50% - 15px);
+    position: absolute;
+    top: calc(50% - 15px);
+  }
+`;
+
 class App extends Component {
   constructor() {
     super();
@@ -54,7 +43,7 @@ class App extends Component {
       downloading: false,
       error: null,
       id,
-      pictures: null,
+      pictures: [{}, {}, {}, {}, {}, {}, {}, {}, {}],
     };
   }
 
@@ -75,7 +64,6 @@ class App extends Component {
             thumbnail: `${basePath}/pepitpicture-${idx}-tbn.jpg`,
             thumbnailHeight: picture.thumbnailHeight,
             thumbnailWidth: picture.thumbnailWidth,
-            caption: <a href={`${basePath}/pepitpicture-${idx}.jpg`} download style={{ color: "#fff" }}>DOWNLOAD</a>
           };
         });
         this.setState({ pictures });
@@ -85,58 +73,45 @@ class App extends Component {
       });
   }
 
-  handleSaveAll = () => {
-    this.setState({ downloading: true });
-    const zip = new JSZip();
-    const promises = this.state.pictures.map((picture, idx) => {
-      return fetch(picture.src)
-        .then((response) => {
-          if (response.status === 200 || response.status === 0) {
-            return response.blob();
-          } else {
-            return Promise.reject(new Error(response.statusText));
-          }
-        })
-        .then((blb) => {
-          this.setState({ counter: this.state.counter + 1 });
-          return blb;
-        })
-        .then((obj) => {
-          return zip.file(`pepitpicture-${idx}.jpg`, obj);
-        })
-        .catch((err) => {
-          this.setState({ error: 'error-fetching-image-for-zip' });
-        });
-    });
-
-    Promise.all(promises).then(() => {
-      zip.generateAsync({ type: 'blob' }).then((content) => {
-        FileSaver.saveAs(content, 'pepitpictures-com-marseillan-jet.zip');
-      });
-    });
-  };
-
   render() {
     const pictureCount = (this.state.pictures && this.state.pictures.length) || '';
     return (
       <Layout>
         <ImageViewerContainer>
-          {this.state.pictures && <ImageViewer images={this.state.pictures} />}
+          {this.state.pictures &&
+            this.state.pictures.map((picture, idx) => {
+              return (
+                <ImageContainer>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="30px"
+                    height="30px"
+                    viewBox="0 0 512 512"
+                  >
+                    <path
+                      d="M504 256c0 137-111 248-248 248S8 393 8 256 119 8 256 8s248 111 248 248zM212 140v116h-70.9c-10.7 0-16.1 13-8.5 20.5l114.9 114.3c4.7 4.7 12.2 4.7 16.9 0l114.9-114.3c7.6-7.6 2.2-20.5-8.5-20.5H300V140c0-6.6-5.4-12-12-12h-64c-6.6 0-12 5.4-12 12z"
+                      fill="rgb(30, 179, 188)"
+                    />
+                  </svg>
+                  <a
+                    href={`https://i.pepitpictures.com/img/${
+                      this.state.id
+                    }/pepitpicture-${idx}.jpg`}
+                    download
+                    style={{ color: '#fff' }}
+                  >
+                    <img
+                      src={picture.thumbnail}
+                      alt=""
+                      width={picture.thumbnailWidth + 'px'}
+                      height={picture.thumbnailHeight + 'px'}
+                    />
+                  </a>
+                </ImageContainer>
+              );
+            })}
         </ImageViewerContainer>
         <Separator />
-        <DownloadButtonContainer>
-          <DownloadAllButton
-            type="button"
-            disabled={this.state.downloading}
-            onClick={this.handleSaveAll}
-          >
-            {!this.state.downloading
-              ? `Save all ${pictureCount} pictures`
-              : `Please be patient while we prepare your zip file...(${
-                  this.state.counter
-                } ready out of ${pictureCount} pictures)`}
-          </DownloadAllButton>
-        </DownloadButtonContainer>
       </Layout>
     );
   }
