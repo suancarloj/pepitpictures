@@ -49,7 +49,6 @@ class EmailForm extends Component {
 }
 
 EmailForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
   onEmailChange: PropTypes.func.isRequired,
   email: PropTypes.string,
 };

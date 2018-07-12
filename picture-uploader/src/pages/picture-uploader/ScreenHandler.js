@@ -142,6 +142,10 @@ class ScreenHandler extends Component {
         this.setState({ published: true, publishing: false });
       }, 2000);
       this.handleCloseSet(push)();
+    })
+    .catch((err) => {
+      this.setState({ publishing: false, published: false });
+      alert('Email invalid please try again')
     });
   };
 

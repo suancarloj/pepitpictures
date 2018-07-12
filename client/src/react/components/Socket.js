@@ -13,7 +13,6 @@ class Socket extends Component {
       const topics = Array.isArray(subscribeTopic) ? subscribeTopic : [subscribeTopic];
       topics.forEach((topic) => {
         this.socket.on(topic, (data) => {
-          console.log(topic, ':', data);
           this.props.subscribeCallback(topic, data);
         });
       })
@@ -22,7 +21,6 @@ class Socket extends Component {
   }
 
   push = (topic, data) => {
-    console.log(topic, ':', data);
     this.socket.emit(topic, data);
   };
 

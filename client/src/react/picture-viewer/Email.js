@@ -12,11 +12,6 @@ class Email extends Component {
     pictureSetId: PropTypes.string.isRequired,
   };
 
-  constructor() {
-    super();
-    this.handleSubmit = debounce(this.handleSubmit, 300);
-  }
-
   state = {
     email: '',
     pictureSetId: null,
@@ -48,10 +43,6 @@ class Email extends Component {
     }
   };
 
-  handleSubmit = (email) => {
-    setPicturesEmail(this.props.pictureSetId, email);
-  };
-
   render() {
     return (
       <Fragment>
@@ -66,9 +57,8 @@ class Email extends Component {
               <EmailForm
                 email={this.state.email}
                 onEmailChange={(email) => {
-                  this.handleSubmit(email);
                   this.setState({ email });
-                  push('live-email-change', email);
+                  push('live-email-change', { pictureSetId: this.props.pictureSetId, email });
                 }}
                 pictureSetId={this.state.pictureSetId}
               />

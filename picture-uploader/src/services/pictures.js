@@ -1,6 +1,14 @@
 // const basePath = 'http://192.168.0.130:9000';
 export const basePath = 'http://localhost:9000';
 
+
+const statusHandler = (response) => {
+  if (response.status >= 400 && response.status < 600) {
+    throw new Error("Bad response from server");
+  }
+  return response.json();
+}
+
 export function setPicturesEmail(pictureSetId, email) {
   const options = {
     method: 'put',
@@ -10,7 +18,7 @@ export function setPicturesEmail(pictureSetId, email) {
     },
   };
   const path = `${basePath}/pictures/${pictureSetId}/set-email`;
-  return fetch(path, options).then(res => res.json());
+  return fetch(path, options).then(statusHandler);
 }
 
 export function publishPictures(pictureSetId) {
@@ -21,7 +29,7 @@ export function publishPictures(pictureSetId) {
     },
   };
   const path = `${basePath}/pictures/${pictureSetId}/publish`;
-  return fetch(path, options).then(res => res.json());
+  return fetch(path, options).then(statusHandler);
 }
 
 export function createPictureCollection(computerId) {
@@ -33,7 +41,7 @@ export function createPictureCollection(computerId) {
     },
   };
   const path = `${basePath}/pictures`;
-  return fetch(path, options).then(res => res.json());
+  return fetch(path, options).then(statusHandler);
 }
 
 export function getPictures(computerId, limit) {
@@ -58,7 +66,7 @@ export function getPictures(computerId, limit) {
     .join('&')
 
   const path = `${basePath}/pictures?${queryStr}`;
-  return fetch(path, options).then(res => res.json());
+  return fetch(path, options).then(statusHandler);
 }
 
 export function createNewPictureCollection(computerId) {
@@ -70,7 +78,7 @@ export function createNewPictureCollection(computerId) {
     },
   };
   const path = `${basePath}/pictures`;
-  return fetch(path, options).then(res => res.json());
+  return fetch(path, options).then(statusHandler);
 }
 
 export function uploadPicture(file, computerId, pictureSetId) {
@@ -81,5 +89,5 @@ export function uploadPicture(file, computerId, pictureSetId) {
     body: formData,
   };
   const path = `${basePath}/upload/computer-${computerId}?set=${pictureSetId}`;
-  return fetch(path, options).then(res => res.json());
+  return fetch(path, options).then(statusHandler);
 }

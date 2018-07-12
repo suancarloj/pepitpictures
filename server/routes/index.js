@@ -6,6 +6,7 @@ const kue = require('kue');
 const queue = kue.createQueue();
 const PictureSet = require('../stores/picture-set.store');
 const jobTypes = require('../../common/job-types');
+const PicturesService = require('../services/picturesService');
 
 router.get('/pictures/:setId/download', (req, res, next) => {
   if (!req.params.setId) {
@@ -51,24 +52,23 @@ router.put('/pictures/:setId/create-sh-file', (req, res, next) => {
     });
 });
 
-router.put('/pictures/:pictureSetId/set-email', (req, res, next) => {
-  if (!req.params.pictureSetId) {
-    return next(new Error('Erreur lors de la création d’un set, paramètre manquant dans l’url'));
-  }
-
-  const update = { email: req.body.email };
-  const search = { _id: new ObjectId(req.params.pictureSetId) };
-
-  PictureSet.update(search, update, (err, set) => {
-    res.json({ status: 'success', data: set });
-  });
-});
+router.put('/pictures/:pictureSetId/set-email', (req, res, next) =>
+  PicturesService.updateEmail(req.params.pictureSetId, req.body.email)
+    .then((set) => res.json({ status: 'success', data: set }))
+    .catch((err) => next(err))
+);
 
 router.put('/pictures/:pictureSetId/publish', (req, res, next) => {
   const { pictureSetId } = req.params;
-  PictureSet.findOne({ _id: new ObjectId(pictureSetId) })
+  const search = {
+    _id: new ObjectId(pictureSetId),
+  };
+  PictureSet.findOne(search)
     .lean()
     .then((pictureSet) => {
+      if (!validator.isEmail(pictureSet.email)) {
+        throw new Error('Invalid email');
+      }
       const staredPictures = pictureSet.pictures.filter((p) => p.stared);
       const pictures =
         staredPictures.length > 0 && staredPictures.length <= 3
@@ -94,11 +94,17 @@ router.put('/pictures/:pictureSetId/publish', (req, res, next) => {
           const search = {
             _id: new ObjectId(pictureSetId),
           };
-          PictureSet.update(search, { $set: { pictureJobId: job.id, emailSent: 'PENDING' }})
-            .then(() => {
+          PictureSet.update(search, { $set: { pictureJobId: job.id, emailSent: 'PENDING' } }).then(
+            () => {
               res.json({ status: 'success' });
-            });
+            }
+          );
         });
+    })
+    .catch((err) => {
+      PictureSet.update(search, { $set: { emailSent: 'ERROR' } }).then(() => {
+        res.status(400).json({ error: err });
+      });
     });
 });
 
@@ -148,21 +154,19 @@ router.get('/pictures', (req, res, next) => {
     query.computerId = req.query.computer;
   }
 
-  PictureSet.paginate(
-    query,
-    {
-      sort: { createdAt: -1 },
-      offset: Number(req.query.page) || 0,
-      limit: Number(req.query.limit) || 10
-    }
-  ).then((result) => {
-    
-    return res.json(result);
-  }).catch(err => {
-    if (err) {
-      return next(err);
-    }
-  });
+  PictureSet.paginate(query, {
+    sort: { createdAt: -1 },
+    offset: Number(req.query.page) || 0,
+    limit: Number(req.query.limit) || 10,
+  })
+    .then((result) => {
+      return res.json(result);
+    })
+    .catch((err) => {
+      if (err) {
+        return next(err);
+      }
+    });
 });
 
 router.get('/pictures/fetch-new', (req, res, next) => {

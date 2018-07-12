@@ -1,3 +1,4 @@
+const PicturesService = require('./services/picturesService');
 module.exports = function(socket) {
   let { room } = socket.handshake.query;
   console.log('join:', room)
@@ -8,6 +9,9 @@ module.exports = function(socket) {
   });
   socket.on('live-email-change', (data) => {
     console.log('live-email-change:', data)
-    socket.to(room).emit('live-email-change', data)
+    PicturesService.updateEmail(data.pictureSetId, data.email)
+      .then(set => {
+        socket.to(room).emit('live-email-change', data.email)
+      });
   });
 };
