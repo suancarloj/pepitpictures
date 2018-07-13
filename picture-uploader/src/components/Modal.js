@@ -9,6 +9,7 @@ const ModalOverlay = styled.div`
   align-items: center;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
+  height: 100%;
   justify-content: center;
   left: 0;
   position: fixed;
@@ -18,10 +19,12 @@ const ModalOverlay = styled.div`
 
 const ModalContent = styled.div`
   background-color: #fff;
-  height: auto;
+  height: 100%;
   padding: 10px;
   position: relative;
   width: 100%;
+  overflow: hidden;
+  overflow-y: auto;
   p {
     color: #000;
     font-size: 14px;
