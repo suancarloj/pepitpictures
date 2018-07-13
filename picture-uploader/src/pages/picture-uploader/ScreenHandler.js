@@ -189,7 +189,7 @@ class ScreenHandler extends Component {
                 <Form method="post">
                   <EmailInput
                     onChange={(e) => {
-                      push('live-email-change', e.target.value);
+                      push('live-email-change', { pictureSetId, email: e.target.value });
                       this.setState({ email: e.target.value, emailSaved: false });
                       this.handleSubmitEmail(push, e.target.value);
                     }}
