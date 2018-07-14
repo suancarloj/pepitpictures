@@ -3,6 +3,7 @@ const router = express.Router();
 const ObjectId = require('mongoose').Types.ObjectId;
 const AdmZip = require('adm-zip');
 const kue = require('kue');
+const validator = require('validator');
 const queue = kue.createQueue();
 const PictureSet = require('../stores/picture-set.store');
 const jobTypes = require('../../common/job-types');
@@ -102,6 +103,7 @@ router.put('/pictures/:pictureSetId/publish', (req, res, next) => {
         });
     })
     .catch((err) => {
+      console.error('Error when publishing:', err);
       PictureSet.update(search, { $set: { emailSent: 'ERROR' } }).then(() => {
         res.status(400).json({ error: err });
       });
