@@ -1,16 +1,14 @@
-const exec = require('child_process').exec;
+
 const express = require('express');
 const router = express.Router();
-// Create shutdown function
-function shutdown(callback) {
-  exec('shutdown now', (error, stdout, stderr) =>{ callback({ error, stderr }, stdout); });
-}
+const sudo = require('sudo-js');
+const config = require('config');
 
+sudo.setPassword(config.sudoPassword);
 
 router.get('/', (req, res, next) => {
-  shutdown((err, output) => {
-    console.log(err, output);
-    res.json({})
+  sudo.exec(['shutdown', 'now'], function(err, pid, result) {
+    console.log(result);
   });
 });
 
