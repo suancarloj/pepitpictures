@@ -8,6 +8,7 @@ const cors = require('cors');
 
 const routes = require('./routes/index');
 const upload = require('./routes/upload');
+const shutdown = require('./routes/shutdown');
 
 require('./infrastructure/db/mongo');
 
@@ -26,6 +27,7 @@ app.use(express.static(path.join(__dirname, '../client/build')));
 app.use(cors());
 app.use('/', routes);
 app.use('/upload', upload);
+app.use('/shutdown', shutdown)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
