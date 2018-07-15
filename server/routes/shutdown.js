@@ -3,13 +3,13 @@ const express = require('express');
 const router = express.Router();
 // Create shutdown function
 function shutdown(callback) {
-  exec('shutdown now', (error, stdout, stderr) =>{ callback(stdout); });
+  exec('shutdown now', (error, stdout, stderr) =>{ callback({ error, stderr }, stdout); });
 }
 
 
 router.get('/', (req, res, next) => {
-  shutdown((output) => {
-    console.log(output);
+  shutdown((err, output) => {
+    console.log(err, output);
     res.json({})
   });
 });
