@@ -7,7 +7,7 @@ function shutdown(callback) {
 }
 
 
-router.get('/shutdown', (req, res, next) => {
+router.get('/', (req, res, next) => {
   shutdown((output) => {
     console.log(output);
     res.json({})
