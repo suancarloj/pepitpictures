@@ -35,7 +35,7 @@ class EmailForm extends Component {
       <Container>
         <form method="post">
           <Input
-            autocomplete="off"
+            autoComplete="off"
             type="text"
             name="email"
             onChange={(e) => this.props.onEmailChange(e.target.value)}

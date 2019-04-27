@@ -100,7 +100,7 @@ table[class=body] .article {
           <div class="content" style="box-sizing: border-box; display: block; Margin: 0 auto; max-width: 580px; padding: 10px;">
 
             <!-- START CENTERED WHITE CONTAINER -->
-            <span class="preheader" style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;">R&eacute;cup&eacute;rez vos images une par une (ou toutes &abreve; la fois uniquement sur ordinateur) en cliquant sur le bouton bleu ci-dessus!</span>
+            <span class="preheader" style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;">R&eacute;cup&eacute;rez vos images une par une (ou toutes &agrave; la fois uniquement sur ordinateur) en cliquant sur le bouton bleu ci-dessus!</span>
             <table class="main" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background: #ffffff; border-radius: 3px; width: 100%;" width="100%">
 
               <!-- START MAIN CONTENT AREA -->
@@ -130,21 +130,26 @@ table[class=body] .article {
                         </table>
                         <br>
                         <br>
-                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;"><strong>R&eacute;cup&eacute;rez vos images une par une (ou toutes &abreve; la fois uniquement sur ordinateur) en cliquant sur le bouton bleu ci-dessus!</strong>
+                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;"><strong>R&eacute;cup&eacute;rez vos images en cliquant sur le bouton bleu ci-dessus!</strong>
+                        <br /><br /> Pour transf&eacute;rer les images &agrave; vos amis sans compromettre leur qualit&eacute;, transf&eacute;rez directement cet E-mail. Ce lien est valide 3 semaines sans limite de t&eacute;l&eacute;chargement. 
                         </p>
                         <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;"><strong>
-                          Recover your images one by one (or all at once only on your computer) by clicking on the blue
+                          Recover your images one by one by clicking on the blue
   button above!
-                        </strong></p>
+                        </strong><br /><br />To transfer the images to friends without compromising their quality, transfer this e-mail directly. This link is valid during 3 weeks without download limit.</p>
 
                         <br>
-                        <p align="left" style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;"><strong>Le Team Pepit</strong> <br><strong>0634316033</strong><br><a href="https://www.pepitpictures.com" target="_blank" style="color: #3498db; text-decoration: underline;"><strong>pepitpictures.com</strong></a></p>
+                        <p align="left" style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;"><strong>Le Team Pepit</strong> <br><strong>06 34 31 60 33</strong><br><a href="https://www.pepitpictures.com" target="_blank" style="color: #3498db; text-decoration: underline;"><strong>pepitpictures.com</strong></a></p>
                         <br>
                         <br>
                         <br>
-                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">N'h&eacute;sitez pas &abreve; nous identifier sur les r&eacute;seaux sociaux #PepitPictures et #Marseillanjet
+                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">N'h&eacute;sitez pas &agrave; nous identifier sur les r&eacute;seaux sociaux #PepitPictures et #Marseillanjet
                         </p>
-                      
+                        <p style="text-align: left">
+                          <strong>FAQ:</strong>
+                          <br />*Ne pas t&eacute;l&eacute;charger les vignettes, mais bien les images hautes d&eacute;finitions en cliquant simplement sur chaque images.
+                          <br />*Votre lien n’est plus Valide? Nous gardons vos image 2 mois Minimum! N’h&eacute;sitez pas &agrave; nous recontacter, nous vous renverrons vos photos.
+                        </p>
                   </td></tr></table>
                 </td>
               </tr>

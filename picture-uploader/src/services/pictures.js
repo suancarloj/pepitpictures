@@ -44,7 +44,7 @@ export function createPictureCollection(computerId) {
   return fetch(path, options).then(statusHandler);
 }
 
-export function getPictures(computerId, limit) {
+export function getPictures(computerId, limit, filter) {
   const options = {
     method: 'get',
     headers: {
@@ -59,6 +59,10 @@ export function getPictures(computerId, limit) {
 
   if (limit) {
     query.limit = limit;
+  }
+
+  if (filter) {
+    query.filter = filter;
   }
 
   const queryStr = Object.keys(query)

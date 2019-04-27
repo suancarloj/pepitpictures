@@ -11,4 +11,5 @@ module.exports = {
       pass: '<your password here>',
     },
   },
+  mongo: "mongodb://127.0.0.1/pepitpictures",
 };

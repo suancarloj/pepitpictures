@@ -151,6 +151,13 @@ router.get('/pictures', (req, res, next) => {
   const query = {
     'pictures.0': { $exists: true },
   };
+  if (req.query.filter) {
+    if (req.query.filter === 'email-only') {
+      query.email = { $ne: null };
+    } else {
+      query.email = { $regex: new RegExp(req.query.filter, 'i') };
+    }
+  }
 
   if (req.query.computer) {
     query.computerId = req.query.computer;
