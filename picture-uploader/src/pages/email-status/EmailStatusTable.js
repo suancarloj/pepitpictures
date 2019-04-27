@@ -49,6 +49,8 @@ const Button = styled.button`
   }
 `;
 
+const Link = Button.withComponent('a');
+
 const Container = styled.div`
   padding: 10px;
 `;
@@ -173,6 +175,10 @@ class EmailStatusTable extends Component {
               {this.state.collections.map((collection, idx) => {
                 const countStared = collection.pictures.filter((p) => p.stared).length;
                 const editEmailActive = this.state.editEmailIndex === idx;
+                const data = collection.pictures.map(p => p.originalName).join('\n');
+                const blob = new Blob([data], {type: "application/text"});
+                const jsonBlob  = URL.createObjectURL(blob);
+
                 return (
                   <tr className={idx % 2 === 0 ? 'alternate' : ''} key={idx} title={collection._id}>
                     <td>{format(collection.createdAt, 'HH:mm DD-MM')}</td>
@@ -217,6 +223,14 @@ class EmailStatusTable extends Component {
                       >
                         {editEmailActive ? 'Cancel edit' : 'Edit email'}
                       </Button>
+                      <Link
+                        disabled={this.state.publishing}
+                        href={jsonBlob}
+                        download={`${collection.email}-${collection.createdAt}.txt`}
+                        type="button"
+                      >
+                        Pictures
+                      </Link>
                     </td>
                   </tr>
                 );
