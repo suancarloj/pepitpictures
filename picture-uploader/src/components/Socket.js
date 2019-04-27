@@ -1,18 +1,13 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
-import io from 'socket.io-client';
 
 class Socket extends Component {
-  constructor(props) {
-    super(props);
-    this.socket = io.connect(props.host);
-  }
   componentDidMount() {
     const { subscribeTopic } = this.props;
     if (subscribeTopic) {
       const topics = Array.isArray(subscribeTopic) ? subscribeTopic : [subscribeTopic];
       topics.forEach((topic) => {
-        this.socket.on(topic, (data) => {
+        this.props.socket.on(topic, (data) => {
           console.log(topic, ':', data);
           this.props.subscribeCallback(topic, data);
         });
@@ -22,7 +17,7 @@ class Socket extends Component {
 
   push = (topic, data) => {
     console.log(topic, ':', data);
-    this.socket.emit(topic, data);
+    this.props.socket.emit(topic, data);
   };
 
   render() {
@@ -32,7 +27,6 @@ class Socket extends Component {
 
 Socket.propTypes = {
   children: PropTypes.func,
-  host: PropTypes.string.isRequired,
   subscribeTopic: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.string),
     PropTypes.string,

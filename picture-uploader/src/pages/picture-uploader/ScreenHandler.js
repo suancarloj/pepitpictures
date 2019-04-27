@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import debounce from 'lodash/debounce';
-import { basePath, publishPictures, setPicturesEmail } from '../../services/pictures';
+import { publishPictures, setPicturesEmail } from '../../services/pictures';
 import Socket from '../../components/Socket';
 
 const Container = styled.div`
@@ -154,7 +154,7 @@ class ScreenHandler extends Component {
     const shortSetId = pictureSetId.substr(12);
     return (
       <Socket
-        host={`${basePath}?room=computer-${this.props.computerId}`}
+        socket={this.props.socket}
         subscribeCallback={(_, email) => this.setState({ email, emailSaved: true })}
         subscribeTopic="live-email-change"
         registerId={this.props.computerId}
