@@ -1,5 +1,5 @@
-// const basePath = 'http://192.168.0.130:9000';
-export const basePath = 'http://localhost:3333';
+export const basePath = 'http://192.168.0.130:9000';
+// export const basePath = 'http://localhost:3333';
 
 const statusHandler = (response) => {
   if (response.status >= 400 && response.status < 600) {
