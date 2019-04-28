@@ -2,18 +2,19 @@ const path = require('path');
 
 module.exports = [
   {
-    name: 'client',
-    script: 'client/src/server/server.js',
+    name: 'picture-viewer',
+    script: 'picture-viewer/src/server/server.js',
     instance_var: 'INSTANCE_ID',
     env: {
-      PROCESS_NAME: 'client',
-      NODE_CONFIG_DIR: path.resolve(__dirname, 'client/config'),
+      PORT: 2992,
+      PROCESS_NAME: 'picture-viewer',
+      NODE_CONFIG_DIR: path.resolve(__dirname, 'picture-viewer/config'),
     },
     exec_mode: 'cluster',
     instances: 1,
     merge_logs: true,
-    log_file: './logs/pm2-client-service.log',
-    error_file: './logs/pm2-client-service-err.log',
+    log_file: './logs/pm2-picture-viewer-service.log',
+    error_file: './logs/pm2-picture-viewer-service-err.log',
     source_map_support: true,
   },
   {
