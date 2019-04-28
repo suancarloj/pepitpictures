@@ -8,7 +8,7 @@ export function Navbar(props) {
           <button
             className="btn btn-large waves-effect waves-light btn-disabled"
             onClick={props.prev}
-            data-ng-disabled="!vm.set.pictures.length || (vm.showSelectedPictures && vm.staredCount === 1)"
+            disabled={!props.pictureCount || (props.showStared && props.staredCount === 1)}
           >
             Back
             <i className="mdi-navigation-arrow-back left" />
@@ -18,18 +18,13 @@ export function Navbar(props) {
           <button
             className="btn btn-large waves-effect waves-light red lighten-2"
             onClick={props.toggleStarPicture}
-            data-ng-disabled="!vm.set.pictures.length"
+            disabled={!props.pictureCount}
           >
             {props.staredCount}
             <i
-              className={props.stared ? 'mdi-action-favorite left' : 'mdi-action-favorite-outline left'}
-              data-ng-show="(!vm.showSelectedPictures && vm.set.pictures[vm.currentPictureIndex].stared) ||
-                            ( vm.showSelectedPictures && vm.selectedPictures[vm.currentPictureIndex].stared)"
-            />
-            <i
-              className="mdi-action-favorite-outline left"
-              data-ng-show="(!vm.showSelectedPictures && !vm.set.pictures[vm.currentPictureIndex].stared) ||
-                            (vm.showSelectedPictures && !vm.selectedPictures[vm.currentPictureIndex].stared)"
+              className={
+                props.stared ? 'mdi-action-favorite left' : 'mdi-action-favorite-outline left'
+              }
             />
           </button>
         </div>
@@ -37,7 +32,7 @@ export function Navbar(props) {
           <button
             className="btn btn-large waves-effect waves-light"
             onClick={props.toggleShowStared}
-            data-ng-disabled="!vm.selectedPictures.length"
+            disabled={!props.pictureCount}
           >
             {props.showStared ? 'All pictures' : 'Selected'}
           </button>
@@ -46,7 +41,7 @@ export function Navbar(props) {
           <button
             className="btn btn-large waves-effect waves-light"
             onClick={props.next}
-            data-ng-disabled="!vm.set.pictures.length || (vm.showSelectedPictures && vm.staredCount === 1)"
+            disabled={!props.pictureCount || (props.showStared && props.staredCount === 1)}
           >
             Next
             <i className="mdi-navigation-arrow-forward right" />

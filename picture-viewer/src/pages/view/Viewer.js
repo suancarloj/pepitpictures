@@ -45,20 +45,22 @@ export function Viewer(props) {
           <PictureViewer imgSrc={picture && picture.name} />
           <Navbar
             next={next}
+            pictureCount={pictureCollection.pictures.length}
             prev={prev}
             showStared={showStared}
             stared={picture && picture.stared}
-            staredCount={pictureCollection.pictures.filter((p) => p.stared).length}
+            staredCount={staredCollection.filter((p) => p.stared).length}
             toggleStarPicture={() => {
               starPicture({ setId: pictureSetId, pictureId: picture._id, stared: !picture.stared })
                 .then(() => {
                   if (picture.stared) {
                     const nextPictureIndex = currentPicture - 1;
-                    if (nextPictureIndex >= 0) {
+                    if (nextPictureIndex > 0) {
                       setCurrentPicture(nextPictureIndex);
+                    } else if (nextPictureIndex === 0) {
+                      setCurrentPicture(0);
                     } else {
                       setShowStared(false);
-                      setCurrentPicture(0);
                     }
                   }
                 })
