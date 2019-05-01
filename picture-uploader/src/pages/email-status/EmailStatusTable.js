@@ -129,10 +129,10 @@ class EmailStatusTable extends Component {
       });
   };
 
-  filterByEmail= (e) => {
+  filterByEmail = (e) => {
     e.preventDefault();
-    this.getAllPictureColection(this.state.filter)
-  }
+    this.getAllPictureColection(this.state.filter);
+  };
 
   render() {
     return (
@@ -175,9 +175,12 @@ class EmailStatusTable extends Component {
               {this.state.collections.map((collection, idx) => {
                 const countStared = collection.pictures.filter((p) => p.stared).length;
                 const editEmailActive = this.state.editEmailIndex === idx;
-                const data = collection.pictures.map(p => p.originalName).join('\n');
-                const blob = new Blob([data], {type: "application/text"});
-                const jsonBlob  = URL.createObjectURL(blob);
+                const data = collection.pictures
+                  .sort((p) => p.stared)
+                  .map((p) => `${p.originalName}${p.stared ? ' - favorite' : ''}`)
+                  .join('\n');
+                const blob = new Blob([data], { type: 'application/text' });
+                const jsonBlob = URL.createObjectURL(blob);
 
                 return (
                   <tr className={idx % 2 === 0 ? 'alternate' : ''} key={idx} title={collection._id}>
