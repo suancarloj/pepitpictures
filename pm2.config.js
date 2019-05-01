@@ -6,7 +6,6 @@ module.exports = [
     script: 'picture-viewer/src/server/server.js',
     instance_var: 'INSTANCE_ID',
     env: {
-      PORT: 2992,
       PROCESS_NAME: 'picture-viewer',
       NODE_CONFIG_DIR: path.resolve(__dirname, 'picture-viewer/config'),
     },
