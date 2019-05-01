@@ -176,7 +176,7 @@ class EmailStatusTable extends Component {
                 const countStared = collection.pictures.filter((p) => p.stared).length;
                 const editEmailActive = this.state.editEmailIndex === idx;
                 const data = collection.pictures
-                  .sort((p) => p.stared)
+                  .sort((p) => (p.stared ? -1 : 1))
                   .map((p) => `${p.originalName}${p.stared ? ' - favorite' : ''}`)
                   .join('\n');
                 const blob = new Blob([data], { type: 'application/text' });
