@@ -36,7 +36,6 @@ export function Viewer(props) {
 
   return (
     <>
-      <Email computerId={props.computerId} pictureSetId={pictureSetId} />
       <Socket
         host={`${basePath}?room=computer-${props.computerId}`}
         registerId={props.computerId}
@@ -45,7 +44,9 @@ export function Viewer(props) {
       >
         {() => (
           <>
-            <PictureViewer imgSrc={picture && picture.name} />
+            <PictureViewer imgSrc={picture && picture.name}>
+              <Email computerId={props.computerId} pictureSetId={pictureSetId} />
+            </PictureViewer>
             <Navbar
               next={next}
               pictureCount={pictureCollection.pictures.length}

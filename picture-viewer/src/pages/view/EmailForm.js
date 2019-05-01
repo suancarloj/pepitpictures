@@ -4,8 +4,13 @@ import styled from 'styled-components';
 
 const Container = styled.div`
   background-color: #fff;
+  bottom: 0;
   height: 120px;
+  left: 0;
   padding: 20px;
+  position: absolute;
+  right: 0;
+  top: calc(50% - 60px);
   width: 100%;
   z-index: 10;
   form {
@@ -35,7 +40,9 @@ class EmailForm extends Component {
             type="text"
             name="email"
             onChange={(e) => this.props.onEmailChange(e.target.value)}
-            innerRef={(input) => { this.emailInput = input; }}
+            ref={(input) => {
+              this.emailInput = input;
+            }}
             value={this.props.email}
           />
         </form>
