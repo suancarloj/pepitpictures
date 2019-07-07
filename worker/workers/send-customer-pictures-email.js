@@ -1,7 +1,9 @@
 const debug = require('debug')('worker:send-customer-pictures-email');
 const Validator = require('better-validator');
+const ObjectId = require('mongoose').Types.ObjectId;
 const emailTransporter = require('../infrastructure/email');
 const emailTemplate = require('./emailTemplate');
+const Pictures = require('../../server/stores/picture-set.store');
 const getText = (id) => `
   Bonjour,
 
@@ -21,8 +23,19 @@ const getText = (id) => `
 module.exports = function sendEmail(job, done) {
   const email = job.data.to;
   const validator = new Validator();
-
-  if (!validator(email).isString().isEmail()) {
+  const search = {
+    _id: new ObjectId(job.data.pictureSetId),
+  };
+  if (
+    !validator(email)
+      .isString()
+      .isEmail()
+  ) {
+    Pictures.update(
+      search,
+      { $set: { emailSent: 'INVALID_EMAIL', emailJobId: job.id } },
+      { new: true }
+    );
     return done(new Error('invalid to address'));
   }
 
@@ -32,11 +45,17 @@ module.exports = function sendEmail(job, done) {
     html: emailTemplate(job.data.pictureSetId),
   };
 
-  emailTransporter.sendMail(options)
+  emailTransporter
+    .sendMail(options)
     .then((info) => {
       debug(`email sent: ${info.response}`);
-      return done();
+      return Pictures.update(
+        search,
+        { $set: { emailSent: 'SENT', emailJobId: job.id } },
+        { new: true }
+      );
     })
+    .then((res) => done)
     .catch((err) => {
       console.log('error sending email', err);
       done(err);

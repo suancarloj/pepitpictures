@@ -32,7 +32,7 @@ export function Navbar(props) {
           <button
             className="btn btn-large waves-effect waves-light"
             onClick={props.toggleShowStared}
-            disabled={!props.pictureCount}
+            disabled={!props.pictureCount || props.staredCount === 0}
           >
             {props.showStared ? 'All pictures' : 'Selected'}
           </button>

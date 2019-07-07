@@ -53,7 +53,7 @@ export function Viewer(props) {
               prev={prev}
               showStared={showStared}
               stared={picture && picture.stared}
-              staredCount={staredCollection.filter((p) => p.stared).length}
+              staredCount={staredCollection.length}
               toggleStarPicture={() => {
                 starPicture({
                   setId: pictureSetId,
@@ -62,12 +62,11 @@ export function Viewer(props) {
                 })
                   .then(() => {
                     if (picture.stared) {
-                      const nextPictureIndex = currentPicture - 1;
-                      if (nextPictureIndex > 0) {
-                        setCurrentPicture(nextPictureIndex);
-                      } else if (nextPictureIndex === 0) {
+                      const maxValue = staredCollection.length - 2;
+                      if (currentPicture > maxValue && maxValue >= 0) {
                         setCurrentPicture(0);
-                      } else {
+                      } else if (maxValue === -1) {
+                        setCurrentPicture(0);
                         setShowStared(false);
                       }
                     }

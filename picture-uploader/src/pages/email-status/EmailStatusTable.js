@@ -137,7 +137,7 @@ class EmailStatusTable extends Component {
   render() {
     return (
       <Modal onClickOutside={this.handleCloseModal}>
-        <ReloadButton onClick={this.getAllPictureColection}>
+        <ReloadButton onClick={() => this.getAllPictureColection()}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             height="12px"

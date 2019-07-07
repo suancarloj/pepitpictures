@@ -56,11 +56,14 @@ function sendMail(to, pictureSetId) {
         _id: new ObjectId(pictureSetId),
       };
       if (err) {
-        Pictures.update(search, { $set: { emailSent: 'ERROR' }});
+        Pictures.update(search, { $set: { emailSent: 'ERROR' } });
         return;
       }
-      Pictures.update(search, { $set: { emailSent: 'SENT', emailJobId: job.id }}, { new: true })
-        .then(res => console.log('-------RESULT:', res, pictureSetId));
+      Pictures.update(
+        search,
+        { $set: { emailSent: 'IN_QUEUE', emailJobId: job.id } },
+        { new: true }
+      ).then((res) => console.log('-------RESULT:', res, pictureSetId));
     });
 }
 
