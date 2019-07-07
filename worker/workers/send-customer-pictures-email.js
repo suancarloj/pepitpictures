@@ -55,7 +55,7 @@ module.exports = function sendEmail(job, done) {
         { new: true }
       );
     })
-    .then((res) => done)
+    .then((res) => done())
     .catch((err) => {
       console.log('error sending email', err);
       done(err);
