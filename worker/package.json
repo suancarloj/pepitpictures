@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "aws-sdk": "~2.259.1",
+    "aws-sdk": "~2.814.0",
     "better-validator": "~2.1.7",
     "bluebird": "~3.5.1",
     "config": "~1.30.0",
